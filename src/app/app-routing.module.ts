@@ -42,6 +42,14 @@ const routes: Routes = [
   {
     path: 'checkout',
     loadChildren: () => import('./checkout/checkout.module').then( m => m.CheckoutPageModule)
+  },
+  {
+    path: 'left-menu',
+    loadChildren: () => import('./my-account/left-menu/left-menu.module').then( m => m.LeftMenuPageModule)
+  },
+  {
+    path: 'my-account',
+    loadChildren: () => import('./my-account/main-content/main-content.module').then( m => m.MainContentPageModule)
   }
 ];
 @NgModule({
