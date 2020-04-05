@@ -1,5 +1,7 @@
 {
-  "name": "superex",
-  "integrations": {},
-  "type": "ionic-angular"
+  "name": "tabang",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
 }
