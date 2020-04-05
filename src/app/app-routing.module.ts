@@ -16,20 +16,12 @@ const routes: Routes = [
     loadChildren: () => import('./about-us/about-us.module').then( m => m.AboutUsPageModule)
   },
   {
-    path: 'footer',
-    loadChildren: () => import('./footer/footer.module').then( m => m.FooterPageModule)
-  },
-  {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
   {
     path: '',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
-    path: 'header',
-    loadChildren: () => import('./header/header.module').then( m => m.HeaderPageModule)
   },
   {
     path: 'products/detail/:id',
@@ -42,10 +34,6 @@ const routes: Routes = [
   {
     path: 'checkout',
     loadChildren: () => import('./checkout/checkout.module').then( m => m.CheckoutPageModule)
-  },
-  {
-    path: 'left-menu',
-    loadChildren: () => import('./my-account/left-menu/left-menu.module').then( m => m.LeftMenuPageModule)
   },
   {
     path: 'my-account',
