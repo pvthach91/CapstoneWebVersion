@@ -81,7 +81,7 @@
 html, body {
   height: 100%; }
 
-body {
+body, .main-content {
   background-color: #f5f5f5;
   line-height: 24px;
   font-size: 14px;

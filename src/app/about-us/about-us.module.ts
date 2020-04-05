@@ -8,6 +8,7 @@ import { AboutUsPageRoutingModule } from './about-us-routing.module';
 
 import { AboutUsPage } from './about-us.page';
 import {FooterPageModule} from "../footer/footer.module";
+import {HeaderPageModule} from "../header/header.module";
 
 @NgModule({
     imports: [
@@ -15,7 +16,8 @@ import {FooterPageModule} from "../footer/footer.module";
         FormsModule,
         IonicModule,
         AboutUsPageRoutingModule,
-        FooterPageModule
+        FooterPageModule,
+        HeaderPageModule
     ],
   declarations: [AboutUsPage]
 })
