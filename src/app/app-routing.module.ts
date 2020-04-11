@@ -66,6 +66,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'user',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./my-account/user/user.module').then( m => m.UserPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/profile',
         pathMatch: 'full'
