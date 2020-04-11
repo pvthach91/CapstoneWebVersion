@@ -175,7 +175,7 @@ ul {
   display: block;
   height: 0;
   max-width: 100%;
-  visibility: hidden;
+  /*visibility: hidden;*/
   overflow: hidden;
   opacity: 0; }
 .tab-content .tab-pane.active {
