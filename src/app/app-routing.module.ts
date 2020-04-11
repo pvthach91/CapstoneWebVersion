@@ -37,7 +37,40 @@ const routes: Routes = [
   },
   {
     path: 'my-account',
-    loadChildren: () => import('./my-account/main-content/main-content.module').then( m => m.MainContentPageModule)
+    children: [
+      {
+        path: 'my-store',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./my-account/my-store/my-store.module').then( m => m.MyStorePageModule)
+          }
+        ]
+      },
+      {
+        path: 'profile',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./my-account/my-store/my-store.module').then( m => m.MyStorePageModule)
+          }
+        ]
+      },
+      {
+        path: 'order',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./my-account/my-store/my-store.module').then( m => m.MyStorePageModule)
+          }
+        ]
+      },
+      {
+        path: '',
+        redirectTo: '/profile',
+        pathMatch: 'full'
+      }
+    ]
   }
 ];
 @NgModule({
