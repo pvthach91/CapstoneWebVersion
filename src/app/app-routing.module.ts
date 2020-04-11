@@ -66,6 +66,24 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'farm',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./my-account/farm/farm.module').then( m => m.FarmPageModule)
+          }
+        ]
+      },
+      {
+        path: 'vehicle',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./my-account/order/order.module').then( m => m.OrderPageModule)
+          }
+        ]
+      },
+      {
         path: 'user',
         children: [
           {
