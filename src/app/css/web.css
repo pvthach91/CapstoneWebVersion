@@ -6243,5 +6243,65 @@ footer {
 .copyright-section .copyright-segment p.copyright-text a:hover {
   color: #80bb01; }
 
-/*=====  End of 22. Footer ======*/
+.chat-body{
+  height: 300px;
+  overflow: auto;
+}
+
+.chat-footer-text{
+  width: 80%;
+  height: 40px;
+}
+.chat-receive .chat-avatar, .chat-contact .chat-avatar {
+  float: left;
+  width: 20%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.chat-send .chat-avatar {
+  float: right;
+  width: 20%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.chat-receive .chat-avatar img, .chat-contact .chat-avatar img{
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+
+.chat-send .chat-avatar img{
+  width: 50px;
+  height: 50px;
+  float: right;
+  border-radius: 100%;
+}
+
+.chat-receive .conversation-text {
+  float: left;
+  background-color: darkgray;
+  border-radius: 5%;
+  width: 70%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.chat-send .conversation-text {
+  float: right;
+  background-color: #00c292;
+  text-align: right;
+  color: #fff;
+  border-radius: 5%;
+  width: 70%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.chat-contact .conversation-text {
+  float: left;
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
 
