@@ -1,16 +1,17 @@
 <div class="myaccount-tab-menu nav" role="tablist">
-  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/my-account.html#dashboad" class="active" data-toggle="tab"><i class="fa fa-dashboard"></i>Dashboard</a>
+  <a routerLink="/my-account/profile" data-toggle="tab" [ngClass]="isProfilePage()?'active': ''"><i class="fa fa-user"></i> Profile</a>
 
-  <a routerLink="/my-account/order" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Orders</a>
+  <a routerLink="/my-account/my-store" data-toggle="tab"  [ngClass]="isMyStorePage()?'active': ''"><i class="fa fa-home"></i> My Store</a>
 
-  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/my-account.html#download" data-toggle="tab"><i class="fa fa-cloud-download"></i> Download</a>
+  <a routerLink="/my-account/farm" data-toggle="tab" [ngClass]="isFarmPage()?'active': ''"><i class="fa fa-pagelines"></i>Farm</a>
 
-  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/my-account.html#payment-method" data-toggle="tab"><i class="fa fa-credit-card"></i> Payment
-    Method</a>
+  <a routerLink="/my-account/vehicle" data-toggle="tab" [ngClass]="isVehiclePage()?'active': ''"><i class="fa fa-truck"></i> Vehicle</a>
 
-  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/my-account.html#address-edit" data-toggle="tab"><i class="fa fa-map-marker"></i> address</a>
+  <a routerLink="/my-account/order" data-toggle="tab" [ngClass]="isOrderPage()?'active': ''"><i class="fa fa-shopping-cart"></i> Orders</a>
 
-  <a routerLink="/my-account/profile" data-toggle="tab"><i class="fa fa-user"></i> Account Details</a>
+  <a routerLink="/my-account/chat" data-toggle="tab" [ngClass]="isChatPage()?'active': ''"><i class="fa fa-comments-o"></i> Chat</a>
 
-  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/login-register.html"><i class="fa fa-sign-out"></i> Logout</a>
+  <a routerLink="/my-account/user" data-toggle="tab" [ngClass]="isUserPage()?'active': ''"><i class="fa fa-users"></i> User</a>
+
+  <a><i class="fa fa-sign-out"></i> Logout</a>
 </div>

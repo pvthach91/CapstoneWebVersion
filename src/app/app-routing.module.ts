@@ -79,7 +79,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () => import('./my-account/order/order.module').then( m => m.OrderPageModule)
+              loadChildren: () => import('./my-account/vehicle/vehicle.module').then( m => m.VehiclePageModule)
           }
         ]
       },
@@ -93,8 +93,17 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'chat',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./my-account/chat/chat.module').then( m => m.ChatPageModule)
+          }
+        ]
+      },
+      {
         path: '',
-        redirectTo: '/profile',
+        redirectTo: '/my-account/profile',
         pathMatch: 'full'
       }
     ]
