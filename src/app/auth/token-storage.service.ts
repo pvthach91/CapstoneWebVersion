@@ -60,11 +60,11 @@ export class TokenStorageService {
     return this.roles;
   }
 
-  public hasUserRole(): boolean {
+  public hasFarmerRole(): boolean {
     const roles = this.getAuthorities();
     let result = false;
     roles.forEach(role => {
-      if (role == 'ROLE_USER') {
+      if (role == 'ROLE_FARMER') {
         result = true;
       }
     });
@@ -93,55 +93,11 @@ export class TokenStorageService {
     return result;
   }
 
-  public hasHRRole(): boolean {
+  public hasBuyerRole(): boolean {
     const roles = this.getAuthorities();
     let result = false;
     roles.forEach(role => {
-      if (role == 'ROLE_HR') {
-        result = true;
-      }
-    });
-    return result;
-  }
-
-  public hasAccountingRole(): boolean {
-    const roles = this.getAuthorities();
-    let result = false;
-    roles.forEach(role => {
-      if (role == 'ROLE_ACCOUNTING') {
-        result = true;
-      }
-    });
-    return result;
-  }
-
-  public hasStockRole(): boolean {
-    const roles = this.getAuthorities();
-    let result = false;
-    roles.forEach(role => {
-      if (role == 'ROLE_STOCK') {
-        result = true;
-      }
-    });
-    return result;
-  }
-
-  public hasSaleRole(): boolean {
-    const roles = this.getAuthorities();
-    let result = false;
-    roles.forEach(role => {
-      if (role == 'ROLE_SALE') {
-        result = true;
-      }
-    });
-    return result;
-  }
-
-  public hasBODRole(): boolean {
-    const roles = this.getAuthorities();
-    let result = false;
-    roles.forEach(role => {
-      if (role == 'ROLE_BOD') {
+      if (role == 'ROLE_BUYER') {
         result = true;
       }
     });
@@ -156,33 +112,15 @@ export class TokenStorageService {
     }
   }
 
-  getCurrentDepartment():string {
-    if (this.hasAdminRole()) {
-      return 'ADMIN DEPARTMENT';
-    } else if (this.hasHRRole()) {
-      return 'HR DEPARTMENT';
-    }if (this.hasAccountingRole()) {
-      return 'ACC DEPARTMENT';
-    }if (this.hasStockRole()) {
-      return 'STOCK DEPARTMENT';
-    }if (this.hasSaleRole()) {
-      return 'SALE DEPARTMENT';
-    }if (this.hasBODRole()) {
-      return 'BOD';
-    }
-  }
-
   public getDefaultPage(): string {
     if (this.hasAdminRole()) {
-      return 'management/sysadmin';
-    } else if (this.hasHRRole()) {
-      return 'management/humanresource';
-    }if (this.hasAccountingRole()) {
-      return 'management/accounting';
-    }if (this.hasStockRole()) {
-      return 'management/stock';
-    }if (this.hasSaleRole()) {
-      return 'management/sale';
+      return 'my-account/user';
+    } else if (this.hasBuyerRole()) {
+      return 'home';
+    }if (this.hasFarmerRole()) {
+      return 'my-account/my-store';
+    }else if (this.hasPMRole()) {
+      return 'my-account/order';
     }
   }
 }

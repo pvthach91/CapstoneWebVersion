@@ -3,40 +3,37 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30 offset-3">
-        <!-- Login Form s-->
-        <form action="https://demo.hasthemes.com/greenfarm-preview/greenfarm/login-register.html#">
-
+        <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
           <div class="login-form">
             <h4 class="login-title">Login</h4>
 
             <div class="row">
               <div class="col-md-12 col-12 mb-20">
-                <label>Email Address*</label>
-                <input class="mb-0" type="email" placeholder="Email Address">
+                <label>Username*</label>
+                <input class="mb-0" type="text" placeholder="Username" id="username" name="username" [(ngModel)]="form.username" #username="ngModel" required minlength="3"
+                       [class.error-validate]="f.submitted && username.invalid && username.errors.required">
               </div>
               <div class="col-12 mb-20">
-                <label>Password</label>
-                <input class="mb-0" type="password" placeholder="Password">
+                <label>Password*</label>
+                <input class="mb-0" type="password" placeholder="Password" id="password" name="password" [(ngModel)]="form.password" #password="ngModel" required minlength="3"
+                       [class.error-validate]="f.submitted && password.invalid && password.errors.required">
               </div>
               <div class="col-md-8">
-
                 <div class="check-box d-inline-block ml-0 ml-md-2 mt-10">
                   <a routerLink="/register">Register new Account</a>
                 </div>
-
               </div>
 
               <div class="col-md-4 mt-10 mb-20 text-left text-md-right">
-                <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/login-register.html#"> Forgotten pasward?</a>
+                <a> Forgotten pasward?</a>
               </div>
 
               <div class="col-md-12">
-                <button class="register-button mt-0">Login</button>
+                <button type="submit" class="register-button mt-0">Login</button>
               </div>
 
             </div>
           </div>
-
         </form>
       </div>
     </div>
