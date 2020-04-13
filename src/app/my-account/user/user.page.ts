@@ -6,6 +6,7 @@ import {TokenStorageService} from "../../auth/token-storage.service";
 import {configuration} from "../../model/configuration.model";
 import {AlertController} from "@ionic/angular";
 import {SignUpInfo} from "../../auth/signup-info";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user',
@@ -26,12 +27,13 @@ export class UserPage implements OnInit {
   passwordMatched :boolean = false;
 
   constructor(private adminService: AdminService,
+              private route: Router,
               private tokenStorage: TokenStorageService,
               public alertController: AlertController) { }
 
   ngOnInit() {
     if (!this.tokenStorage.hasAdminRole()) {
-      window.location.href = 'home';
+      this.route.navigate(['/home']);
     }
     this.search(1);
   }

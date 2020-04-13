@@ -3,34 +3,84 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 offset-3">
-        <form action="https://demo.hasthemes.com/greenfarm-preview/greenfarm/login-register.html#">
-
+        <form  role="form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
           <div class="login-form">
             <h4 class="login-title">Register</h4>
 
             <div class="row">
+              <div style="margin: auto">
+                <div>You are most likely to be</div>
+                <div>
+                  <button (click)="chooseFarmer()" type="button" [ngClass]="farmerActive()?'btn btn-primary': 'btn btn-outline-primary'">FARMER</button>
+                  <button (click)="chooseBuyer()" type="button" [ngClass]="farmerActive()?'btn btn-outline-success': 'btn btn-success'" class="ml-5">BUYER</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-20">
               <div class="col-md-6 col-12 mb-20">
-                <label>First Name</label>
-                <input class="mb-0" type="text" placeholder="First Name">
+                <label>Username*
+                  <span *ngIf="f.submitted && username.invalid">
+                                    <span *ngIf="username.errors.required" class="text-danger"><small>Username is required</small></span>
+                                    <span *ngIf="username.errors.minlength" class="text-danger"><small>Username must be at least 3 characters</small></span>
+                                  </span>
+                </label>
+
+                <input class="mb-0" type="text" placeholder="Username" id="username" name="username" [(ngModel)]="form.username" #username="ngModel" required minlength="3">
               </div>
               <div class="col-md-6 col-12 mb-20">
-                <label>Last Name</label>
-                <input class="mb-0" type="text" placeholder="Last Name">
+                <label>Full Name*
+                  <span *ngIf="f.submitted && name.invalid">
+                                    <span *ngIf="name.errors.required" class="text-danger"><small>Name is required</small></span>
+                                    <span *ngIf="name.errors.minlength" class="text-danger"><small>Name must be at least 3 characters</small></span>
+                                  </span>
+                </label>
+
+                <input class="mb-0" type="text" placeholder="Full Name" id="name" name="name" [(ngModel)]="form.name" #name="ngModel" required minlength="3">
               </div>
-              <div class="col-md-12 mb-20">
-                <label>Email Address*</label>
-                <input class="mb-0" type="email" placeholder="Email Address">
+              <div class="col-md-6 col-12 mb-20">
+                <label>Email*
+                  <span *ngIf="f.submitted && email.invalid">
+                                    <span *ngIf="email.errors.required" class="text-danger"><small>Email is required</small></span>
+                                    <span *ngIf="email.errors.email" class="text-danger"><small>Email must be a valid email address</small></span>
+                                  </span>
+                </label>
+
+                <input class="mb-0" type="email" placeholder="Email" id="email" name="email" [(ngModel)]="form.email" #email="ngModel" required email>
+              </div>
+              <div class="col-md-6 col-12 mb-20">
+                <label>Phone*
+                  <span *ngIf="f.submitted && phone.invalid">
+                                    <span *ngIf="phone.errors.required" class="text-danger"><small>Phone is required</small></span>
+                                    <span *ngIf="phone.errors.minlength" class="text-danger"><small>Phone must be at least 10 numbers</small></span>
+                                  </span>
+                </label>
+
+                <input class="mb-0" type="text" placeholder="Phone" id="phone" name="phone" [(ngModel)]="form.phone" #phone="ngModel" required minlength="10">
               </div>
               <div class="col-md-6 mb-20">
-                <label>Password</label>
-                <input class="mb-0" type="password" placeholder="Password">
+                <label>Password*
+                  <span *ngIf="f.submitted && password.invalid">
+                                    <span *ngIf="password.errors.required" class="text-danger"><small>Password is required</small></span>
+                                    <span *ngIf="password.errors.minlength" class="text-danger"><small>Password must be at least 3 characters</small></span>
+                                  </span>
+                </label>
+
+                <input class="mb-0" type="password" placeholder="Password" id="password" name="password" [(ngModel)]="form.password" #password="ngModel" required minlength="3">
               </div>
               <div class="col-md-6 mb-20">
-                <label>Confirm Password</label>
-                <input class="mb-0" type="password" placeholder="Confirm Password">
+                <label>Confirm Password*
+                  <span *ngIf="f.submitted && password.invalid">
+                                    <span *ngIf="cpassword.errors.required" class="text-danger"><small>Confirm password is required</small></span>
+                                    <span *ngIf="cpassword.errors.minlength" class="text-danger"><small>Confirm password must be at least 3 characters</small></span>
+                                  </span>
+                  <span *ngIf="f.submitted && !passwordMatched" class="text-danger"><small>Not matched</small></span>
+                </label>
+
+                <input class="mb-0" type="password" placeholder="Confirm Password" id="cpassword" name="cpassword" [(ngModel)]="form.cpassword" #cpassword="ngModel" required minlength="3">
               </div>
               <div class="col-12">
-                <button class="register-button mt-0">Register</button>
+                <button type="submit" class="register-button mt-0">Register</button>
               </div>
             </div>
           </div>

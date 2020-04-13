@@ -44,7 +44,7 @@ export class LeftMenuPage implements OnInit {
 
   logout() {
     this.tokenStorage.signOut();
-    window.location.href = 'home';
+    this.route.navigate(['/home']);
   }
 
 }

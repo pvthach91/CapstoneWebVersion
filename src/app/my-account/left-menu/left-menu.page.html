@@ -1,17 +1,55 @@
 <div class="myaccount-tab-menu nav" role="tablist">
-  <a routerLink="/my-account/profile" [ngClass]="isProfilePage()?'active': ''"><i class="fa fa-user"></i> Profile</a>
+  <a routerLink="/my-account/profile"
+     *ngIf="tokenStorage.isLoggedIn()"
+     [ngClass]="isProfilePage()?'active': ''">
+    <i class="fa fa-user"></i>
+    Profile
+  </a>
 
-  <a routerLink="/my-account/my-store" [ngClass]="isMyStorePage()?'active': ''"><i class="fa fa-home"></i> My Store</a>
+  <a routerLink="/my-account/my-store"
+     *ngIf="tokenStorage.hasFarmerRole()"
+     [ngClass]="isMyStorePage()?'active': ''">
+    <i class="fa fa-home"></i>
+    My Store
+  </a>
 
-  <a routerLink="/my-account/farm" [ngClass]="isFarmPage()?'active': ''"><i class="fa fa-pagelines"></i>Farm</a>
+  <a routerLink="/my-account/farm"
+     *ngIf="tokenStorage.hasFarmerRole()"
+     [ngClass]="isFarmPage()?'active': ''">
+    <i class="fa fa-pagelines"></i>
+    Farm
+  </a>
 
-  <a routerLink="/my-account/vehicle" [ngClass]="isVehiclePage()?'active': ''"><i class="fa fa-truck"></i> Vehicle</a>
+  <a routerLink="/my-account/vehicle"
+     *ngIf="tokenStorage.hasFarmerRole()"
+     [ngClass]="isVehiclePage()?'active': ''">
+    <i class="fa fa-truck"></i>
+    Vehicle
+  </a>
 
-  <a routerLink="/my-account/order" [ngClass]="isOrderPage()?'active': ''"><i class="fa fa-shopping-cart"></i> Orders</a>
+  <a routerLink="/my-account/order"
+     *ngIf="tokenStorage.hasFarmerRole() || tokenStorage.hasBuyerRole() || tokenStorage.hasPMRole()"
+     [ngClass]="isOrderPage()?'active': ''">
+    <i class="fa fa-shopping-cart"></i>
+    Orders
+  </a>
 
-  <a routerLink="/my-account/chat" [ngClass]="isChatPage()?'active': ''"><i class="fa fa-comments-o"></i> Chat</a>
+  <a routerLink="/my-account/chat"
+     *ngIf="tokenStorage.hasFarmerRole() || tokenStorage.hasBuyerRole()"
+     [ngClass]="isChatPage()?'active': ''">
+    <i class="fa fa-comments-o"></i>
+    Chat
+  </a>
 
-  <a routerLink="/my-account/user" [ngClass]="isUserPage()?'active': ''"><i class="fa fa-users"></i> User</a>
+  <a routerLink="/my-account/user"
+     *ngIf="tokenStorage.hasAdminRole()"
+     [ngClass]="isUserPage()?'active': ''">
+    <i class="fa fa-users"></i>
+    User
+  </a>
 
-  <a (click)="logout()"><i class="fa fa-sign-out"></i> Logout</a>
+  <a (click)="logout()" *ngIf="tokenStorage.isLoggedIn()">
+    <i class="fa fa-sign-out"></i>
+    Logout
+  </a>
 </div>

@@ -3,6 +3,7 @@ import {AuthService} from "../auth/auth.service";
 import {TokenStorageService} from "../auth/token-storage.service";
 import {AuthLoginInfo} from "../auth/login-info";
 import {AlertController} from "@ionic/angular";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -16,12 +17,13 @@ export class LoginPage implements OnInit {
 
   constructor(private authService: AuthService,
               public alertController: AlertController,
+              private route: Router,
               private tokenStorage: TokenStorageService) { }
 
   ngOnInit() {
     if (this.tokenStorage.isLoggedIn()) {
       let defaultPage = this.tokenStorage.getDefaultPage();
-      window.location.href = defaultPage;
+      this.route.navigate(['/login']);
     }
   }
 
@@ -61,6 +63,7 @@ export class LoginPage implements OnInit {
   reloadPage() {
     let defaultPage = this.tokenStorage.getDefaultPage();
     window.location.href = defaultPage;
+    this.route.navigate([defaultPage]);
   }
 
 }

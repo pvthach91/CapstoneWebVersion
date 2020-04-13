@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AdminService} from "../../services/admin.service";
 import {TokenStorageService} from "../../auth/token-storage.service";
 import {User} from "../../model/user.model";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {configuration} from "../../model/configuration.model";
 import {FileUploadService} from "../../services/file-upload.service";
 import {AlertController} from "@ionic/angular";
@@ -15,7 +15,7 @@ import {AlertController} from "@ionic/angular";
 export class ProfilePage implements OnInit {
 
   user: User = new User();
-  profilePhoto:string = 'asset/images/no-photo.jpg';
+  profilePhoto:string = 'assets/images/no-photo.jpg';
 
   uploadActive = false;
 
@@ -23,13 +23,14 @@ export class ProfilePage implements OnInit {
 
   constructor(private adminService: AdminService,
               private route: ActivatedRoute,
+              private router: Router,
               private fileUploadService: FileUploadService,
               public alertController: AlertController,
               private tokenStorage: TokenStorageService) { }
 
   ngOnInit() {
     if (!this.tokenStorage.isLoggedIn()) {
-      window.location.href = 'home';
+        this.router.navigate(['/home']);
       return;
     }
     this.route.params.subscribe(
@@ -53,7 +54,7 @@ export class ProfilePage implements OnInit {
     this.adminService.getCurrentUser().subscribe(
         data => {
           this.user = data;
-          if (data.photo != undefined && data.photo != null) {
+          if (data.photo != undefined && data.photo != null && data.photo.length > 0) {
             this.profilePhoto = configuration.host + "/api/guest/file/" +data.photo;
           }
         },

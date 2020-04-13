@@ -114,13 +114,13 @@ export class TokenStorageService {
 
   public getDefaultPage(): string {
     if (this.hasAdminRole()) {
-      return 'my-account/user';
+      return '/my-account/user';
     } else if (this.hasBuyerRole()) {
-      return 'home';
+      return '/home';
     }if (this.hasFarmerRole()) {
-      return 'my-account/my-store';
+      return '/my-account/my-store';
     }else if (this.hasPMRole()) {
-      return 'my-account/order';
+      return '/my-account/order';
     }
   }
 }
