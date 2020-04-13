@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../auth/auth.service";
 import {TokenStorageService} from "../auth/token-storage.service";
 import {AuthLoginInfo} from "../auth/login-info";
+import {AlertController} from "@ionic/angular";
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginPage implements OnInit {
   private loginInfo: AuthLoginInfo;
 
   constructor(private authService: AuthService,
+              public alertController: AlertController,
               private tokenStorage: TokenStorageService) { }
 
   ngOnInit() {
@@ -23,17 +25,24 @@ export class LoginPage implements OnInit {
     }
   }
 
-  onSubmit() {
-    // this.spinnerService.show();
-    // console.log(this.form);
+  async presentAlert(header: string, subHeader: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      subHeader: subHeader,
+      message: message,
+      buttons: ['OK']
+    });
 
+    await alert.present();
+  }
+
+  onSubmit() {
     this.loginInfo = new AuthLoginInfo(
         this.form.username,
         this.form.password);
 
     this.authService.attemptAuth(this.loginInfo).subscribe(
         data => {
-          // this.spinnerService.hide();
           if (data.success == true) {
             this.tokenStorage.saveToken(data.data.accessToken);
             this.tokenStorage.saveUsername(data.data.username);
@@ -41,12 +50,11 @@ export class LoginPage implements OnInit {
             this.tokenStorage.saveAuthorities(data.data.authorities);
             this.reloadPage();
           } else {
-            // this.toastr.error(data.message, 'Login failed');
+            this.presentAlert('Login failed', '', data.message);
           }
         },
         error => {
-          // this.spinnerService.hide();
-          // this.toastr.error('Please check your username and password', 'Login failed');
+          this.presentAlert('Login failed', '', 'Please check your username and password');
         }
     );
   }

@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {TokenStorageService} from "../../auth/token-storage.service";
 
 @Component({
   selector: 'app-left-menu',
@@ -8,7 +9,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class LeftMenuPage implements OnInit {
   @Input() currentPage: string;
 
-  constructor() { }
+  constructor(private tokenStorage: TokenStorageService,) { }
 
   ngOnInit() {
   }
@@ -39,6 +40,11 @@ export class LeftMenuPage implements OnInit {
 
   isUserPage(): boolean {
     return 'user' == this.currentPage ? true : false;
+  }
+
+  logout() {
+    this.tokenStorage.signOut();
+    window.location.href = 'home';
   }
 
 }

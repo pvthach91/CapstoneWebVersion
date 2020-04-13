@@ -13,5 +13,5 @@
 
   <a routerLink="/my-account/user" [ngClass]="isUserPage()?'active': ''"><i class="fa fa-users"></i> User</a>
 
-  <a><i class="fa fa-sign-out"></i> Logout</a>
+  <a (click)="logout()"><i class="fa fa-sign-out"></i> Logout</a>
 </div>

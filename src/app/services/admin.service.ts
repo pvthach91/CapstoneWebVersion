@@ -40,6 +40,11 @@ export class AdminService {
     return this.http.post<ApiResponse>(url, info, httpOptions);
   }
 
+  changePhoto(user: User): Observable<User> {
+    const url = configuration.host + '/api/user/changePhoto';
+    return this.http.post<User>(url, user, httpOptions);
+  }
+
 
   deactivateUser(username: string): Observable<ApiResponse> {
     const url = configuration.host + '/api/user/deactivate/' + username;
