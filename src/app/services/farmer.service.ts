@@ -66,6 +66,11 @@ export class FarmerService {
     return this.http.post<number>(url, farm, httpOptions);
   }
 
+  changeFarmPhoto(farm: Farm): Observable<ApiResponse> {
+    const url = configuration.host + '/api/farmer/changeFarmPhoto';
+    return this.http.post<ApiResponse>(url, farm, httpOptions);
+  }
+
   addVehicle(vehicle: Vehicle): Observable<number> {
     const url = configuration.host + '/api/farmer/addVehicle';
     return this.http.post<number>(url, vehicle, httpOptions);

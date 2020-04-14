@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: FarmPage
+  },
+  {
+    path: 'view/:id',
+    loadChildren: () => import('./farm-view/farm-view.module').then( m => m.FarmViewPageModule)
   }
 ];
 
