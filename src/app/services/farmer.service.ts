@@ -26,6 +26,11 @@ export class FarmerService {
     return this.http.get<Array<Farm>>(url, httpOptions);
   }
 
+  getFarmsForCurrentUser(): Observable<Array<Farm>> {
+    const url = configuration.host + '/api/guest/farms';
+    return this.http.get<Array<Farm>>(url, httpOptions);
+  }
+
   getFarm(farmId: number): Observable<ApiResponse> {
     const url = configuration.host + '/api/guest/farm/' + farmId;
     return this.http.get<ApiResponse>(url);
@@ -33,6 +38,11 @@ export class FarmerService {
 
   getVehicles(userId : number): Observable<Array<Farm>> {
     const url = configuration.host + '/api/guest/vehicles/' + userId;
+    return this.http.get<Array<Farm>>(url, httpOptions);
+  }
+
+  getVehiclesForCurrentUser(): Observable<Array<Farm>> {
+    const url = configuration.host + '/api/guest/vehicles';
     return this.http.get<Array<Farm>>(url, httpOptions);
   }
 

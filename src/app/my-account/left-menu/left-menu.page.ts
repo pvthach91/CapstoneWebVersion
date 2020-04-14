@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TokenStorageService} from "../../auth/token-storage.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-left-menu',
@@ -9,7 +10,8 @@ import {TokenStorageService} from "../../auth/token-storage.service";
 export class LeftMenuPage implements OnInit {
   @Input() currentPage: string;
 
-  constructor(private tokenStorage: TokenStorageService,) { }
+  constructor(private tokenStorage: TokenStorageService,
+              private route: Router) { }
 
   ngOnInit() {
   }
