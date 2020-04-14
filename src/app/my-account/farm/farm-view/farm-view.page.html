@@ -1,0 +1,99 @@
+<ion-content [fullscreen]="true">
+  <div class="main-content">
+    <app-header></app-header>
+
+    <div class="breadcrumb-area mb-50">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="breadcrumb-container">
+              <ul>
+                <li><a routerLink="/home"><i class="fa fa-home"></i> Home</a></li>
+                <li class="active">Shop</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-account-section section position-relative mb-50 fix">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-lg-3 col-12">
+                <app-left-menu currentPage="farm"></app-left-menu>
+              </div>
+              <div class="col-lg-9 col-12">
+                <div class="tab-content" id="myaccountContent">
+                  <div class="tab-pane fade active" id="register" role="tabpanel">
+                    <div class="myaccount-content">
+                      <span class="pull-right"><a routerLink="/my-account/farm" data-toggle="tooltip" title="Back to farm list" class="btn btn-info"><i class="fa fa-arrow-left"></i></a></span>
+                      <h3>View farm detail</h3>
+
+                      <div class="myaccount-table table-responsive text-center">
+                        <div class="col-sm-12 col-md-12 col-xs-12">
+                          <form>
+                            <div class="login-form">
+                              <div *ngIf="displayOldImages">
+                                <div class="mb-7 mb-md-0">
+                                  <div class="tab-content mb-2" id="pills-tabContent">
+                                    <div class="tab-pane fade active show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                      <img class="card-img rounded-0" src="{{savedCurrentPhoto}}" alt="card-img" style="height: 300px">
+                                    </div>
+                                  </div>
+
+                                  <ul class="row nav nav-pills" id="pills-tab" role="tablist">
+                                    <li *ngFor="let url of oldImagesMap | keyvalue" class="nav-item col-4 pr-1">
+                                      <a (click)="changePhotoView(url.value)" class="nav-link img p-0 active show" id="pills-home-tab" data-toggle="pill" role="tab" aria-controls="pills-home" aria-selected="true">
+                                        <img class="w-100" src="{{configuration.host}}/api/guest/file/{{url.value}}" alt="card-img">
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+
+                              <div  *ngIf="!displayOldImages">
+                                <div class="mb-7 mb-md-0">
+                                  <ul class="row nav nav-pills" role="tablist">
+                                    <li  *ngFor="let url of displayImagesMap | keyvalue" class="nav-item col-4 pr-1">
+                                      <a  class="nav-link img p-0 active show" data-toggle="pill" role="tab" aria-controls="pills-home" aria-selected="true">
+                                        <img class="w-100" [src]="url.value" alt="card-img">
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+
+                              <div class="row mt-10">
+                                <div class="col-md-8 col-12 mb-20">
+                                  <input type="file" class="form-control" id="exampleInputFile" multiple="multiple" (change)="onFileChanged($event)" accept=".png,.jpg">
+                                </div>
+                                <div class="col-md-4 col-12">
+                                  <button [disabled]="displayOldImages" (click)="cancelUpload()" class="btn btn-info ml-50">Cancel</button>
+                                  <button [disabled]="displayOldImages" (click)="uploadFarmPhoto()" class="btn btn-primary ml-5">Upload</button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div id = "farm-detail-location-map" style = "height:350px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-footer></app-footer>
+  </div>
+
+</ion-content>
