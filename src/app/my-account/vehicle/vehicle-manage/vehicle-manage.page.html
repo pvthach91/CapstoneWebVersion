@@ -1,0 +1,85 @@
+<ion-content [fullscreen]="true">
+  <div class="main-content">
+    <app-header></app-header>
+
+    <div class="breadcrumb-area mb-50">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="breadcrumb-container">
+              <ul>
+                <li><a routerLink="/home"><i class="fa fa-home"></i> Home</a></li>
+                <li class="active">Shop</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-account-section section position-relative mb-50 fix">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-lg-3 col-12">
+                <app-left-menu currentPage="profile"></app-left-menu>
+              </div>
+              <div class="col-lg-9 col-12">
+                <div class="tab-content" id="myaccountContent">
+                  <div class="tab-pane fade active" id="account-info" role="tabpanel">
+                    <div class="myaccount-content">
+                      <span class="pull-right"><a routerLink="/my-account/vehicle" data-toggle="tooltip" title="Back vehicle list" class="btn btn-info"><i class="fa fa-arrow-left"></i></a></span>
+                      <h3>Vehicle</h3>
+
+                      <div class="account-details-form">
+                        <form  role="form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                          <div class="row">
+                            <div class="col-lg-6 col-12 mb-30">
+                              <label>Name*
+                                <span *ngIf="f.submitted && name.invalid">
+                                  <span *ngIf="name.errors.required" class="text-danger"><small>Name is required</small></span>
+                                </span>
+                              </label>
+                              <input type="text" id="name" name="name" [(ngModel)]="form.name" #name="ngModel" required/>
+                            </div>
+
+                            <div class="col-lg-6 col-12 mb-30">
+                              <label>Price per km *
+                                <span *ngIf="f.submitted && pricePerKm.invalid">
+                                  <span *ngIf="pricePerKm.errors.required" class="text-danger"><small>Price is required</small></span>
+                                </span>
+                              </label>
+                              <input type="number" id="pricePerKm" name="pricePerKm" [(ngModel)]="form.pricePerKm" #pricePerKm="ngModel" required>
+                            </div>
+
+                            <div class="col-lg-6 col-12 mb-30">
+                              <label>Weight can carry (kg)
+                                <span *ngIf="f.submitted && weightCarry.invalid">
+                                  <span *ngIf="weightCarry.errors.required" class="text-danger"><small>Weight is required</small></span>
+                                </span>
+                              </label>
+                              <input type="number" id="weightCarry" name="weightCarry" [(ngModel)]="form.weightCarry" #weightCarry="ngModel" required>
+                            </div>
+
+                            <div class="col-12">
+                              <button type="submit" class="save-change-btn">Save Changes</button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-footer></app-footer>
+  </div>
+
+</ion-content>
+
