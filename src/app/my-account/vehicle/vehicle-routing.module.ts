@@ -7,6 +7,15 @@ const routes: Routes = [
   {
     path: '',
     component: VehiclePage
+  },
+  {
+    path: 'new',
+    loadChildren: () => import('./vehicle-manage/vehicle-manage.module').then( m => m.VehicleManagePageModule)
+  }
+  ,
+  {
+    path: 'view/:id',
+    loadChildren: () => import('./vehicle-manage/vehicle-manage.module').then( m => m.VehicleManagePageModule)
   }
 ];
 

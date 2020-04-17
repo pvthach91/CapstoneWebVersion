@@ -41,9 +41,9 @@ export class FarmerService {
     return this.http.get<Array<Farm>>(url, httpOptions);
   }
 
-  getVehiclesForCurrentUser(): Observable<Array<Farm>> {
+  getVehiclesForCurrentUser(): Observable<Array<Vehicle>> {
     const url = configuration.host + '/api/guest/vehicles';
-    return this.http.get<Array<Farm>>(url, httpOptions);
+    return this.http.get<Array<Vehicle>>(url, httpOptions);
   }
 
   getVehicle(vehicleId: number): Observable<ApiResponse> {

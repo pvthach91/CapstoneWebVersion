@@ -29,79 +29,34 @@
                 <div class="tab-content" id="myaccountContent">
                   <div class="tab-pane fade active" id="address-edit" role="tabpanel">
                     <div class="myaccount-content">
+                      <span class="pull-right"><a routerLink="new" data-toggle="tooltip" title="New Vehicle" class="btn btn-info"><i class="fa fa-plus"></i></a></span>
                       <h3>Vehicles</h3>
 
                       <div class="myaccount-table table-responsive text-center">
-                        <div class="shop-product-wrap grid row no-gutters mb-35">
+                        <table class="table table-bordered">
+                          <thead class="thead-light">
+                          <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Price (per km)</th>
+                            <th>Weight can carry (kg)</th>
+                            <th>Action</th>
+                          </tr>
+                          </thead>
 
-                          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="gf-product shop-grid-view-product">
-                              <div class="image">
-                                <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html">
-                                  <span class="onsale">Sale!</span>
-                                  <img src="assets/images/product03.jpg" class="img-fluid" alt="">
-                                </a>
-                              </div>
-                              <div class="product-content">
-                                <div class="product-categories">
-                                  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">Fast Foods</a>,
-                                  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">Vegetables</a>
-                                </div>
-                                <h3 class="product-title"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html">Ornare sed consequat nisl eget</a></h3>
-                                <div class="price-box">
-                                  <span class="main-price">$89.00</span>
-                                  <span class="discounted-price">$80.00</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="gf-product shop-grid-view-product">
-                              <div class="image">
-                                <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html">
-                                  <span class="onsale">Sale!</span>
-                                  <img src="assets/images/product04.jpg" class="img-fluid" alt="">
-                                </a>
-                              </div>
-                              <div class="product-content">
-                                <div class="product-categories">
-                                  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">Fast Foods</a>,
-                                  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">Vegetables</a>
-                                </div>
-                                <h3 class="product-title"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html">Ornare sed consequat nisl eget</a></h3>
-                                <div class="price-box">
-                                  <span class="main-price">$89.00</span>
-                                  <span class="discounted-price">$80.00</span>
-                                </div>
-                              </div>
-
-                            </div>
-                          </div>
-
-                          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="gf-product shop-grid-view-product">
-                              <div class="image">
-                                <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html">
-                                  <span class="onsale">Sale!</span>
-                                  <img src="assets/images/product05.jpg" class="img-fluid" alt="">
-                                </a>
-                              </div>
-                              <div class="product-content">
-                                <div class="product-categories">
-                                  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">Fast Foods</a>,
-                                  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">Vegetables</a>
-                                </div>
-                                <h3 class="product-title"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html">Ornare sed consequat nisl eget</a></h3>
-                                <div class="price-box">
-                                  <span class="main-price">$89.00</span>
-                                  <span class="discounted-price">$80.00</span>
-                                </div>
-                              </div>
-
-                            </div>
-                          </div>
-                        </div>
+                          <tbody>
+                          <tr *ngFor="let vehicle of vehicles; let i = index;">
+                            <td>{{i + 1}}</td>
+                            <td>{{vehicle.name}}</td>
+                            <td>{{vehicle.pricePerKm}}</td>
+                            <td>{{vehicle.weightCarry}}</td>
+                            <td>
+                              <a (click)="deleteVehicle(vehicle.id)" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                              <a routerLink="view/{{vehicle.id}}" class="btn btn-primary ml-5"><i class="fa fa-edit"></i> Edit</a>
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                   </div>

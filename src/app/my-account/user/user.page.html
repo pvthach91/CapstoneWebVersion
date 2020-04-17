@@ -92,9 +92,9 @@
                                 <div class="col-md-6 col-12 mb-20">
                                   <label>Username*
                                     <span *ngIf="f.submitted && username.invalid">
-                                    <span *ngIf="username.errors.required" class="text-danger"><small>Username is required</small></span>
-                                    <span *ngIf="username.errors.minlength" class="text-danger"><small>Username must be at least 3 characters</small></span>
-                                  </span>
+                                      <span *ngIf="username.errors.required" class="text-danger"><small>Username is required</small></span>
+                                      <span *ngIf="username.errors.minlength" class="text-danger"><small>Username must be at least 3 characters</small></span>
+                                    </span>
                                   </label>
 
                                   <input class="mb-0" type="text" placeholder="Username" id="username" name="username" [(ngModel)]="form.username" #username="ngModel" required minlength="3">
