@@ -32,6 +32,9 @@ export class FarmViewPage implements OnInit {
 
   private configuration = configuration;
 
+  lat = 14.665393;
+  lng = 121.012528;
+
 
   map;
 
@@ -55,6 +58,7 @@ export class FarmViewPage implements OnInit {
       } else {
         // Load detail page
         console.log('.........................init farm');
+        // this.initMap();
         this.getCurrentFarm();
       }
     });
@@ -95,7 +99,7 @@ export class FarmViewPage implements OnInit {
 //Creating farm
   initMap() {
     var mapOptions = {
-      center:new google.maps.LatLng(14.665393, 121.012528),
+      center:new google.maps.LatLng(this.currentFarm.latitude, this.currentFarm.longitude),
       zoom:15
     };
 

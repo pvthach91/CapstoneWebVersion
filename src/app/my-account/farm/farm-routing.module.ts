@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'view/:id',
     loadChildren: () => import('./farm-view/farm-view.module').then( m => m.FarmViewPageModule)
+  },
+  {
+    path: 'new',
+    loadChildren: () => import('./farm-new/farm-new.module').then( m => m.FarmNewPageModule)
   }
 ];
 

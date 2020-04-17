@@ -1,0 +1,89 @@
+<ion-content [fullscreen]="true">
+    <div class="main-content">
+        <app-header></app-header>
+
+        <div class="breadcrumb-area mb-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="breadcrumb-container">
+                            <ul>
+                                <li><a routerLink="/home"><i class="fa fa-home"></i> Home</a></li>
+                                <li class="active">Shop</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="my-account-section section position-relative mb-50 fix">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-lg-3 col-12">
+                                <app-left-menu currentPage="farm"></app-left-menu>
+                            </div>
+                            <div class="col-lg-9 col-12">
+                                <div class="tab-content" id="myaccountContent">
+                                    <div class="tab-pane fade active" id="register" role="tabpanel">
+                                        <div class="myaccount-content">
+                                            <span class="pull-right"><a routerLink="/my-account/farm" data-toggle="tooltip" title="Back to farm list" class="btn btn-info"><i class="fa fa-arrow-left"></i></a></span>
+                                            <h3>Add new farm</h3>
+
+                                            <div class="myaccount-table table-responsive text-center">
+                                                <div class="col-sm-12 col-md-12 col-xs-12">
+                                                    <form>
+                                                        <div class="login-form">
+                                                            <div *ngIf="displayOldImages">
+                                                            </div>
+
+                                                            <div  *ngIf="!displayOldImages">
+                                                                <div class="mb-7 mb-md-0">
+                                                                    <ul class="row nav nav-pills" role="tablist">
+                                                                        <li  *ngFor="let url of displayImagesMap | keyvalue" class="nav-item col-4 pr-1">
+                                                                            <a  class="nav-link img p-0 active show" data-toggle="pill" role="tab" aria-controls="pills-home" aria-selected="true">
+                                                                                <img class="w-100" [src]="url.value" alt="card-img">
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row mt-10">
+                                                                <div class="col-md-8 col-12 mb-20">
+                                                                    <input type="file" class="form-control" id="exampleInputFile" multiple="multiple" (change)="onFileChanged($event)" accept=".png,.jpg">
+                                                                </div>
+                                                                <div class="col-md-4 col-12">
+<!--                                                                    <button [disabled]="displayOldImages" (click)="uploadFarmPhoto()" class="btn btn-primary ml-5">Upload</button>-->
+                                                                </div>
+                                                            </div>
+
+                                                            <div>
+                                                                <div id = "farm-detail-location-map" style = "height:350px;"></div>
+                                                            </div>
+
+                                                            <div class="row mt-10">
+                                                                <div class="col-md-12 col-12">
+                                                                    <button (click)="uploadFarmPhoto()" type="button" class="register-button mt-0">Submit</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <app-footer></app-footer>
+    </div>
+
+</ion-content>

@@ -29,7 +29,7 @@
                 <div class="tab-content" id="myaccountContent">
                   <div *ngIf="showList" class="tab-pane fade active" id="address-edit" role="tabpanel">
                     <div class="myaccount-content">
-                      <span class="pull-right"><a (click)="openCreatingFarm()" data-toggle="tooltip" title="Create Farm" class="btn btn-info"><i class="fa fa-user-plus"></i></a></span>
+                      <span class="pull-right"><a href="my-account/farm/new" data-toggle="tooltip" title="Create Farm" class="btn btn-info"><i class="fa fa-user-plus"></i></a></span>
                       <h3>Farms</h3>
 
                       <div class="myaccount-table table-responsive text-center">
@@ -43,7 +43,7 @@
                               </div>
                               <div class="product-content">
                                 <div class="product-categories">
-                                  <a routerLink="view/{{farm.id}}"  class="register-button">Detail</a>
+                                  <a href="my-account/farm/view/{{farm.id}}"  class="register-button">Detail</a>
                                 </div>
                               </div>
                             </div>

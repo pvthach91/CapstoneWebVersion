@@ -58,12 +58,12 @@ export class FarmPage implements OnInit {
     // this.initMap();
   }
 
-  openCreatingFarm(): void {
-    this.showList = false;
-    this.isNewAction = true;
-    this.currentFarm = new Farm(null, '', [], 0, 0);
-    this.initData();
-  }
+  // openCreatingFarm(): void {
+  //   this.showList = false;
+  //   this.isNewAction = true;
+  //   this.currentFarm = new Farm(null, '', [], 0, 0);
+  //   this.initData();
+  // }
 
   // editFarm(farm: Farm): void {
   //   this.showList = false;
