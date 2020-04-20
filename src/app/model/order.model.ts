@@ -11,10 +11,12 @@ export class Order {
   longitude: number;
   totalPrice: number;
   status: string;
+  shippingMethod: string;
+  shippingPrice: number;
   items: Array<OrderItem>;
 
 
-  constructor(id: number, orderId: string, date: string, orderBy: User, address: string, latitude: number, longitude: number, totalPrice: number, status: string, items: Array<OrderItem>) {
+  constructor(id: number, orderId: string, date: string, orderBy: User, address: string, latitude: number, longitude: number, totalPrice: number, status: string, shippingMethod: string, shippingPrice: number, items: Array<OrderItem>) {
     this.id = id;
     this.orderId = orderId;
     this.date = date;
@@ -24,6 +26,8 @@ export class Order {
     this.longitude = longitude;
     this.totalPrice = totalPrice;
     this.status = status;
+    this.shippingMethod = shippingMethod;
+    this.shippingPrice = shippingPrice;
     this.items = items;
   }
 }

@@ -29,9 +29,9 @@ export class ProductService {
     return this.http.get<ApiResponse>(url);
   }
 
-  addProduct(product: Product): Observable<Product> {
+  addProduct(product: Product): Observable<ApiResponse> {
     const url = configuration.host + '/api/product/add';
-    return this.http.post<Product>(url, product, httpOptions);
+    return this.http.post<ApiResponse>(url, product, httpOptions);
   }
 
   deleteProduct(dishId: number): Observable<ApiResponse> {

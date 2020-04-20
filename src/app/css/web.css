@@ -5287,7 +5287,7 @@ p.result-show-message {
   line-height: 23px; }
 .login-form .nice-select .list {
   width: 100%; }
-.login-form input {
+.login-form input, .login-form textarea, .login-form select {
   width: 100%;
   background-color: transparent;
   border: 1px solid #999999;

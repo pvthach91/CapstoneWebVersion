@@ -1,0 +1,360 @@
+<ion-content [fullscreen]="true">
+  <div class="main-content">
+    <app-header></app-header>
+
+    <div class="breadcrumb-area mb-50">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="breadcrumb-container">
+              <ul>
+                <li><a routerLink="/home"><i class="fa fa-home"></i> Home</a></li>
+                <li class="active">Shop</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-account-section section position-relative mb-50 fix">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-lg-3 col-12">
+                <app-left-menu currentPage="my-store"></app-left-menu>
+              </div>
+              <div class="col-lg-9 col-12">
+                <div class="tab-content" id="myaccountContent">
+                  <div class="tab-pane fade active" id="my-store" role="tabpanel">
+                    <div class="myaccount-content">
+                      <span class="pull-right"><a routerLink="/my-account/my-store" data-toggle="tooltip" title="Back to my store" class="btn btn-info"><i class="fa fa-arrow-left"></i></a></span>
+                      <h3>My store</h3>
+
+                      <div class="myaccount-content">
+                        <form  role="form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                          <div class="login-form">
+                            <div class="row">
+                              <div *ngIf="displayOldImages">
+                                <div class="mb-7 mb-md-0">
+                                  <div class="tab-content mb-2" id="pills-tabContent">
+                                    <div class="tab-pane fade active show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                      <img class="card-img rounded-0" src="{{savedCurrentPhoto}}" alt="card-img" style="height: 300px">
+                                    </div>
+                                  </div>
+
+                                  <ul class="row nav nav-pills" id="pills-tab" role="tablist">
+                                    <li *ngFor="let url of oldImagesMap | keyvalue" class="nav-item col-4 pr-1">
+                                      <a (click)="changePhotoView(url.value)" class="nav-link img p-0 active show" id="pills-home-tab" data-toggle="pill" role="tab" aria-controls="pills-home" aria-selected="true">
+                                        <img class="w-100" src="{{configuration.host}}/api/guest/file/{{url.value}}" alt="card-img">
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <div  *ngIf="!displayOldImages">
+                                <div class="mb-7 mb-md-0">
+                                  <ul class="row nav nav-pills" role="tablist">
+                                    <li  *ngFor="let url of displayImagesMap | keyvalue" class="nav-item col-4 pr-1">
+                                      <a  class="nav-link img p-0 active show" data-toggle="pill" role="tab" aria-controls="pills-home" aria-selected="true">
+                                        <img class="w-100" [src]="url.value" alt="card-img">
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <div class="col-md-10 col-12 mb-20">
+                                <input type="file" class="form-control" id="exampleInputFile" multiple="multiple" (change)="onFileChanged($event)" accept=".png,.jpg">
+                              </div>
+                              <div class="col-md-2 col-12">
+                                <button [disabled]="displayOldImages" (click)="cancelUpload()" class="btn btn-info">Cancel</button>
+                              </div>
+
+
+                              <div class="col-md-6 col-12 mb-20">
+                                <label>Product name*
+                                  <span *ngIf="f.submitted && name.invalid">
+                                      <span *ngIf="name.errors.required" class="text-danger"><small>Name is required</small></span>
+                                      <span *ngIf="name.errors.minlength" class="text-danger"><small>Name must be at least 3 characters</small></span>
+                                    </span>
+                                </label>
+                                <input class="mb-0" type="text" placeholder="product name" id="name" name="name" [(ngModel)]="form.name" #name="ngModel" required minlength="3">
+                              </div>
+                              <div class="col-md-6 col-12 mb-20">
+                                <label>Category*
+                                  <span *ngIf="f.submitted && category.invalid">
+                                    <span *ngIf="category.errors.required" class="text-danger"><small>Category is required</small></span>
+                                  </span>
+                                </label>
+                                  <select class="mb-0" id="category" name="category" [(ngModel)]="form.category" #category="ngModel" required>
+                                      <option value="Poultry">Poultry</option>
+                                      <option value="Livestock">Livestock</option>
+                                      <option value="Aquatic">Aquatic</option>
+                                      <option value="Vegetable">Vegetable</option>
+                                      <option value="Fruit">Fruit</option>
+                                      <option value="Other">Other</option>
+                                  </select>
+                              </div>
+                               <div class="col-md-6 col-12 mb-20">
+                                    <label>Price*
+                                        <span *ngIf="f.submitted && price.invalid">
+                                      <span *ngIf="price.errors.required" class="text-danger"><small>price is required</small></span>
+                                    </span>
+                                    </label>
+                                    <input class="mb-0" type="text" placeholder="price" id="price" name="price" [(ngModel)]="form.price" #price="ngModel" required>
+                               </div>
+                              <div class="col-md-12 mb-20">
+                                <label>Description*
+                                  <span *ngIf="f.submitted && description.invalid">
+                                    <span *ngIf="description.errors.required" class="text-danger"><small>Description is required</small></span>
+                                  </span>
+                                </label>
+
+                                <textarea rows="4" class="mb-0" type="text" placeholder="description" id="description" name="description" [(ngModel)]="form.description" #description="ngModel" required></textarea>
+                              </div>
+                              <div class="col-md-6 col-12 mb-20">
+                                <label>Promotion Active*
+                                  <span *ngIf="f.submitted && promotionActive.invalid">
+                                    <span *ngIf="promotionActive.errors.required" class="text-danger"><small>promotionActive is required</small></span>
+                                  </span>
+                                </label>
+
+                                  <select class="mb-0" id="promotionActive" name="promotionActive" [(ngModel)]="form.promotionActive" #promotionActive="ngModel" required (change)="changePromotion($event.target.value)">
+                                      <option value="true">Active</option>
+                                      <option value="false">Inactive</option>
+                                  </select>
+                              </div>
+                              <div class="col-md-6 mb-20">
+                                <label>Promotion Price*
+                                  <span *ngIf="f.submitted && promotionPrice.invalid">
+                                    <span *ngIf="promotionPrice.errors.required" class="text-danger"><small>Promotion price is required</small></span>
+                                  </span>
+                                </label>
+
+                                <input [disabled]="!promotionSectionActive" class="mb-0" type="number" placeholder="promotion price" id="promotionPrice" name="promotionPrice" [(ngModel)]="form.promotionPrice" #promotionPrice="ngModel" required>
+                              </div>
+                              <div class="col-md-6 mb-20">
+                                    <label>Quantity*
+                                        <span *ngIf="f.submitted && quantity.invalid">
+                                            <span *ngIf="quantity.errors.required" class="text-danger"><small>quantity is required</small></span>
+                                        </span>
+                                    </label>
+
+                                    <input class="mb-0" type="number" placeholder="quantity" id="quantity" name="quantity" [(ngModel)]="form.quantity" #quantity="ngModel" required>
+                                </div>
+                              <div class="col-md-6 mb-20">
+                                <label>Location*
+                                  <span *ngIf="f.submitted && location.invalid">
+                                    <span *ngIf="location.errors.required" class="text-danger"><small>location is required</small></span>
+                                  </span>
+                                </label>
+
+                                  <select class="mb-0" id="location" name="location" [(ngModel)]="form.location" #location="ngModel" required>
+                                      <option *ngFor="let farm of farms" [ngValue]="farm">{{farm.address}}</option>
+                                  </select>
+                              </div>
+                              <div class="col-12">
+                                <button type="submit" class="register-button mt-0">Submit</button>
+                              </div>
+                            </div>
+                          </div>
+
+                        </form>
+
+
+                        <div class="single-product-tab-section mb-35">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="tab-slider-wrapper">
+                                  <nav>
+                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                      <a class="nav-item nav-link active" id="review-tab" data-toggle="tab" href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#review" role="tab" aria-selected="false">Reviews (3)</a>
+                                      <a class="nav-item nav-link" id="description-tab" data-toggle="tab" href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#description" role="tab" aria-selected="true">Description</a>
+                                      <a class="nav-item nav-link" id="features-tab" data-toggle="tab" href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#features" role="tab" aria-selected="false">Features</a>
+                                    </div>
+                                  </nav>
+                                  <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+                                      <div class="product-ratting-wrap">
+                                        <div class="pro-avg-ratting">
+                                          <h4>4.5 <span>(Overall)</span></h4>
+                                          <span>Based on 9 Comments</span>
+                                        </div>
+                                        <div class="ratting-list">
+                                          <div class="sin-list float-left">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <span>(5)</span>
+                                          </div>
+                                          <div class="sin-list float-left">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <span>(3)</span>
+                                          </div>
+                                          <div class="sin-list float-left">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <span>(1)</span>
+                                          </div>
+                                          <div class="sin-list float-left">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <span>(0)</span>
+                                          </div>
+                                          <div class="sin-list float-left">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <span>(0)</span>
+                                          </div>
+                                        </div>
+                                        <div class="rattings-wrapper">
+
+                                          <div class="sin-rattings">
+                                            <div class="ratting-author">
+                                              <h3>Cristopher Lee</h3>
+                                              <div class="ratting-star">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <span>(5)</span>
+                                              </div>
+                                            </div>
+                                            <p>enim ipsam voluptatem quia voluptas sit
+                                              aspernatur aut odit aut fugit, sed quia res eos
+                                              qui ratione voluptatem sequi Neque porro
+                                              quisquam est, qui dolorem ipsum quia dolor sit
+                                              amet, consectetur, adipisci veli</p>
+                                          </div>
+
+                                          <div class="sin-rattings">
+                                            <div class="ratting-author">
+                                              <h3>Nirob Khan</h3>
+                                              <div class="ratting-star">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <span>(5)</span>
+                                              </div>
+                                            </div>
+                                            <p>enim ipsam voluptatem quia voluptas sit
+                                              aspernatur aut odit aut fugit, sed quia res eos
+                                              qui ratione voluptatem sequi Neque porro
+                                              quisquam est, qui dolorem ipsum quia dolor sit
+                                              amet, consectetur, adipisci veli</p>
+                                          </div>
+
+                                          <div class="sin-rattings">
+                                            <div class="ratting-author">
+                                              <h3>MD.ZENAUL ISLAM</h3>
+                                              <div class="ratting-star">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <span>(5)</span>
+                                              </div>
+                                            </div>
+                                            <p>enim ipsam voluptatem quia voluptas sit
+                                              aspernatur aut odit aut fugit, sed quia res eos
+                                              qui ratione voluptatem sequi Neque porro
+                                              quisquam est, qui dolorem ipsum quia dolor sit
+                                              amet, consectetur, adipisci veli</p>
+                                          </div>
+
+                                        </div>
+                                        <div class="ratting-form-wrapper fix">
+                                          <h3>Add your Comments</h3>
+                                          <form action="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#">
+                                            <div class="ratting-form row">
+                                              <div class="col-12 mb-15">
+                                                <h5>Rating:</h5>
+                                                <div class="ratting-star fix">
+                                                  <i class="fa fa-star-o"></i>
+                                                  <i class="fa fa-star-o"></i>
+                                                  <i class="fa fa-star-o"></i>
+                                                  <i class="fa fa-star-o"></i>
+                                                  <i class="fa fa-star-o"></i>
+                                                </div>
+                                              </div>
+                                              <div class="col-md-6 col-12 mb-15">
+                                                <label for="name">Name:</label>
+                                                <input placeholder="Name" type="text">
+                                              </div>
+                                              <div class="col-md-6 col-12 mb-15">
+                                                <label for="email">Email:</label>
+                                                <input id="email" placeholder="Email" type="text">
+                                              </div>
+                                              <div class="col-12 mb-15">
+                                                <label for="your-review">Your Review:</label>
+                                                <textarea name="review" id="your-review" placeholder="Write a review"></textarea>
+                                              </div>
+                                              <div class="col-12">
+                                                <input value="add review" type="submit">
+                                              </div>
+                                            </div>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="tab-pane fade" role="tabpanel" aria-labelledby="description-tab">
+                                      <p class="product-desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque obcaecati tempore reiciendis neque facere! Eos, necessitatibus? Fugit iure veritatis quidem velit quaerat quos qui pariatur dolore facilis, aliquid quae voluptatibus dicta. Quae harum velit hic molestias, eius ab cum quidem voluptates modi maiores laboriosam iusto excepturi ex, recusandae aut, facere earum ad vero aperiam. Minima dolores dignissimos ab ipsam atque placeat sapiente officia debitis nobis porro at quia veritatis, quidem id repudiandae ex tempore non. Enim soluta explicabo atque adipisci itaque.</p>
+                                    </div>
+                                    <div class="tab-pane fade" id="features" role="tabpanel" aria-labelledby="features-tab">
+                                      <table class="table-data-sheet">
+                                        <tbody>
+                                        <tr class="odd">
+
+                                          <td>Name</td>
+                                          <td>Kaoreet lobortis sagittis laoreet</td>
+                                        </tr>
+                                        <tr class="even">
+
+                                          <td>Color</td>
+                                          <td>Yellow</td>
+                                        </tr>
+
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-footer></app-footer>
+  </div>
+
+</ion-content>
+

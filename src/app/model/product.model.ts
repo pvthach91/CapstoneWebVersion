@@ -10,12 +10,13 @@ export class Product {
   description: string;
   images: Array<string>;
   dateCreated: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
+  quantity: number;
   user: User;
 
 
-  constructor(id: number, name: string, category: string, price: number, promotionPrice: number, promotionActive: boolean, description: string, images: Array<string>, dateCreated: string, latitude: string, longitude: string) {
+  constructor(id: number, name: string, category: string, price: number, promotionPrice: number, promotionActive: boolean, description: string, images: Array<string>, latitude: number, longitude: number, quantity: number) {
     this.id = id;
     this.name = name;
     this.category = category;
@@ -24,8 +25,8 @@ export class Product {
     this.promotionActive = promotionActive;
     this.description = description;
     this.images = images;
-    this.dateCreated = dateCreated;
     this.latitude = latitude;
     this.longitude = longitude;
+    this.quantity = quantity;
   }
 }

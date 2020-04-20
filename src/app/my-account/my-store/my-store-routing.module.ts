@@ -7,6 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: MyStorePage
+  },
+  {
+    path: 'detail/:id',
+    loadChildren: () => import('./my-store-detail/my-store-detail.module').then( m => m.MyStoreDetailPageModule)
+  },
+  {
+    path: 'new',
+    loadChildren: () => import('./my-store-detail/my-store-detail.module').then( m => m.MyStoreDetailPageModule)
   }
 ];
 
