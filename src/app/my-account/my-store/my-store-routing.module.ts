@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'new',
-    loadChildren: () => import('./my-store-detail/my-store-detail.module').then( m => m.MyStoreDetailPageModule)
+    loadChildren: () => import('./my-store-new/my-store-new.module').then( m => m.MyStoreNewPageModule)
   }
 ];
 
