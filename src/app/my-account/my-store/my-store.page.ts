@@ -13,6 +13,7 @@ import {configuration} from "../../model/configuration.model";
 export class MyStorePage implements OnInit {
 
   products:Array<Product> = new Array<Product>();
+  subProducts:Array<Product> = new Array<Product>();
   currentPage: number = 1;
   totalPage: number;
   pages: Array<number> = new Array<number>();
@@ -53,6 +54,7 @@ export class MyStorePage implements OnInit {
           // this.currentPage = data.current;
           // this.totalPage = data.total;
           this.makePages();
+          this.gotoPage(1);
         },
         error => {
           console.log(error);
@@ -62,6 +64,13 @@ export class MyStorePage implements OnInit {
 
   makePages() {
     this.pages = new Array<number>();
+    this.totalPage = 1;
+    if (this.products.length % configuration.pageSize == 0) {
+      this.totalPage = this.products.length / configuration.pageSize;
+    } else {
+      this.totalPage = this.products.length / configuration.pageSize + 1;
+    }
+
     if (this.totalPage < 1) {
       // do nothing
     } else {
@@ -75,7 +84,18 @@ export class MyStorePage implements OnInit {
     if(page <1) {
       page = 1;
     }
-    this.search(page);
+    let start = configuration.pageSize * (this.currentPage - 1);
+    // let end = configuration.pageSize;
+    if (page == this.pages.length) {
+      this.subProducts = this.products.slice(start);
+    } else {
+      this.subProducts = this.products.slice(start, configuration.pageSize);
+    }
+
+    console.log(this.subProducts);
+
+    // this.subProducts = this.products.slice(start, end);
+    // this.search(page);
   }
 
 }
