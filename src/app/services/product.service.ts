@@ -24,6 +24,11 @@ export class ProductService {
     return this.http.get<Page>(url, httpOptions);
   }
 
+  getProductsForFarmer(): Observable<Array<Product>> {
+    const url = configuration.host + '/api/products/';
+    return this.http.get<Array<Product>>(url, httpOptions);
+  }
+
   getProduct(id: number): Observable<ApiResponse> {
     const url = configuration.host + '/api/guest/product/' + id;
     return this.http.get<ApiResponse>(url);
