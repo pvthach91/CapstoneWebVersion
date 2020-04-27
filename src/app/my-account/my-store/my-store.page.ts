@@ -17,7 +17,6 @@ export class MyStorePage implements OnInit {
   currentPage: number = 1;
   totalPage: number;
   pages: Array<number> = new Array<number>();
-  criteria: UserSearchCriteria;
 
   private configuration = configuration;
 
@@ -40,14 +39,6 @@ export class MyStorePage implements OnInit {
   }
 
   search(page: number) {
-    this.criteria = new UserSearchCriteria(
-        null,
-        null,
-        null,
-        1,
-        page,
-        configuration.pageSize
-    );
     this.productService.getProductsForFarmer().subscribe(
         data => {
           this.products = data;
@@ -64,6 +55,7 @@ export class MyStorePage implements OnInit {
 
   makePages() {
     this.pages = new Array<number>();
+    this.currentPage = 1;
     this.totalPage = 1;
     if (this.products.length % configuration.pageSize == 0) {
       this.totalPage = this.products.length / configuration.pageSize;

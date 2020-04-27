@@ -5,6 +5,7 @@ import {Page} from "../model/page.model";
 import {configuration} from "../model/configuration.model";
 import {ApiResponse} from "../model/api-response.model";
 import {Product} from "../model/product.model";
+import {ProductCriteriaSearch} from "../model/product-criteria-search.model";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,9 +20,9 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(): Observable<Page> {
+  getProducts(criteria: ProductCriteriaSearch): Observable<Array<Product>> {
     const url = configuration.host + '/api/guest/products/';
-    return this.http.get<Page>(url, httpOptions);
+    return this.http.post<Array<Product>>(url, criteria, httpOptions);
   }
 
   getProductsForFarmer(): Observable<Array<Product>> {
