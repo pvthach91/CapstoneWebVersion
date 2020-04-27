@@ -1,0 +1,78 @@
+<ion-content [fullscreen]="true">
+  <div class="main-content">
+    <app-header></app-header>
+
+    <div class="breadcrumb-area mb-50">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="breadcrumb-container">
+              <ul>
+                <li><a routerLink="/home"><i class="fa fa-home"></i> Home</a></li>
+                <li class="active">Shop</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-account-section section position-relative mb-50 fix">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-lg-3 col-12">
+                <app-left-menu currentPage="my-store"></app-left-menu>
+              </div>
+              <div class="col-lg-9 col-12">
+                <div class="tab-content" id="myaccountContent">
+                  <div class="tab-pane fade active" id="my-store" role="tabpanel">
+                    <div class="myaccount-content">
+                      <span class="pull-right"><a routerLink="/my-account/my-store" data-toggle="tooltip" title="Back to my store" class="btn btn-info"><i class="fa fa-arrow-left"></i></a></span>
+                      <h3>Store selling address</h3>
+
+                      <div class="myaccount-table table-responsive text-center">
+                        <div class="col-sm-12 col-md-12 col-xs-12">
+                          <form role="form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                            <div class="login-form">
+                              <div class="row">
+                                <div class="col-md-12 mb-20">
+                                  <label>Address*
+                                    <span *ngIf="f.submitted && address.invalid">
+                                      <span *ngIf="address.errors.required" class="text-danger"><small>address is required</small></span>
+                                    </span>
+                                  </label>
+                                  <input class="mb-0" type="text" placeholder="address" id="address" name="address" [(ngModel)]="form.address" #address="ngModel" required>
+                                </div>
+                              </div>
+
+                              <div>
+                                <div id = "my-store-config-location-map" style = "height:350px;"></div>
+                              </div>
+
+                              <div class="row mt-10">
+                                <div class="col-md-12 col-12">
+                                  <button type="submit" class="register-button mt-0">Submit</button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-footer></app-footer>
+  </div>
+
+</ion-content>
+
+

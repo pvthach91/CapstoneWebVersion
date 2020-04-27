@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'new',
     loadChildren: () => import('./my-store-new/my-store-new.module').then( m => m.MyStoreNewPageModule)
+  },
+  {
+    path: 'config',
+    loadChildren: () => import('./my-store-config/my-store-config.module').then( m => m.MyStoreConfigPageModule)
   }
 ];
 

@@ -45,6 +45,11 @@ export class AdminService {
     return this.http.post<User>(url, user, httpOptions);
   }
 
+  updateAddress(user: User): Observable<User> {
+    const url = configuration.host + '/api/user/updateAddress';
+    return this.http.post<User>(url, user, httpOptions);
+  }
+
 
   deactivateUser(username: string): Observable<ApiResponse> {
     const url = configuration.host + '/api/user/deactivate/' + username;
