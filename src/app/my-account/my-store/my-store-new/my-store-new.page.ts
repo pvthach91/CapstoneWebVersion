@@ -7,6 +7,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {FileUploadService} from "../../../services/file-upload.service";
 import {FarmerService} from "../../../services/farmer.service";
 import {ProductService} from "../../../services/product.service";
+import {AdminService} from "../../../services/admin.service";
+import {User} from "../../../model/user.model";
 
 @Component({
   selector: 'app-my-store-new',
@@ -27,17 +29,7 @@ export class MyStoreNewPage implements OnInit {
   oldImagesMap: Map<number, string> = new Map<number, string>();
   displayOldImages = false;
 
-  currentProduct: Product = new Product(null,
-      '',
-      '',
-      0,
-      0,
-      false,
-      '',
-      [],
-      null,
-      null,
-      0);
+  currentProduct: Product = new Product(null, '', '', 0, 0, false, '', [], null, null, 0,true, 0);
 
   joinImagesText: Array<string>;
   farms: Array<Farm> = new Array<Farm>();
@@ -46,14 +38,18 @@ export class MyStoreNewPage implements OnInit {
 
   promotionSectionActive = false;
 
+  user: User = new User();
+
   constructor(public alertController: AlertController,
               private route: ActivatedRoute,
               private router: Router,
               private fileUploadService: FileUploadService,
               private farmService: FarmerService,
+              private adminService: AdminService,
               private productService: ProductService) { }
 
   ngOnInit() {
+    this.getFarmAddress();
     this.route.params.subscribe(params => {
       this.id = params['id'];
       if (this.id == null || this.id == undefined) {
@@ -61,12 +57,14 @@ export class MyStoreNewPage implements OnInit {
         this.isNewAction = true;
         this.form.promotionActive = false;
         this.form.promotionPrice = 0;
+        this.initData();
       } else {
         // Load detail page
         this.isNewAction = false;
-        this.getCurrentProduct();
+        // this.getCurrentProduct();
+
       }
-      this.getFarmAddress();
+
     });
   }
 
@@ -81,12 +79,23 @@ export class MyStoreNewPage implements OnInit {
     await alert.present();
   }
 
+  getCurrentUser() {
+    this.adminService.getCurrentUser().subscribe(
+        data => {
+          this.user = data;
+        },
+        error => {
+        }
+    );
+  }
+
   getFarmAddress() {
     this.farmService.getFarmsForCurrentUser().subscribe(
         data => {
           if (data != null) {
             this.farms = data;
-            this.form.location = data;
+            // this.form.location = data;
+            this.form.location = this.farms[0];
           } else {
             this.presentAlert('Error', '', "Failed to get farm address");
           }
@@ -119,20 +128,19 @@ export class MyStoreNewPage implements OnInit {
   }
 
   initData() : void {
-    if (!this.isNewAction) {
       this.form.id = this.currentProduct.id;
-      this.form.category = this.currentProduct.category;
+      this.form.category = 'Poultry';
       this.form.price = this.currentProduct.price;
       this.form.promotionPrice = this.currentProduct.promotionPrice;
-      this.form.promotionActive = this.currentProduct.promotionActive;
+      this.form.promotionActive = false;
       this.form.description = this.currentProduct.description;
       this.form.images = this.currentProduct.images;
       this.form.latitude = this.currentProduct.latitude;
       this.form.longitude = this.currentProduct.longitude;
-      this.form.quantity = this.currentProduct.quantity;
+      this.form.storeLocation = true;
 
-      this.promotionSectionActive = this.currentProduct.promotionActive;
-    }
+
+      this.promotionSectionActive = false;
   }
 
   onFileChanged(event: any): void {
@@ -197,6 +205,10 @@ export class MyStoreNewPage implements OnInit {
 
   postProduct() {
     let location = this.form.location;
+    if (this.form.storeLocation == 'true') {
+      location.latitude = this.user.latitude;
+      location.longitude = this.user.longitude;
+    }
     let product = new Product(
         this.form.id,
         this.form.name,
@@ -208,7 +220,9 @@ export class MyStoreNewPage implements OnInit {
         this.displayOldImages ? this.getOldImageUrl() : this.joinImagesText,
         location.latitude,
         location.longitude,
-        this.form.quantity);
+        this.form.quantity,
+        this.form.storeLocation,
+        location.id);
     this.productService.addProduct(product).subscribe(
         data => {
           if (data.success) {

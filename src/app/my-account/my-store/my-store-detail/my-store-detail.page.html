@@ -104,6 +104,15 @@
                                     </label>
                                     <input class="mb-0" type="text" placeholder="price" id="price" name="price" [(ngModel)]="form.price" #price="ngModel" required>
                                </div>
+                              <div class="col-md-6 mb-20">
+                                <label>Quantity(kg)*
+                                  <span *ngIf="f.submitted && quantity.invalid">
+                                            <span *ngIf="quantity.errors.required" class="text-danger"><small>quantity is required</small></span>
+                                        </span>
+                                </label>
+
+                                <input class="mb-0" type="number" placeholder="quantity" id="quantity" name="quantity" [(ngModel)]="form.quantity" #quantity="ngModel" required>
+                              </div>
                               <div class="col-md-12 mb-20">
                                 <label>Description*
                                   <span *ngIf="f.submitted && description.invalid">
@@ -134,15 +143,20 @@
 
                                 <input [disabled]="!promotionSectionActive" class="mb-0" type="number" placeholder="promotion price" id="promotionPrice" name="promotionPrice" [(ngModel)]="form.promotionPrice" #promotionPrice="ngModel" required>
                               </div>
-                              <div class="col-md-6 mb-20">
-                                    <label>Quantity*
-                                        <span *ngIf="f.submitted && quantity.invalid">
-                                            <span *ngIf="quantity.errors.required" class="text-danger"><small>quantity is required</small></span>
-                                        </span>
-                                    </label>
 
-                                    <input class="mb-0" type="number" placeholder="quantity" id="quantity" name="quantity" [(ngModel)]="form.quantity" #quantity="ngModel" required>
-                                </div>
+                              <div class="col-md-6 mb-20">
+                                <label>Store Location*
+                                  <span *ngIf="f.submitted && location.invalid">
+                                    <span *ngIf="location.errors.required" class="text-danger"><small>location is required</small></span>
+                                  </span>
+                                </label>
+
+                                <select class="mb-0" id="storeLocation" name="storeLocation" [(ngModel)]="form.storeLocation" #storeLocation="ngModel" required>
+                                  <option value="true">Sell at store</option>
+                                  <option value="false">Sell at farm</option>
+                                </select>
+                              </div>
+
                               <div class="col-md-6 mb-20">
                                 <label>Location*
                                   <span *ngIf="f.submitted && location.invalid">

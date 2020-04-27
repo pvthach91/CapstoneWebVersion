@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {FileUploadService} from "../../../services/file-upload.service";
 import {FarmerService} from "../../../services/farmer.service";
 import {Farm} from "../../../model/farm.model";
+import {ProductDetail} from "../../../model/productdetail.model";
 
 @Component({
   selector: 'app-my-store-detail',
@@ -15,7 +16,6 @@ import {Farm} from "../../../model/farm.model";
 })
 export class MyStoreDetailPage implements OnInit {
 
-  isNewAction = true;
   form: any = {};
   id;
   savedCurrentPhoto;
@@ -27,17 +27,8 @@ export class MyStoreDetailPage implements OnInit {
   oldImagesMap: Map<number, string> = new Map<number, string>();
   displayOldImages = false;
 
-  currentProduct: Product = new Product(null,
-      '',
-      '',
-      0,
-      0,
-      false,
-      '',
-      [],
-      null,
-      null,
-      0);
+  dto: Product = new Product(null, '', '', 0, 0, false, '', [], null, null, 0, false, 0);
+  productDetail: ProductDetail = new ProductDetail(this.dto,[], [], []);
 
   joinImagesText: Array<string>;
   farms: Array<Farm> = new Array<Farm>();
@@ -54,19 +45,15 @@ export class MyStoreDetailPage implements OnInit {
               private productService: ProductService) { }
 
   ngOnInit() {
+    this.getFarmAddress();
     this.route.params.subscribe(params => {
       this.id = params['id'];
       if (this.id == null || this.id == undefined) {
         // Load new page
-        this.isNewAction = true;
-        this.form.promotionActive = false;
-        this.form.promotionPrice = 0;
       } else {
         // Load detail page
-        this.isNewAction = false;
         this.getCurrentProduct();
       }
-      this.getFarmAddress();
     });
   }
 
@@ -86,7 +73,7 @@ export class MyStoreDetailPage implements OnInit {
         data => {
           if (data != null) {
             this.farms = data;
-            this.form.location = data;
+            // this.form.location = data;
           } else {
             this.presentAlert('Error', '', "Failed to get farm address");
           }
@@ -101,12 +88,12 @@ export class MyStoreDetailPage implements OnInit {
     this.productService.getProduct(this.id).subscribe(
         data => {
           if (data.success) {
-            this.currentProduct = data.data;
+            this.productDetail = data.data;
             this.displayOldImages = true;
-            this.currentProduct.images.forEach((url, i) => {
+            this.productDetail.dto.images.forEach((url, i) => {
               this.oldImagesMap.set(i, url);
             });
-            this.savedCurrentPhoto = configuration.host + '/api/guest/file/' + this.currentProduct.images[0];
+            this.savedCurrentPhoto = configuration.host + '/api/guest/file/' + this.productDetail.dto.images[0];
             this.initData();
           } else {
             this.presentAlert('Error', '', data.message);
@@ -119,20 +106,28 @@ export class MyStoreDetailPage implements OnInit {
   }
 
   initData() : void {
-    if (!this.isNewAction) {
-      this.form.id = this.currentProduct.id;
-      this.form.category = this.currentProduct.category;
-      this.form.price = this.currentProduct.price;
-      this.form.promotionPrice = this.currentProduct.promotionPrice;
-      this.form.promotionActive = this.currentProduct.promotionActive;
-      this.form.description = this.currentProduct.description;
-      this.form.images = this.currentProduct.images;
-      this.form.latitude = this.currentProduct.latitude;
-      this.form.longitude = this.currentProduct.longitude;
-      this.form.quantity = this.currentProduct.quantity;
+    this.form.id = this.productDetail.dto.id;
+    this.form.name = this.productDetail.dto.name;
+    this.form.category = this.productDetail.dto.category;
+    this.form.price = this.productDetail.dto.price;
+    this.form.promotionPrice = this.productDetail.dto.promotionPrice;
+    this.form.promotionActive = this.productDetail.dto.promotionActive;
+    this.form.description = this.productDetail.dto.description;
+    this.form.images = this.productDetail.dto.images;
+    this.form.latitude = this.productDetail.dto.latitude;
+    this.form.longitude = this.productDetail.dto.longitude;
+    this.form.quantity = this.productDetail.dto.quantity;
+    this.form.storeLocation = this.productDetail.dto.storeLocation;
 
-      this.promotionSectionActive = this.currentProduct.promotionActive;
-    }
+    // let selectedFarm = 0;
+    this.farms.forEach((farm, index) => {
+      if (farm.id == this.productDetail.dto.locationRef) {
+        // selectedFarm = index;
+        this.form.location = farm;
+      }
+    });
+
+    this.promotionSectionActive = this.productDetail.dto.promotionActive;
   }
 
   onFileChanged(event: any): void {
@@ -197,6 +192,10 @@ export class MyStoreDetailPage implements OnInit {
 
   postProduct() {
     let location = this.form.location;
+    if (this.form.storeLocation == 'true') {
+      location.latitude = this.productDetail.dto.user.latitude;
+      location.longitude = this.productDetail.dto.user.longitude;
+    }
     let product = new Product(
         this.form.id,
         this.form.name,
@@ -208,11 +207,13 @@ export class MyStoreDetailPage implements OnInit {
         this.displayOldImages ? this.getOldImageUrl() : this.joinImagesText,
         location.latitude,
         location.longitude,
-        this.form.quantity);
+        this.form.quantity,
+        this.form.storeLocation,
+        location.id);
     this.productService.addProduct(product).subscribe(
         data => {
           if (data.success) {
-            this.router.navigate(['/my-account/my-store']);
+            this.presentAlert('Success', '', 'Saved successfuly');
           } else {
             this.presentAlert('Failed', '', data.message);
           }
@@ -245,23 +246,4 @@ export class MyStoreDetailPage implements OnInit {
       this.postProduct();
     }
   }
-
-  test() {
-    let location = this.form.location;
-    let product = new Product(
-        this.form.id,
-        this.form.name,
-        this.form.category,
-        this.form.price,
-        this.form.promotionPrice,
-        this.form.promotionActive,
-        this.form.description,
-        this.displayOldImages ? this.getOldImageUrl() : this.joinImagesText,
-        location.latitude,
-        location.longitude,
-        this.form.quantity);
-
-    console.log(JSON.stringify(product));
-  }
-
 }

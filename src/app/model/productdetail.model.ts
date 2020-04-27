@@ -1,7 +1,7 @@
 import {Product} from "./product.model";
 import {Rate} from "./rate.model";
 
-export class Productdetail {
+export class ProductDetail {
   dto: Product;
   comments: Array<Comment>;
   rates: Array<Rate>;
