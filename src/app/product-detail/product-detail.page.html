@@ -393,7 +393,55 @@
                   </div>
                 </div>
                 <div [ngClass]="showTabFarmer? 'active' : ''" class="tab-pane fade" id="farmer" role="tabpanel" aria-labelledby="description-tab">
-                  <p class="product-desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque obcaecati tempore reiciendis neque facere! Eos, necessitatibus? Fugit iure veritatis quidem velit quaerat quos qui pariatur dolore facilis, aliquid quae voluptatibus dicta. Quae harum velit hic molestias, eius ab cum quidem voluptates modi maiores laboriosam iusto excepturi ex, recusandae aut, facere earum ad vero aperiam. Minima dolores dignissimos ab ipsam atque placeat sapiente officia debitis nobis porro at quia veritatis, quidem id repudiandae ex tempore non. Enim soluta explicabo atque adipisci itaque.</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="col-lg-3 col-12">
+                          <div class="myaccount-tab-menu nav" role="tablist">
+                            <a [ngClass]="farm.key==aboutAuthorCurrentFarm.id?'active':''" *ngFor="let farm of farmMap | keyvalue;" (click)="changeAboutFarmerFarm(farm.key)">
+                              <i class="fa fa-user"></i>
+                              {{farm.value.address}}
+                            </a>
+                          </div>
+                        </div>
+                        <div class="col-lg-9 col-12">
+                          <div class="tab-content" id="myaccountContent">
+                            <div class="tab-pane fade active" id="register" role="tabpanel">
+                              <div class="myaccount-content">
+                                <h3>Farm Gallery</h3>
+
+                                <div class="myaccount-table table-responsive text-center">
+                                  <div class="col-sm-12 col-md-12 col-xs-12">
+                                    <form>
+                                      <div class="login-form">
+                                        <div>
+                                          <div class="mb-7 mb-md-0">
+                                            <div class="tab-content mb-2" id="pills-tabContent">
+                                              <div class="tab-pane fade active show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                                <img class="card-img rounded-0" src="{{aboutAuthorCurrentFarmPhoto}}" alt="card-img" style="height: 300px">
+                                              </div>
+                                            </div>
+
+                                            <ul class="row nav nav-pills" id="pills-tab" role="tablist">
+                                              <li *ngFor="let url of aboutAuthorCurrentFarm.images" class="nav-item col-4 pr-1">
+                                                <a (click)="changeAboutFarmerPhotoView(url)" class="nav-link img p-0 active show" id="pills-home-tab" data-toggle="pill" role="tab" aria-controls="pills-home" aria-selected="true">
+                                                  <img class="w-100" src="{{configuration.host}}/api/guest/file/{{url}}" alt="card-img">
+                                                </a>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

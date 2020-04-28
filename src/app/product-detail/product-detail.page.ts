@@ -12,6 +12,8 @@ import {Rate} from "../model/rate.model";
 import {TokenStorageService} from "../auth/token-storage.service";
 import {Comment} from "../model/comment.model";
 import {CommentService} from "../services/comment.service";
+import {FarmerService} from "../services/farmer.service";
+import {Farm} from "../model/farm.model";
 
 @Component({
   selector: 'app-product-detail',
@@ -45,13 +47,18 @@ export class ProductDetailPage implements OnInit {
     oneStar; twoStar; threeStar; fourStar; fiveStar;
     myRate: Rate = new Rate(null, 0, null, null);
 
-
     myComment: string = '';
+
+    farms: Array<Farm> = new Array<Farm>();
+    farmMap: Map<number, Farm> = new Map<number, Farm>();
+    aboutAuthorCurrentFarm: Farm = new Farm(null,'', [], 0, 0);
+    aboutAuthorCurrentFarmPhoto;
 
   constructor(private productService: ProductService,
               public alertController: AlertController,
               private tokenStorage: TokenStorageService,
               public rateService: RateService,
+              private farmService: FarmerService,
               public commentService: CommentService,
               private route: ActivatedRoute,) { }
 
@@ -164,6 +171,8 @@ export class ProductDetailPage implements OnInit {
         this.showTabComment = false;
         this.showTabRating = false;
         this.showTabFarmer = true;
+
+        this.getFarms();
     }
 
     initMap() {
@@ -257,6 +266,32 @@ export class ProductDetailPage implements OnInit {
             });
             await alert.present();
         }
+    }
+
+    getFarms() {
+      this.farmMap = new Map<number, Farm>();
+        this.farmService.getFarms(this.dto.user.id).subscribe(
+            data => {
+                this.farms = data;
+                this.farms.forEach((farm, index) => {
+                    this.farmMap.set(farm.id, farm);
+                });
+                this.aboutAuthorCurrentFarm = this.farms[0];
+                this.aboutAuthorCurrentFarmPhoto = configuration.host + '/api/guest/file/' + this.farms[0].images[0];
+            },
+            error => {
+                console.log(error);
+            }
+        );
+    }
+
+    changeAboutFarmerPhotoView(src: string) {
+        this.aboutAuthorCurrentFarmPhoto = configuration.host + '/api/guest/file/' + src;
+    }
+
+    changeAboutFarmerFarm(farmId: number) {
+        this.aboutAuthorCurrentFarm = this.farmMap.get(farmId);
+        this.aboutAuthorCurrentFarmPhoto = configuration.host + '/api/guest/file/' + this.aboutAuthorCurrentFarm.images[0];
     }
 
 }
