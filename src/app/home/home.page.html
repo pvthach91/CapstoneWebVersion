@@ -2,7 +2,7 @@
 
   <div class="main-content">
 
-    <app-header></app-header>
+    <app-header #headerPage></app-header>
 
     <div class="breadcrumb-area mb-50">
       <div class="container">
@@ -253,10 +253,7 @@
                       <img src="{{configuration.host}}/api/guest/file/{{product.images[0]}}" class="img-fluid" alt="">
                     </a>
                     <div class="product-hover-icons">
-                      <a data-tooltip="Add to cart"> <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
-                      <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html#" data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> </a>
-                      <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html#" data-tooltip="Compare"> <span class="arrow_left-right_alt"></span> </a>
-                      <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
+                      <a (click)="addItemToCart(product)" data-tooltip="Add to cart"> <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
                     </div>
                   </div>
                   <div class="product-content">

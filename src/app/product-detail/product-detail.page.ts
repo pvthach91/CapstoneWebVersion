@@ -1,7 +1,7 @@
 import {RateService} from "../services/rate.service";
 
 declare const google: any;
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ProductService} from "../services/product.service";
 import {ActivatedRoute} from "@angular/router";
 import {configuration} from "../model/configuration.model";
@@ -14,6 +14,8 @@ import {Comment} from "../model/comment.model";
 import {CommentService} from "../services/comment.service";
 import {FarmerService} from "../services/farmer.service";
 import {Farm} from "../model/farm.model";
+import {HeaderPage} from "../header/header.page";
+import {CartStorageService} from "../services/cart-storage.service";
 
 @Component({
   selector: 'app-product-detail',
@@ -21,6 +23,8 @@ import {Farm} from "../model/farm.model";
   styleUrls: ['./product-detail.page.scss'],
 })
 export class ProductDetailPage implements OnInit {
+    @ViewChild('headerPage',null) headerPage:HeaderPage;
+    quantity: number = 1;
 
   id;
   private configuration = configuration;
@@ -60,6 +64,7 @@ export class ProductDetailPage implements OnInit {
               public rateService: RateService,
               private farmService: FarmerService,
               public commentService: CommentService,
+              private cartStorage: CartStorageService,
               private route: ActivatedRoute,) { }
 
   ngOnInit() {
@@ -84,6 +89,28 @@ export class ProductDetailPage implements OnInit {
 
     await alert.present();
   }
+
+    updateShoppingCartHeader() {
+        this.headerPage.updateCart();
+    }
+
+    increaseQuantity() {
+        this.quantity += 1;
+    }
+
+    decreaseQuantity() {
+        if( this.quantity > 1) {
+            this.quantity -= 1;
+        }
+    }
+
+    addItemToCart(product: Product) {
+        let added = this.cartStorage.addItem(product, this.quantity);
+        if (added) {
+            this.presentAlert('Success', '', 'Added to cart successfully');
+            this.updateShoppingCartHeader();
+        }
+    }
 
   calculaterates() {
       let sumRate = 0;

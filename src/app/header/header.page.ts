@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {TokenStorageService} from "../auth/token-storage.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {OrderItem} from "../model/order-item.model";
+import {CartStorageService} from "../services/cart-storage.service";
 
 @Component({
   selector: 'app-header',
@@ -9,15 +11,36 @@ import {Router} from "@angular/router";
 })
 export class HeaderPage implements OnInit {
 
+  shoppingCart: Array<OrderItem>;
+  totalPrice: number;
+  totalItem: number;
+
   constructor(private tokenStorage: TokenStorageService,
-              private route: Router) { }
+              private cartStorage: CartStorageService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
+    this.route.params.subscribe(
+        params => {
+          this.updateCart();
+        });
   }
 
   logout() {
     this.tokenStorage.signOut();
-    this.route.navigate(['/home']);
+    this.router.navigate(['/home']);
+  }
+
+  updateCart() {
+    this.shoppingCart = this.cartStorage.getShoppingCart();
+    this.totalPrice = 0;
+    this.totalItem = 0;
+    this.shoppingCart.forEach((cartItem, index) => {
+      let rowPrice = cartItem.quantity*cartItem.product.price;
+      this.totalPrice += rowPrice;
+      this.totalItem ++;
+    });
   }
 
 }

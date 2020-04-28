@@ -2,7 +2,7 @@
 
   <div class="main-content">
 
-    <app-header></app-header>
+    <app-header #headerPage></app-header>
 
     <div class="breadcrumb-area mb-50">
       <div class="container">
@@ -10,7 +10,7 @@
           <div class="col">
             <div class="breadcrumb-container">
               <ul>
-                <li><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/index.html"><i class="fa fa-home"></i> Home</a></li>
+                <li><a routerLink="/home"><i class="fa fa-home"></i> Home</a></li>
                 <li class="active">Shop</li>
               </ul>
             </div>
@@ -54,14 +54,13 @@
                 <h2 class="product-title mb-15">{{dto.name}}</h2>
 
                 <p class="product-rating">
-                  <i class="fa fa-star active"></i>
-                  <i class="fa fa-star active"></i>
-                  <i class="fa fa-star active"></i>
-                  <i class="fa fa-star active"></i>
-                  <i class="fa fa-star"></i>
+                  <i [ngClass]="averageRates >= 1? 'active': ''" class="fa fa-star"></i>
+                  <i [ngClass]="averageRates >= 2? 'active': ''" class="fa fa-star"></i>
+                  <i [ngClass]="averageRates >= 3? 'active': ''" class="fa fa-star"></i>
+                  <i [ngClass]="averageRates >= 4? 'active': ''" class="fa fa-star"></i>
+                  <i [ngClass]="averageRates >= 5? 'active': ''" class="fa fa-star"></i>
 
-                  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#">(1 customer
-                    review)</a>
+                  <a>({{rates.length}} customer rate)</a>
                 </p>
 
                 <h2 *ngIf="dto.promotionActive" class="product-price mb-15">
@@ -77,14 +76,12 @@
 
                 <div class="cart-buttons mb-20">
                   <div class="pro-qty mr-20 mb-xs-20">
-                    <input type="text" value="1">
-                    <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#"
-                       class="inc qty-btn">+</a><a
-                          href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#"
-                          class="dec qty-btn">-</a></div>
+                    <input type="number" [(ngModel)]="quantity">
+                    <a (click)="increaseQuantity()" class="inc qty-btn">+</a>
+                    <a (click)="decreaseQuantity()" class="dec qty-btn">-</a>
+                  </div>
                   <div class="add-to-cart-btn">
-                    <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#"><i
-                            class="fa fa-shopping-cart"></i> Add to Cart</a>
+                    <a (click)="addItemToCart(dto)"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
                   </div>
                 </div>
 
@@ -97,7 +94,7 @@
 
 
                 <div class="single-product-category mb-20">
-                  <h3>Categories: <span><a>Available {{dto.quantity}} kg(s)</a>,
+                  <h3>Available: <span><a> {{dto.quantity}} kg(s)</a>, category:
                       <a>{{dto.category}}</a></span>
                   </h3>
                 </div>

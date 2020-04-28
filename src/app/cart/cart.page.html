@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <div class="main-content">
 
-    <app-header></app-header>
+    <app-header #headerPage></app-header>
 
     <div class="breadcrumb-area mb-50">
       <div class="container">
@@ -9,7 +9,7 @@
           <div class="col">
             <div class="breadcrumb-container">
               <ul>
-                <li><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/index.html"><i class="fa fa-home"></i> Home</a></li>
+                <li><a routerLink="/home"><i class="fa fa-home"></i> Home</a></li>
                 <li class="active">Shop</li>
               </ul>
             </div>
@@ -22,8 +22,7 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <form action="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#">
-              <div class="cart-table table-responsive mb-40">
+            <div class="cart-table table-responsive mb-40">
                 <table class="table">
                   <thead>
                   <tr>
@@ -36,42 +35,23 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td class="pro-thumbnail"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#"><img src="assets/images/product01.jpg" class="img-fluid" alt="Product"></a></td>
-                    <td class="pro-title"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#">Cillum dolore tortor nisl fermentum</a></td>
-                    <td class="pro-price"><span>$29.00</span></td>
-                    <td class="pro-quantity"><div class="pro-qty"><input type="text" value="1"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#" class="inc qty-btn">+</a><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#" class="dec qty-btn">-</a></div></td>
-                    <td class="pro-subtotal"><span>$29.00</span></td>
-                    <td class="pro-remove"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#"><i class="fa fa-trash-o"></i></a></td>
-                  </tr>
-                  <tr>
-                    <td class="pro-thumbnail"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#"><img src="assets/images/product02.jpg" class="img-fluid" alt="Product"></a></td>
-                    <td class="pro-title"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#">Auctor gravida pellentesque</a></td>
-                    <td class="pro-price"><span>$30.00</span></td>
-                    <td class="pro-quantity"><div class="pro-qty"><input type="text" value="2"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#" class="inc qty-btn">+</a><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#" class="dec qty-btn">-</a></div></td>
-                    <td class="pro-subtotal"><span>$60.00</span></td>
-                    <td class="pro-remove"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#"><i class="fa fa-trash-o"></i></a></td>
-                  </tr>
-                  <tr>
-                    <td class="pro-thumbnail"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#"><img src="assets/images/product03.jpg" class="img-fluid" alt="Product"></a></td>
-                    <td class="pro-title"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#">Condimentum posuere consectetur</a></td>
-                    <td class="pro-price"><span>$25.00</span></td>
-                    <td class="pro-quantity"><div class="pro-qty"><input type="text" value="1"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#" class="inc qty-btn">+</a><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#" class="dec qty-btn">-</a></div></td>
-                    <td class="pro-subtotal"><span>$25.00</span></td>
-                    <td class="pro-remove"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#"><i class="fa fa-trash-o"></i></a></td>
-                  </tr>
-                  <tr>
-                    <td class="pro-thumbnail"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#"><img src="assets/images/product04.jpg" class="img-fluid" alt="Product"></a></td>
-                    <td class="pro-title"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#">Habitasse dictumst elementum</a></td>
-                    <td class="pro-price"><span>$11.00</span></td>
-                    <td class="pro-quantity"><div class="pro-qty"><input type="text" value="1"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#" class="inc qty-btn">+</a><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#" class="dec qty-btn">-</a></div></td>
-                    <td class="pro-subtotal"><span>$11.00</span></td>
-                    <td class="pro-remove"><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#"><i class="fa fa-trash-o"></i></a></td>
+                  <tr *ngFor="let cart of shoppingCart; let i = index;">
+                    <td class="pro-thumbnail"><a><img src="{{configuration.host}}/api/guest/file/{{cart.product.images[0]}}" class="img-fluid" alt="Product"></a></td>
+                    <td class="pro-title"><a>{{cart.product.name}}</a></td>
+                    <td class="pro-price"><span>PHP {{cart.product.promotionPrice}}</span></td>
+                    <td class="pro-quantity">
+                      <div class="pro-qty">
+                        <input type="text" [(ngModel)]="shoppingCart[i].quantity">
+                        <a (click)="increaseQuantity(cart)" class="inc qty-btn">+</a>
+                        <a (click)="decreaseQuantity(cart)" class="dec qty-btn">-</a>
+                    </div>
+                    </td>
+                    <td class="pro-subtotal"><span>PHP {{cart.quantity * cart.product.price}}</span></td>
+                    <td class="pro-remove"><a (click)="removeItem(cart.product.id)"><i class="fa fa-trash-o"></i></a></td>
                   </tr>
                   </tbody>
                 </table>
               </div>
-            </form>
             <div class="row">
               <div class="col-lg-6 col-12">
                 <div class="calculate-shipping">

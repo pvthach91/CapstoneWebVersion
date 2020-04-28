@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AlertController} from "@ionic/angular";
 import {ProductService} from "../services/product.service";
 import {Product} from "../model/product.model";
 import {configuration} from "../model/configuration.model";
 import {ActivatedRoute} from "@angular/router";
 import {ProductCriteriaSearch} from "../model/product-criteria-search.model";
+import {CartStorageService} from "../services/cart-storage.service";
+import {HeaderPage} from "../header/header.page";
 
 @Component({
   selector: 'app-home',
@@ -12,6 +14,8 @@ import {ProductCriteriaSearch} from "../model/product-criteria-search.model";
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  @ViewChild('headerPage',null) headerPage:HeaderPage;
+
   products:Array<Product> = new Array<Product>();
   subProducts:Array<Product> = new Array<Product>();
   currentPage: number = 1;
@@ -24,6 +28,7 @@ export class HomePage implements OnInit {
 
   constructor(public alertController: AlertController,
               private route: ActivatedRoute,
+              private cartStorage: CartStorageService,
               private productService: ProductService) { }
 
   ngOnInit() {
@@ -108,5 +113,17 @@ export class HomePage implements OnInit {
 
   changeToGridView() {
     this.gridView = true;
+  }
+
+  addItemToCart(product: Product) {
+    let added = this.cartStorage.addItem(product, 1);
+    if (added) {
+      this.presentAlert('Success', '', 'Added to cart successfully');
+      this.updateShoppingCartHeader();
+    }
+  }
+
+  updateShoppingCartHeader() {
+    this.headerPage.updateCart();
   }
 }
