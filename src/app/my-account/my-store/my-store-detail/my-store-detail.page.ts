@@ -41,6 +41,7 @@ export class MyStoreDetailPage implements OnInit {
   private configuration = configuration;
 
   promotionSectionActive = false;
+  storePickupActive = true;
 
   // Tabs
   showTabComment = true;
@@ -141,15 +142,19 @@ export class MyStoreDetailPage implements OnInit {
     this.form.quantity = this.productDetail.dto.quantity;
     this.form.storeLocation = this.productDetail.dto.storeLocation;
 
-    // let selectedFarm = 0;
-    this.farms.forEach((farm, index) => {
-      if (farm.id == this.productDetail.dto.locationRef) {
-        // selectedFarm = index;
-        this.form.location = farm;
-      }
-    });
+    if (this.productDetail.dto.storeLocation) {
+      this.form.location = this.farms[0];
+    } else {
+      this.farms.forEach((farm, index) => {
+        if (farm.id == this.productDetail.dto.locationRef) {
+          this.form.location = farm;
+        }
+      });
+    }
+
 
     this.promotionSectionActive = this.productDetail.dto.promotionActive;
+    this.storePickupActive = this.productDetail.dto.storeLocation;
   }
 
   onFileChanged(event: any): void {
@@ -209,6 +214,15 @@ export class MyStoreDetailPage implements OnInit {
       this.promotionSectionActive = true;
     } else {
       this.promotionSectionActive = false;
+      this.form.promotionPrice = this.form.price;
+    }
+  }
+
+  changePickUpLocation(value: string) {
+    if (value=='true') {
+      this.storePickupActive = true;
+    } else {
+      this.storePickupActive = false;
     }
   }
 

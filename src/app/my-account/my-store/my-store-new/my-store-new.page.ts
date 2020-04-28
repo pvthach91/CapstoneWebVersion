@@ -37,6 +37,7 @@ export class MyStoreNewPage implements OnInit {
   private configuration = configuration;
 
   promotionSectionActive = false;
+  storePickupActive = true;
 
   user: User = new User();
 
@@ -141,6 +142,7 @@ export class MyStoreNewPage implements OnInit {
 
 
       this.promotionSectionActive = false;
+      this.storePickupActive = true;
   }
 
   onFileChanged(event: any): void {
@@ -200,6 +202,15 @@ export class MyStoreNewPage implements OnInit {
       this.promotionSectionActive = true;
     } else {
       this.promotionSectionActive = false;
+      this.form.promotionPrice = this.form.price;
+    }
+  }
+
+  changePickUpLocation(value: string) {
+    if (value=='true') {
+      this.storePickupActive = true;
+    } else {
+      this.storePickupActive = false;
     }
   }
 
@@ -208,6 +219,11 @@ export class MyStoreNewPage implements OnInit {
     if (this.form.storeLocation == 'true') {
       location.latitude = this.user.latitude;
       location.longitude = this.user.longitude;
+    } else {
+      if (this.form.location == null || this.form.location == undefined) {
+        this.presentAlert('Warning', '', 'Please select pickup location');
+        return;
+      }
     }
     let product = new Product(
         this.form.id,

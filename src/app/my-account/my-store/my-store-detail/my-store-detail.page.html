@@ -105,7 +105,7 @@
                                     <input class="mb-0" type="text" placeholder="price" id="price" name="price" [(ngModel)]="form.price" #price="ngModel" required>
                                </div>
                               <div class="col-md-6 mb-20">
-                                <label>Quantity(kg)*
+                                <label>In stock (kg)*
                                   <span *ngIf="f.submitted && quantity.invalid">
                                             <span *ngIf="quantity.errors.required" class="text-danger"><small>quantity is required</small></span>
                                         </span>
@@ -123,15 +123,15 @@
                                 <textarea rows="4" class="mb-0" type="text" placeholder="description" id="description" name="description" [(ngModel)]="form.description" #description="ngModel" required></textarea>
                               </div>
                               <div class="col-md-6 col-12 mb-20">
-                                <label>Promotion Active*
+                                <label>Promotion*
                                   <span *ngIf="f.submitted && promotionActive.invalid">
                                     <span *ngIf="promotionActive.errors.required" class="text-danger"><small>promotionActive is required</small></span>
                                   </span>
                                 </label>
 
                                   <select class="mb-0" id="promotionActive" name="promotionActive" [(ngModel)]="form.promotionActive" #promotionActive="ngModel" required (change)="changePromotion($event.target.value)">
-                                      <option value="true">Active</option>
-                                      <option value="false">Inactive</option>
+                                    <option value="true">Apply Promotion</option>
+                                    <option value="false">Dont Apply Promotion</option>
                                   </select>
                               </div>
                               <div class="col-md-6 mb-20">
@@ -145,27 +145,27 @@
                               </div>
 
                               <div class="col-md-6 mb-20">
-                                <label>Store Location*
+                                <label>Pick up at*
                                   <span *ngIf="f.submitted && location.invalid">
                                     <span *ngIf="location.errors.required" class="text-danger"><small>location is required</small></span>
                                   </span>
                                 </label>
 
-                                <select class="mb-0" id="storeLocation" name="storeLocation" [(ngModel)]="form.storeLocation" #storeLocation="ngModel" required>
-                                  <option value="true">Sell at store</option>
-                                  <option value="false">Sell at farm</option>
+                                <select class="mb-0" id="storeLocation" name="storeLocation" [(ngModel)]="form.storeLocation" #storeLocation="ngModel" required (change)="changePickUpLocation($event.target.value)">
+                                  <option value="true">Pick up at store</option>
+                                  <option value="false">Pick up at farm</option>
                                 </select>
                               </div>
 
                               <div class="col-md-6 mb-20">
-                                <label>Location*
+                                <label>Select farm location to pickup*
                                   <span *ngIf="f.submitted && location.invalid">
                                     <span *ngIf="location.errors.required" class="text-danger"><small>location is required</small></span>
                                   </span>
                                 </label>
 
                                   <select class="mb-0" id="location" name="location" [(ngModel)]="form.location" #location="ngModel" required>
-                                      <option *ngFor="let farm of farms" [ngValue]="farm">{{farm.address}}</option>
+                                      <option [disabled]="storePickupActive" *ngFor="let farm of farms" [ngValue]="farm">{{farm.address}}</option>
                                   </select>
                               </div>
                               <div class="col-12">

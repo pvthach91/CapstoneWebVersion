@@ -46,7 +46,7 @@
                         <a (click)="decreaseQuantity(cart)" class="dec qty-btn">-</a>
                     </div>
                     </td>
-                    <td class="pro-subtotal"><span>PHP {{cart.quantity * cart.product.price}}</span></td>
+                    <td class="pro-subtotal"><span>PHP {{cart.quantity * cart.product.promotionPrice}}</span></td>
                     <td class="pro-remove"><a (click)="removeItem(cart.product.id)"><i class="fa fa-trash-o"></i></a></td>
                   </tr>
                   </tbody>

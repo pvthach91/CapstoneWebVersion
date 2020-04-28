@@ -37,7 +37,7 @@ export class HeaderPage implements OnInit {
     this.totalPrice = 0;
     this.totalItem = 0;
     this.shoppingCart.forEach((cartItem, index) => {
-      let rowPrice = cartItem.quantity*cartItem.product.price;
+      let rowPrice = cartItem.quantity*cartItem.product.promotionPrice;
       this.totalPrice += rowPrice;
       this.totalItem ++;
     });

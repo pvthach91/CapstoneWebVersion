@@ -31,7 +31,7 @@ export class CartPage implements OnInit {
     this.shoppingCart = this.cartStorage.getShoppingCart();
     this.totalPrice = 0;
     this.shoppingCart.forEach((cartItem, index) => {
-      let rowPrice = cartItem.quantity*cartItem.product.price;
+      let rowPrice = cartItem.quantity*cartItem.product.promotionPrice;
       this.totalPrice += rowPrice;
     });
     this.updateShoppingCartHeader();
