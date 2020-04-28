@@ -21,13 +21,13 @@ export class RateService {
 
   constructor(private http: HttpClient) { }
 
-  getRates(productId: number): Observable<Page> {
+  getRates(productId: number): Observable<Array<Rate>> {
     const url = configuration.host + '/api/guest/rates/' + productId;
-    return this.http.get<Page>(url, httpOptions);
+    return this.http.get<Array<Rate>>(url, httpOptions);
   }
 
-  addRate(productId: number, rate: Rate): Observable<Product> {
+  addRate(productId: number, rate: Rate): Observable<Array<Rate>> {
     const url = configuration.host + '/api/rate/addRate/' + productId;
-    return this.http.post<Product>(url, rate, httpOptions);
+    return this.http.post<Array<Rate>>(url, rate, httpOptions);
   }
 }

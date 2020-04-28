@@ -183,17 +183,45 @@
                                 <div class="tab-slider-wrapper">
                                   <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                      <a class="nav-item nav-link active" id="review-tab" data-toggle="tab" href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#review" role="tab" aria-selected="false">Reviews (3)</a>
-                                      <a class="nav-item nav-link" id="description-tab" data-toggle="tab" href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#description" role="tab" aria-selected="true">Description</a>
-                                      <a class="nav-item nav-link" id="features-tab" data-toggle="tab" href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#features" role="tab" aria-selected="false">Features</a>
+                                      <a (click)="activeTabComment()" [ngClass]="showTabComment? 'active' : ''" class="nav-item nav-link" id="review-tab" data-toggle="tab" role="tab" aria-selected="false">Comments</a>
+                                      <a (click)="activeTabRating()" [ngClass]="showTabRating? 'active' : ''" class="nav-item nav-link" id="description-tab" data-toggle="tab" role="tab" aria-selected="true">Rating</a>
                                     </div>
                                   </nav>
                                   <div class="tab-content" id="nav-tabContent">
-                                    <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+                                    <div [ngClass]="showTabComment? 'active' : ''" class="tab-pane fade show" id="review" role="tabpanel" aria-labelledby="review-tab">
+                                      <div class="product-ratting-wrap">
+                                        <div class="rattings-wrapper">
+                                          <div *ngFor="let comment of comments" class="sin-rattings">
+                                            <div class="ratting-author">
+                                              <h3>{{comment.commentedBy.name}}</h3>
+                                              <div class="ratting-star">
+                                                <span>(at {{comment.dateCreated | date: 'yyyy/MM/dd HH:mm' }})</span>
+                                              </div>
+                                            </div>
+                                            <p>{{comment.content}}</p>
+                                          </div>
+                                        </div>
+                                        <div class="ratting-form-wrapper fix">
+                                          <h3>Add your Comments</h3>
+                                          <form>
+                                            <div class="ratting-form row">
+                                              <div class="col-12 mb-15">
+                                                <label for="your-review">Your Comments:</label>
+                                                <textarea name="review" id="your-review" placeholder="Write a comment" [(ngModel)]="myComment"></textarea>
+                                              </div>
+                                              <div class="col-12">
+                                                <input (click)="commentProduct()" value="add comment" type="submit">
+                                              </div>
+                                            </div>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div [ngClass]="showTabRating? 'active' : ''" class="tab-pane fade" id="rating" role="tabpanel" aria-labelledby="description-tab">
                                       <div class="product-ratting-wrap">
                                         <div class="pro-avg-ratting">
-                                          <h4>4.5 <span>(Overall)</span></h4>
-                                          <span>Based on 9 Comments</span>
+                                          <h4>{{averageRates}} <span>(Overall)</span></h4>
+                                          <span>Based on {{rates.length}} Comment(s)</span>
                                         </div>
                                         <div class="ratting-list">
                                           <div class="sin-list float-left">
@@ -202,7 +230,7 @@
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
-                                            <span>(5)</span>
+                                            <span>({{fiveStar}})</span>
                                           </div>
                                           <div class="sin-list float-left">
                                             <i class="fa fa-star"></i>
@@ -210,7 +238,7 @@
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star-o"></i>
-                                            <span>(3)</span>
+                                            <span>({{fourStar}})</span>
                                           </div>
                                           <div class="sin-list float-left">
                                             <i class="fa fa-star"></i>
@@ -218,7 +246,7 @@
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
-                                            <span>(1)</span>
+                                            <span>({{threeStar}})</span>
                                           </div>
                                           <div class="sin-list float-left">
                                             <i class="fa fa-star"></i>
@@ -226,7 +254,7 @@
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
-                                            <span>(0)</span>
+                                            <span>({{twoStar}})</span>
                                           </div>
                                           <div class="sin-list float-left">
                                             <i class="fa fa-star"></i>
@@ -234,122 +262,27 @@
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
-                                            <span>(0)</span>
+                                            <span>({{oneStar}})</span>
                                           </div>
                                         </div>
                                         <div class="rattings-wrapper">
-
-                                          <div class="sin-rattings">
+                                          <div *ngFor="let rate of rates" class="sin-rattings">
                                             <div class="ratting-author">
-                                              <h3>Cristopher Lee</h3>
+                                              <h3>{{rate.ratedBy.name}}</h3>
                                               <div class="ratting-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <span>(5)</span>
+                                                <i [ngClass]="rate.star >= 1? 'fa fa-star' : 'fa fa-star-o'"></i>
+                                                <i [ngClass]="rate.star >= 2? 'fa fa-star' : 'fa fa-star-o'"></i>
+                                                <i [ngClass]="rate.star >= 3? 'fa fa-star' : 'fa fa-star-o'"></i>
+                                                <i [ngClass]="rate.star >= 4? 'fa fa-star' : 'fa fa-star-o'"></i>
+                                                <i [ngClass]="rate.star >= 5? 'fa fa-star' : 'fa fa-star-o'"></i>
+                                                <span>({{rate.star}})</span>
+                                                <span>({{rate.dateCreated | date: 'yyyy/MM/dd HH:mm'}})</span>
                                               </div>
                                             </div>
-                                            <p>enim ipsam voluptatem quia voluptas sit
-                                              aspernatur aut odit aut fugit, sed quia res eos
-                                              qui ratione voluptatem sequi Neque porro
-                                              quisquam est, qui dolorem ipsum quia dolor sit
-                                              amet, consectetur, adipisci veli</p>
+                                            <p></p>
                                           </div>
-
-                                          <div class="sin-rattings">
-                                            <div class="ratting-author">
-                                              <h3>Nirob Khan</h3>
-                                              <div class="ratting-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <span>(5)</span>
-                                              </div>
-                                            </div>
-                                            <p>enim ipsam voluptatem quia voluptas sit
-                                              aspernatur aut odit aut fugit, sed quia res eos
-                                              qui ratione voluptatem sequi Neque porro
-                                              quisquam est, qui dolorem ipsum quia dolor sit
-                                              amet, consectetur, adipisci veli</p>
-                                          </div>
-
-                                          <div class="sin-rattings">
-                                            <div class="ratting-author">
-                                              <h3>MD.ZENAUL ISLAM</h3>
-                                              <div class="ratting-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <span>(5)</span>
-                                              </div>
-                                            </div>
-                                            <p>enim ipsam voluptatem quia voluptas sit
-                                              aspernatur aut odit aut fugit, sed quia res eos
-                                              qui ratione voluptatem sequi Neque porro
-                                              quisquam est, qui dolorem ipsum quia dolor sit
-                                              amet, consectetur, adipisci veli</p>
-                                          </div>
-
-                                        </div>
-                                        <div class="ratting-form-wrapper fix">
-                                          <h3>Add your Comments</h3>
-                                          <form action="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#">
-                                            <div class="ratting-form row">
-                                              <div class="col-12 mb-15">
-                                                <h5>Rating:</h5>
-                                                <div class="ratting-star fix">
-                                                  <i class="fa fa-star-o"></i>
-                                                  <i class="fa fa-star-o"></i>
-                                                  <i class="fa fa-star-o"></i>
-                                                  <i class="fa fa-star-o"></i>
-                                                  <i class="fa fa-star-o"></i>
-                                                </div>
-                                              </div>
-                                              <div class="col-md-6 col-12 mb-15">
-                                                <label for="name">Name:</label>
-                                                <input placeholder="Name" type="text">
-                                              </div>
-                                              <div class="col-md-6 col-12 mb-15">
-                                                <label for="email">Email:</label>
-                                                <input id="email" placeholder="Email" type="text">
-                                              </div>
-                                              <div class="col-12 mb-15">
-                                                <label for="your-review">Your Review:</label>
-                                                <textarea name="review" id="your-review" placeholder="Write a review"></textarea>
-                                              </div>
-                                              <div class="col-12">
-                                                <input value="add review" type="submit">
-                                              </div>
-                                            </div>
-                                          </form>
                                         </div>
                                       </div>
-                                    </div>
-                                    <div class="tab-pane fade" role="tabpanel" aria-labelledby="description-tab">
-                                      <p class="product-desc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque obcaecati tempore reiciendis neque facere! Eos, necessitatibus? Fugit iure veritatis quidem velit quaerat quos qui pariatur dolore facilis, aliquid quae voluptatibus dicta. Quae harum velit hic molestias, eius ab cum quidem voluptates modi maiores laboriosam iusto excepturi ex, recusandae aut, facere earum ad vero aperiam. Minima dolores dignissimos ab ipsam atque placeat sapiente officia debitis nobis porro at quia veritatis, quidem id repudiandae ex tempore non. Enim soluta explicabo atque adipisci itaque.</p>
-                                    </div>
-                                    <div class="tab-pane fade" id="features" role="tabpanel" aria-labelledby="features-tab">
-                                      <table class="table-data-sheet">
-                                        <tbody>
-                                        <tr class="odd">
-
-                                          <td>Name</td>
-                                          <td>Kaoreet lobortis sagittis laoreet</td>
-                                        </tr>
-                                        <tr class="even">
-
-                                          <td>Color</td>
-                                          <td>Yellow</td>
-                                        </tr>
-
-                                        </tbody>
-                                      </table>
                                     </div>
                                   </div>
                                 </div>

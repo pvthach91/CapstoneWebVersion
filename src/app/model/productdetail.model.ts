@@ -1,5 +1,6 @@
 import {Product} from "./product.model";
 import {Rate} from "./rate.model";
+import {Comment} from "./comment.model";
 
 export class ProductDetail {
   dto: Product;

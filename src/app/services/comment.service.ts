@@ -20,9 +20,9 @@ export class CommentService {
 
   constructor(private http: HttpClient) { }
 
-  getComments(productId: number): Observable<Page> {
+  getComments(productId: number): Observable<Array<Comment>> {
     const url = configuration.host + '/api/guest/comments/' + productId;
-    return this.http.get<Page>(url, httpOptions);
+    return this.http.get<Array<Comment>>(url, httpOptions);
   }
 
   getSubComments(commentId: number): Observable<Page> {
@@ -30,9 +30,9 @@ export class CommentService {
     return this.http.get<Page>(url, httpOptions);
   }
 
-  addComment(productId: number, comment: Comment): Observable<Product> {
+  addComment(productId: number, comment: Comment): Observable<Array<Comment>> {
     const url = configuration.host + '/api/comment/addComment/' + productId;
-    return this.http.post<Product>(url, comment, httpOptions);
+    return this.http.post<Array<Comment>>(url, comment, httpOptions);
   }
 
   addSubComment(commentId: number, comment: SubComment): Observable<Product> {
