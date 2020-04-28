@@ -24,6 +24,10 @@ export class LeftMenuPage implements OnInit {
     return 'my-store' == this.currentPage ? true : false;
   }
 
+  isDeliverAddressPage(): boolean {
+    return 'deliver-address' == this.currentPage ? true : false;
+  }
+
   isFarmPage(): boolean {
     return 'farm' == this.currentPage ? true : false;
   }

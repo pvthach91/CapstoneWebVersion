@@ -102,6 +102,10 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'deliver-address',
+        loadChildren: () => import('./my-account/deliver-address/deliver-address.module').then( m => m.DeliverAddressPageModule)
+      },
+      {
         path: '',
         redirectTo: '/my-account/profile',
         pathMatch: 'full'

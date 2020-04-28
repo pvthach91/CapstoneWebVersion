@@ -13,6 +13,13 @@
     My Store
   </a>
 
+  <a routerLink="/my-account/deliver-address"
+     *ngIf="tokenStorage.hasBuyerRole()"
+     [ngClass]="isDeliverAddressPage()?'active': ''">
+    <i class="fa fa-map-marker"></i>
+    Deliver Address
+  </a>
+
   <a routerLink="/my-account/farm"
      *ngIf="tokenStorage.hasFarmerRole()"
      [ngClass]="isFarmPage()?'active': ''">
