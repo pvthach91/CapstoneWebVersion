@@ -1,3 +1,5 @@
+import {State} from "../../../model/state.model";
+
 declare const google: any;
 
 import { Component, OnInit } from '@angular/core';
@@ -8,6 +10,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {FarmerService} from "../../../services/farmer.service";
 import {FileUploadService} from "../../../services/file-upload.service";
 import {AlertController} from "@ionic/angular";
+import {StateService} from "../../../services/state.service";
+import {ConfigurationStorage} from "../../../services/configuration-storage.service";
 
 @Component({
   selector: 'app-farm-view',
@@ -17,7 +21,9 @@ import {AlertController} from "@ionic/angular";
 export class FarmViewPage implements OnInit {
 
   id;
+  form: any = {};
   savedCurrentPhoto;
+  states: Array<State> =new Array<State>();
 
   selectedFile: Array<File>;
   displayImages = new Array<string>();
@@ -43,6 +49,7 @@ export class FarmViewPage implements OnInit {
               private route: ActivatedRoute,
               private farmService: FarmerService,
               private fileUploadService: FileUploadService,
+              private configurationStorage: ConfigurationStorage,
               public alertController: AlertController) { }
 
   ngOnInit() {
@@ -60,6 +67,7 @@ export class FarmViewPage implements OnInit {
         console.log('.........................init farm');
         // this.initMap();
         this.getCurrentFarm();
+        this.states = this.configurationStorage.getStateList();
       }
     });
   }
@@ -80,11 +88,7 @@ export class FarmViewPage implements OnInit {
         data => {
           if (data.success) {
             this.currentFarm = data.data;
-            this.displayOldImages = true;
-            this.currentFarm.images.forEach((url, i) => {
-              this.oldImagesMap.set(i, url);
-            });
-            this.savedCurrentPhoto = configuration.host + '/api/guest/file/' + this.currentFarm.images[0];
+            this.initData();
             this.initMap();
           } else {
             this.presentAlert('Error', '', data.message);
@@ -94,6 +98,17 @@ export class FarmViewPage implements OnInit {
           console.log(error);
         }
     );
+  }
+
+  initData() {
+    this.displayOldImages = true;
+    this.currentFarm.images.forEach((url, i) => {
+      this.oldImagesMap.set(i, url);
+    });
+    this.savedCurrentPhoto = configuration.host + '/api/guest/file/' + this.currentFarm.images[0];
+    this.form.id = this.currentFarm.id;
+    this.form.address = this.currentFarm.address;
+    this.form.state = this.currentFarm.state;
   }
 
 //Creating farm
@@ -203,6 +218,50 @@ export class FarmViewPage implements OnInit {
       } else {
         this.presentAlert('Warning', '', 'Please upload your farm pictures');
       }
+    }
+  }
+
+
+  postFarm() {
+    let requestFarm = this.currentFarm;
+    requestFarm.images = this.joinImagesText;
+    requestFarm.state = this.form.state;
+    requestFarm.address = this.form.address;
+    this.farmService.addFarm(requestFarm).subscribe(
+        data => {
+          if (data != null) {
+            this.presentAlert('Success', '', 'Update successfully');
+            this.currentFarm = data.data;
+            this.initData();
+          } else {
+            this.presentAlert('Error', '', 'Failed to create farm');
+          }
+        },
+        error => {
+          this.presentAlert('Error', '', 'Failed to create farm');
+        }
+    );
+  }
+
+  onSubmit() {
+    if (!this.displayOldImages) {
+      this.getSelectedFiles();
+      if (this.selectedFile.length > 0) {
+        this.fileUploadService.uploadFarmPhoto(this.selectedFile).subscribe(
+            data => {
+              this.joinImagesText = data;
+              this.postFarm();
+            },
+            error => {
+              this.presentAlert('Error', '', 'Failed to upload files');
+            }
+        );
+      } else {
+        this.presentAlert('Warning', '', 'Please upload your farm pictures');
+      }
+    } else {
+      this.joinImagesText = this.currentFarm.images;
+      this.postFarm();
     }
   }
 }

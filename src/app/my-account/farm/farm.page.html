@@ -27,9 +27,9 @@
               </div>
               <div class="col-lg-9 col-12">
                 <div class="tab-content" id="myaccountContent">
-                  <div *ngIf="showList" class="tab-pane fade active" id="address-edit" role="tabpanel">
+                  <div class="tab-pane fade active" id="address-edit" role="tabpanel">
                     <div class="myaccount-content">
-                      <span class="pull-right"><a href="my-account/farm/new" data-toggle="tooltip" title="Create Farm" class="btn btn-info"><i class="fa fa-user-plus"></i></a></span>
+                      <span class="pull-right"><a routerLink="new" data-toggle="tooltip" title="Create Farm" class="btn btn-info"><i class="fa fa-user-plus"></i></a></span>
                       <h3>Farms</h3>
 
                       <div class="myaccount-table table-responsive text-center">
@@ -43,7 +43,7 @@
                               </div>
                               <div class="product-content">
                                 <div class="product-categories">
-                                  <a href="my-account/farm/view/{{farm.id}}"  class="register-button">Detail</a>
+                                  <a routerLink="view/{{farm.id}}"  class="register-button">Detail</a>
                                 </div>
                               </div>
                             </div>
@@ -51,80 +51,6 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div *ngIf="!showList" class="tab-pane fade active" id="register" role="tabpanel">
-                    <div class="myaccount-content">
-                      <span class="pull-right"><a (click)="openFarmList()" data-toggle="tooltip" title="Back to farm list" class="btn btn-info"><i class="fa fa-arrow-left"></i></a></span>
-                      <h3>Add new farm</h3>
-
-                      <div class="myaccount-table table-responsive text-center">
-                        <div class="col-sm-12 col-md-12 col-xs-12">
-                          <form  role="form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-                            <div class="login-form">
-                              <div  *ngIf="displayOldImages">
-                                <div class="mb-7 mb-md-0">
-                                  <div class="tab-content mb-2" id="pills-tabContent">
-                                    <div class="tab-pane fade active show" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                                      <img class="card-img rounded-0" src="{{savedCurrentPhoto}}" alt="card-img" style="height: 300px">
-                                    </div>
-                                  </div>
-
-                                  <ul class="row nav nav-pills" id="pills-tab" role="tablist">
-                                    <li *ngFor="let url of oldImagesMap | keyvalue" class="nav-item col-4 pr-1">
-                                      <a (click)="changePhotoView(url.value)" class="nav-link img p-0 active show" id="pills-home-tab" data-toggle="pill" role="tab" aria-controls="pills-home" aria-selected="true">
-                                        <img class="w-100" src="{{configuration.host}}/api/guest/file/{{url.value}}" alt="card-img">
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-
-                              <div  *ngIf="!displayOldImages">
-                                <div class="mb-7 mb-md-0">
-                                  <ul class="row nav nav-pills" role="tablist">
-                                    <li  *ngFor="let url of displayImagesMap | keyvalue" class="nav-item col-4 pr-1">
-                                      <a  class="nav-link img p-0 active show" data-toggle="pill" role="tab" aria-controls="pills-home" aria-selected="true">
-                                        <img class="w-100" [src]="url.value" alt="card-img">
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-
-                              <div class="row mt-5">
-                                <div class="col-lg-6 col-12 mb-30">
-                                  <input type="file" class="form-control" id="exampleInputFile" multiple="multiple" (change)="onFileChanged($event)" accept=".png,.jpg">
-                                </div>
-
-                              </div>
-
-                              <div class="row mt-10">
-                                <div class="col-md-9 col-12 mb-20">
-                                  <input class="mb-0" type="text" placeholder="Enter farm address" id="address" name="address" [(ngModel)]="form.address" #address="ngModel">
-                                </div>
-                                <div class="col-md-3 col-12">
-                                  <button type="button" class="register-button mt-0">Search</button>
-                                </div>
-                              </div>
-
-
-
-                              <div class="row mt-10">
-                                <div class="col-md-12 col-12">
-                                  <button type="submit" class="register-button mt-0">Submit</button>
-                                </div>
-                              </div>
-                            </div>
-
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div id = "farm-detail-location-map" style = "height:350px;"></div>
                   </div>
                 </div>
               </div>

@@ -61,9 +61,9 @@ export class FarmerService {
     return this.http.post<ApiResponse>(url, null, httpOptions);
   }
 
-  addFarm(farm: Farm): Observable<number> {
+  addFarm(farm: Farm): Observable<ApiResponse> {
     const url = configuration.host + '/api/farmer/addFarm';
-    return this.http.post<number>(url, farm, httpOptions);
+    return this.http.post<ApiResponse>(url, farm, httpOptions);
   }
 
   changeFarmPhoto(farm: Farm): Observable<ApiResponse> {

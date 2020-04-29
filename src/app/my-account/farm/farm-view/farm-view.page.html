@@ -34,7 +34,7 @@
 
                       <div class="myaccount-table table-responsive text-center">
                         <div class="col-sm-12 col-md-12 col-xs-12">
-                          <form>
+                          <form role="form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                             <div class="login-form">
                               <div *ngIf="displayOldImages">
                                 <div class="mb-7 mb-md-0">
@@ -67,17 +67,42 @@
                               </div>
 
                               <div class="row mt-10">
-                                <div class="col-md-8 col-12 mb-20">
+                                <div class="col-md-10 col-12 mb-20">
                                   <input type="file" class="form-control" id="exampleInputFile" multiple="multiple" (change)="onFileChanged($event)" accept=".png,.jpg">
                                 </div>
-                                <div class="col-md-4 col-12">
-                                  <button [disabled]="displayOldImages" (click)="cancelUpload()" class="btn btn-info ml-50">Cancel</button>
-                                  <button [disabled]="displayOldImages" (click)="uploadFarmPhoto()" class="btn btn-primary ml-5">Upload</button>
+                                <div class="col-md-2 col-12">
+                                  <button [disabled]="displayOldImages" (click)="cancelUpload()" class="btn btn-info ml-20">Cancel</button>
+<!--                                  <button [disabled]="displayOldImages" (click)="uploadFarmPhoto()" class="btn btn-primary ml-5">Upload</button>-->
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-6 col-12 mb-20">
+                                  <label>Region*
+                                    <span *ngIf="f.submitted && state.invalid">
+                                    <span *ngIf="state.errors.required" class="text-danger"><small>region is required</small></span>
+                                  </span>
+                                  </label>
+                                  <select class="mb-0" id="state" name="state" [(ngModel)]="form.state" #state="ngModel" required>
+                                    <option *ngFor="let state of states" [ngValue]="state.name">{{state.name}}</option>
+                                  </select>
+                                </div>
+
+                                <div class="col-md-6 col-12 mb-20">
+                                  <label>Address*
+                                    <span *ngIf="f.submitted && address.invalid">
+                                      <span *ngIf="address.errors.required" class="text-danger"><small>address is required</small></span>
+                                    </span>
+                                  </label>
+                                  <input class="mb-0" type="text" placeholder="address" id="address" name="address" [(ngModel)]="form.address" #address="ngModel" required>
                                 </div>
                               </div>
 
                               <div>
                                 <div id = "farm-detail-location-map" style = "height:350px;"></div>
+                              </div>
+
+                              <div class="row col-12 mt-10">
+                                <button type="submit" class="register-button mt-0">Submit</button>
                               </div>
                             </div>
                           </form>

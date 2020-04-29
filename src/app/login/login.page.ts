@@ -4,6 +4,8 @@ import {TokenStorageService} from "../auth/token-storage.service";
 import {AuthLoginInfo} from "../auth/login-info";
 import {AlertController} from "@ionic/angular";
 import {Router} from "@angular/router";
+import {ConfigurationStorage} from "../services/configuration-storage.service";
+import {StateService} from "../services/state.service";
 
 @Component({
   selector: 'app-login',
@@ -18,6 +20,8 @@ export class LoginPage implements OnInit {
   constructor(private authService: AuthService,
               public alertController: AlertController,
               private route: Router,
+              private configurationStorage: ConfigurationStorage,
+              private stateService: StateService,
               private tokenStorage: TokenStorageService) { }
 
   ngOnInit() {
@@ -50,6 +54,7 @@ export class LoginPage implements OnInit {
             this.tokenStorage.saveUsername(data.data.username);
             this.tokenStorage.saveFullName(data.data.fullName);
             this.tokenStorage.saveAuthorities(data.data.authorities);
+            this.storeStates();
             this.reloadPage();
           } else {
             this.presentAlert('Login failed', '', data.message);
@@ -64,6 +69,23 @@ export class LoginPage implements OnInit {
     let defaultPage = this.tokenStorage.getDefaultPage();
     window.location.href = defaultPage;
     this.route.navigate([defaultPage]);
+  }
+
+  storeStates() {
+    this.stateService.getStates().subscribe(
+        data => {
+          if (data != null) {
+            this.configurationStorage.saveStateList(data);
+
+            console.log(this.configurationStorage.getStateList());
+          } else {
+            this.presentAlert('Login failed', '', 'Failed to get states');
+          }
+        },
+        error => {
+          this.presentAlert('Login failed', '', 'Please check your username and password');
+        }
+    );
   }
 
 }

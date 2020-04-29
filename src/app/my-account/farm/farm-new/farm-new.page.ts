@@ -1,3 +1,5 @@
+import {State} from "../../../model/state.model";
+
 declare const google: any;
 import { Component, OnInit } from '@angular/core';
 import {Farm} from "../../../model/farm.model";
@@ -6,6 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {FarmerService} from "../../../services/farmer.service";
 import {FileUploadService} from "../../../services/file-upload.service";
 import {AlertController} from "@ionic/angular";
+import {ConfigurationStorage} from "../../../services/configuration-storage.service";
 
 @Component({
   selector: 'app-farm-new',
@@ -15,14 +18,14 @@ import {AlertController} from "@ionic/angular";
 export class FarmNewPage implements OnInit {
 
     id;
+    form: any = {};
+    states: Array<State> =new Array<State>();
+
     selectedFile: Array<File>;
     displayImages = new Array<string>();
     displayImagesMap: Map<number, string> = new Map<number, string>();
     imagesMap: Map<number, File> = new Map<number, File>();
-    oldImagesMap: Map<number, string> = new Map<number, string>();
     displayOldImages = false;
-
-    currentFarm: Farm = new Farm(null, '', '', [], 0, 0);
 
     joinImagesText: Array<string>;
 
@@ -36,6 +39,7 @@ export class FarmNewPage implements OnInit {
                 private route: ActivatedRoute,
                 private farmService: FarmerService,
                 private fileUploadService: FileUploadService,
+                private configurationStorage: ConfigurationStorage,
                 public alertController: AlertController) { }
 
     ngOnInit() {
@@ -45,7 +49,12 @@ export class FarmNewPage implements OnInit {
         }
 
         this.route.params.subscribe(params => {
+            this.lat = 14.665393;
+            this.lng = 121.012528;
             this.getCurrentLocation();
+            this.states = this.configurationStorage.getStateList();
+            this.form.state = this.states[0].name;
+            this.form.address = '';
         });
     }
 
@@ -83,8 +92,6 @@ export class FarmNewPage implements OnInit {
             center:new google.maps.LatLng(this.lat, this.lng),
             zoom:15
         };
-
-        console.log('init map: ' + this.currentFarm.latitude + ", " + this.currentFarm.longitude);
 
         this.map = new google.maps.Map(document.getElementById("farm-detail-location-map"),mapOptions);
         this.marker = new google.maps.Marker({
@@ -132,15 +139,16 @@ export class FarmNewPage implements OnInit {
     postFarm() {
         let farm = new Farm(
             null,
-            '',
-            '',
+            this.form.state,
+            this.form.address,
             this.joinImagesText,
             this.marker.position.lat(),
             this.marker.position.lng());
         this.farmService.addFarm(farm).subscribe(
             data => {
-                if (data != null) {
-                    window.location.href = 'my-account/farm/view/' + data;
+                if (data.success) {
+                    // window.location.href = 'my-account/farm/view/' + data;
+                    this.router.navigate(['/my-account/farm/view/' + data.data.id]);
                 } else {
                     this.presentAlert('Error', '', 'Failed to create farm');
                 }
@@ -152,7 +160,7 @@ export class FarmNewPage implements OnInit {
     }
 
 
-    uploadFarmPhoto() {
+    onSubmit() {
         console.log('current location: ' + this.marker.position.lat() + ' , ' + this.marker.position.lng())
         if (!this.displayOldImages) {
             this.getSelectedFiles();
