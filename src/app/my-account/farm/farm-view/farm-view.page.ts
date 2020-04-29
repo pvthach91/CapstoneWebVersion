@@ -26,7 +26,7 @@ export class FarmViewPage implements OnInit {
   oldImagesMap: Map<number, string> = new Map<number, string>();
   displayOldImages = false;
 
-  currentFarm: Farm = new Farm(null, '', [], 0, 0);
+  currentFarm: Farm = new Farm(null, '', '', [], 0, 0);
 
   joinImagesText: Array<string>;
 

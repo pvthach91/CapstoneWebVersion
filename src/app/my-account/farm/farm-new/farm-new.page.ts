@@ -22,7 +22,7 @@ export class FarmNewPage implements OnInit {
     oldImagesMap: Map<number, string> = new Map<number, string>();
     displayOldImages = false;
 
-    currentFarm: Farm = new Farm(null, '', [], 0, 0);
+    currentFarm: Farm = new Farm(null, '', '', [], 0, 0);
 
     joinImagesText: Array<string>;
 
@@ -132,6 +132,7 @@ export class FarmNewPage implements OnInit {
     postFarm() {
         let farm = new Farm(
             null,
+            '',
             '',
             this.joinImagesText,
             this.marker.position.lat(),

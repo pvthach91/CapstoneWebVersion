@@ -55,7 +55,7 @@ export class ProductDetailPage implements OnInit {
 
     farms: Array<Farm> = new Array<Farm>();
     farmMap: Map<number, Farm> = new Map<number, Farm>();
-    aboutAuthorCurrentFarm: Farm = new Farm(null,'', [], 0, 0);
+    aboutAuthorCurrentFarm: Farm = new Farm(null,'', '', [], 0, 0);
     aboutAuthorCurrentFarmPhoto;
 
   constructor(private productService: ProductService,

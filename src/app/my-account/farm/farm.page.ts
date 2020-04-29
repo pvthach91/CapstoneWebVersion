@@ -126,6 +126,7 @@ export class FarmPage implements OnInit {
     if (!this.isNewAction) {
       this.form.id = this.currentFarm.id;
       this.form.address = this.currentFarm.address;
+      this.form.state = this.currentFarm.state;
       this.form.latitude = this.currentFarm.latitude;
       this.form.longitude = this.currentFarm.longitude;
       this.form.images = this.currentFarm.images;
@@ -138,6 +139,7 @@ export class FarmPage implements OnInit {
     } else {
       this.form.id = null;
       this.form.address = '';
+      this.form.state = '';
       this.form.latitude = 0;
       this.form.longitude = 0;
       this.form.images = [];
@@ -206,6 +208,7 @@ export class FarmPage implements OnInit {
   postFarm() {
     let farm = new Farm(
         this.isNewAction ? null : this.form.id,
+        this.form.state,
         this.form.address,
         this.joinImagesText,
         this.form.latitude,

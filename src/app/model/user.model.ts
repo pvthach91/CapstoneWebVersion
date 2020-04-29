@@ -6,6 +6,7 @@ export class User {
   username: string;
   email: string;
   phone: string;
+  state: string;
   address: string;
   joinDate: string;
   photo: string;
@@ -21,6 +22,7 @@ export class User {
     this.username = '';
     this.email = '';
     this.phone = '';
+    this.state = '';
     this.address = '';
     this.joinDate = '';
     this.photo = '';
