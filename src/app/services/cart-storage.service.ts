@@ -12,12 +12,12 @@ export class CartStorageService {
   constructor() { }
 
   public saveShoppingCart(cartItems: Array<OrderItem>) {
-    window.sessionStorage.removeItem(SHOPPING_CART_KEY);
-    window.sessionStorage.setItem(SHOPPING_CART_KEY, JSON.stringify(cartItems));
+    window.localStorage.removeItem(SHOPPING_CART_KEY);
+    window.localStorage.setItem(SHOPPING_CART_KEY, JSON.stringify(cartItems));
   }
 
   public getShoppingCart(): Array<OrderItem> {
-     let shoppingCartJson = sessionStorage.getItem(SHOPPING_CART_KEY);
+     let shoppingCartJson = localStorage.getItem(SHOPPING_CART_KEY);
      // console.log(shoppingCartJson);
      if (shoppingCartJson == undefined || shoppingCartJson == null) {
        let items: Array<OrderItem> = new Array<OrderItem>();
@@ -29,7 +29,7 @@ export class CartStorageService {
   }
 
   public remove(){
-    window.sessionStorage.removeItem(SHOPPING_CART_KEY);
+    window.localStorage.removeItem(SHOPPING_CART_KEY);
   }
 
 
