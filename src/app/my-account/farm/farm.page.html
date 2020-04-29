@@ -37,15 +37,14 @@
                           <div *ngFor="let farm of farms" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="gf-product shop-grid-view-product">
                               <div class="image">
-                                <a>
+                                <a routerLink="view/{{farm.id}}">
                                   <img src="{{configuration.host}}/api/guest/file/{{farm.images[0]}}" class="img-fluid" alt="">
                                 </a>
                               </div>
                               <div class="product-content">
-                                <div class="product-categories">
-                                  <a routerLink="view/{{farm.id}}"  class="register-button">Detail</a>
-                                </div>
+                                <h3 class="product-title"><a routerLink="view/{{farm.id}}">{{farm.address}}</a></h3>
                               </div>
+
                             </div>
                           </div>
                         </div>

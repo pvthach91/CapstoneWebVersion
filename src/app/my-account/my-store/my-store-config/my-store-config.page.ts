@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AdminService} from "../../../services/admin.service";
 import {User} from "../../../model/user.model";
 import {AlertController} from "@ionic/angular";
+import {State} from "../../../model/state.model";
+import {ConfigurationStorage} from "../../../services/configuration-storage.service";
 
 declare const google: any;
 
@@ -14,6 +16,7 @@ declare const google: any;
 export class MyStoreConfigPage implements OnInit {
 
   form: any = {};
+  states: Array<State> =new Array<State>();
 
   lat;
   lng;
@@ -25,10 +28,13 @@ export class MyStoreConfigPage implements OnInit {
   constructor(private route: ActivatedRoute,
               private adminService: AdminService,
               private router: Router,
+              private configurationStorage: ConfigurationStorage,
               public alertController: AlertController) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
+      this.states = this.configurationStorage.getStateList();
+      this.form.state = this.states[0].name;
       this.getCurrentLocation();
       this.getCurrentUser();
     });
@@ -50,6 +56,7 @@ export class MyStoreConfigPage implements OnInit {
         data => {
           this.user = data;
           this.form.address = this.user.address;
+          this.form.state = this.user.state;
           console.log('user');
           if (this.user.latitude != null && this.user.latitude != undefined && this.user.latitude != 0 &&
               this.user.longitude != null && this.user.longitude != undefined && this.user.longitude != 0) {
@@ -103,6 +110,7 @@ export class MyStoreConfigPage implements OnInit {
     userRequest.latitude = this.marker.position.lat();
     userRequest.longitude = this.marker.position.lng();
     userRequest.address = this.form.address;
+    userRequest.state = this.form.state;
     this.adminService.updateAddress(userRequest).subscribe(
         data => {
           if (data != null) {
