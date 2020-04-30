@@ -38,7 +38,7 @@ export class AddressService {
     return this.http.post<ApiResponse>(url, null, httpOptions);
   }
 
-  addFarm(address: Address): Observable<ApiResponse> {
+  addAddress(address: Address): Observable<ApiResponse> {
     const url = configuration.host + '/api/farmer/addAddress';
     return this.http.post<ApiResponse>(url, address, httpOptions);
   }
