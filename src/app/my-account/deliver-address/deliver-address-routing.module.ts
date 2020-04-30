@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'new',
     loadChildren: () => import('./deliver-address-new/deliver-address-new.module').then( m => m.DeliverAddressNewPageModule)
+  },
+  {
+    path: 'view/:id',
+    loadChildren: () => import('./deliver-address-new/deliver-address-new.module').then( m => m.DeliverAddressNewPageModule)
   }
 ];
 

@@ -16,7 +16,9 @@ declare const google: any;
 export class DeliverAddressNewPage implements OnInit {
 
   form: any = {};
+  id;
   states: Array<State> =new Array<State>();
+  address: Address = new Address(null, '', '', '', 0, 0);
 
   lat;
   lng;
@@ -33,9 +35,13 @@ export class DeliverAddressNewPage implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.states = this.configurationStorage.getStateList();
-      this.form.state = this.states[0].name;
-      this.getCurrentLocation();
-      // this.getCurrentUser();
+      this.id = params['id'];
+      if (this.id == null || this.id == undefined) {
+        this.form.state = this.states[0].name;
+        this.getCurrentLocation();
+      } else {
+        this.getCurrentAddress();
+      }
     });
   }
 
@@ -50,6 +56,29 @@ export class DeliverAddressNewPage implements OnInit {
     await alert.present();
   }
 
+  getCurrentAddress() {
+    this.addressService.getFarm(this.id).subscribe(
+        data => {
+          if (data.success) {
+            this.address = data.data;
+            this.lat = this.address.latitude;
+            this.lng = this.address.longitude;
+            this.form.id = this.address.id;
+            this.form.state = this.address.state;
+            this.form.address = this.address.address;
+            this.form.name = this.address.name;
+
+            this.draggable = false;
+            this.initMap();
+          } else {
+            this.presentAlert('Failed', '', 'Failed to get address');
+          }
+        },
+        error => {
+        }
+    );
+  }
+
   getCurrentLocation() {
     if (navigator.geolocation) {
       let current = this;
@@ -57,6 +86,7 @@ export class DeliverAddressNewPage implements OnInit {
         console.log('show location: ' + position.coords.latitude);
         current.lat =position.coords.latitude;
         current.lng =position.coords.longitude;
+        current.draggable = true;
         current.initMap();
       }, function() {
       });
@@ -81,7 +111,7 @@ export class DeliverAddressNewPage implements OnInit {
   }
 
   onSubmit() {
-    let adress = new Address(null, this.form.state, this.form.address, this.marker.position.lat(), this.marker.position.lng());
+    let adress = new Address(this.form.id, this.form.name, this.form.state, this.form.address, this.marker.position.lat(), this.marker.position.lng());
     this.addressService.addAddress(adress).subscribe(
         data => {
           if (data.success) {
