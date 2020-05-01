@@ -1,0 +1,98 @@
+<ion-content [fullscreen]="true">
+  <div class="main-content">
+    <app-header></app-header>
+
+    <div class="breadcrumb-area mb-50">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="breadcrumb-container">
+              <ul>
+                <li><a routerLink="/home"><i class="fa fa-home"></i> Home</a></li>
+                <li class="active">Shop</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-account-section section position-relative mb-50 fix">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-lg-3 col-12">
+                <app-left-menu currentPage="shipping-config"></app-left-menu>
+              </div>
+              <div class="col-lg-9 col-12">
+                <div class="tab-content" id="myaccountContent">
+                  <div class="tab-pane fade active" id="account-info" role="tabpanel">
+                    <div class="myaccount-content">
+                      <span class="pull-right"><a routerLink="/my-account/shipping-config" data-toggle="tooltip" title="Back config list" class="btn btn-info"><i class="fa fa-arrow-left"></i></a></span>
+                      <h3>Config Shipping</h3>
+
+                      <div class="account-details-form">
+                        <form  role="form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                          <div class="login-form">
+                            <div class="row">
+                              <div class="col-lg-6 col-12 mb-30">
+                                <label>Weight carry from(kg)(inclusive)*
+                                  <span *ngIf="f.submitted && weightCarryTo.invalid">
+                                  <span *ngIf="weightCarryTo.errors.required" class="text-danger"><small>Weight is required</small></span>
+                                </span>
+                                </label>
+                                <input type="number" id="weightCarryTo" name="weightCarryTo" [(ngModel)]="form.weightCarryTo" #weightCarryTo="ngModel" required>
+                              </div>
+
+                              <div class="col-lg-6 col-12 mb-30">
+                                <label>Weight carry from(kg)(exclusive) *
+                                  <span *ngIf="f.submitted && weightCarryFrom.invalid">
+                                  <span *ngIf="weightCarryFrom.errors.required" class="text-danger"><small>Weight is required</small></span>
+                                </span>
+                                </label>
+                                <input type="number" id="weightCarryFrom" name="weightCarryFrom" [(ngModel)]="form.weightCarryFrom" #weightCarryFrom="ngModel" required>
+                              </div>
+
+                              <div class="col-md-6 col-12 mb-20">
+                                <label>Region*
+                                  <span *ngIf="f.submitted && state.invalid">
+                                  <span *ngIf="state.errors.required" class="text-danger"><small>region is required</small></span>
+                                </span>
+                                </label>
+                                <select class="mb-0" id="state" name="state" [(ngModel)]="form.state" #state="ngModel" required>
+                                  <option *ngFor="let state of states" [ngValue]="state.name">{{state.name}}</option>
+                                </select>
+                              </div>
+
+                              <div class="col-lg-6 col-12 mb-30">
+                                <label>Price(PHP)*
+                                  <span *ngIf="f.submitted && price.invalid">
+                                  <span *ngIf="price.errors.required" class="text-danger"><small>price is required</small></span>
+                                </span>
+                                </label>
+                                <input type="number" id="price" name="price" [(ngModel)]="form.price" #price="ngModel" required/>
+                              </div>
+
+                              <div class="col-12">
+                                <button type="submit" class="save-change-btn">Save Changes</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-footer></app-footer>
+  </div>
+
+</ion-content>
+
