@@ -67,7 +67,6 @@ export class LoginPage implements OnInit {
   }
   reloadPage() {
     let defaultPage = this.tokenStorage.getDefaultPage();
-    window.location.href = defaultPage;
     this.route.navigate([defaultPage]);
   }
 
