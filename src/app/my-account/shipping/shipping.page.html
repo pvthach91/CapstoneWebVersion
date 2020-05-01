@@ -1,0 +1,78 @@
+<ion-content [fullscreen]="true">
+  <div class="main-content">
+    <app-header></app-header>
+
+    <div class="breadcrumb-area mb-50">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="breadcrumb-container">
+              <ul>
+                <li><a routerLink="/home"><i class="fa fa-home"></i> Home</a></li>
+                <li class="active">Shop</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-account-section section position-relative mb-50 fix">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-lg-3 col-12">
+                <app-left-menu currentPage="shipping-config"></app-left-menu>
+              </div>
+              <div class="col-lg-9 col-12">
+                <div class="tab-content" id="myaccountContent">
+                  <div class="tab-pane fade active" id="address-edit" role="tabpanel">
+                    <div class="myaccount-content">
+                      <span class="pull-right"><a routerLink="new" data-toggle="tooltip" title="New Config" class="btn btn-info"><i class="fa fa-plus"></i></a></span>
+                      <h3>Vehicles</h3>
+
+                      <div class="myaccount-table table-responsive text-center">
+                        <table class="table table-bordered">
+                          <thead class="thead-light">
+                          <tr>
+                            <th>#</th>
+                            <th>Area</th>
+                            <th>Weight from (kg)</th>
+                            <th>Weight to (exclusive)</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                          </tr>
+                          </thead>
+
+                          <tbody>
+                          <tr *ngFor="let shipping of shippings; let i = index;">
+                            <td>{{i + 1}}</td>
+                            <td>{{shipping.state}}</td>
+                            <td>{{shipping.weightCarryFrom}}</td>
+                            <td>{{shipping.weightCarryTo}}</td>
+                            <td>
+                              <a (click)="deleteShippingConfig(shipping.id)" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                              <a routerLink="view/{{shipping.id}}" class="btn btn-primary ml-5"><i class="fa fa-edit"></i> Edit</a>
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-footer></app-footer>
+  </div>
+
+</ion-content>
+
+
+

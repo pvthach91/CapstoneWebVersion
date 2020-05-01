@@ -3,7 +3,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {configuration} from "../model/configuration.model";
 import {ApiResponse} from "../model/api-response.model";
-import {Farm} from "../model/farm.model";
 import {ShippingConfig} from "../model/shipping-config.model";
 
 const httpOptions = {
@@ -20,9 +19,9 @@ export class ShippingConfigService {
   constructor(private http: HttpClient) { }
 
 
-  getShippingConfigs(): Observable<Array<Farm>> {
+  getShippingConfigs(): Observable<Array<ShippingConfig>> {
     const url = configuration.host + '/api/shippingConfigs/';
-    return this.http.get<Array<Farm>>(url, httpOptions);
+    return this.http.get<Array<ShippingConfig>>(url, httpOptions);
   }
 
   getShippingConfig(id: number): Observable<ApiResponse> {

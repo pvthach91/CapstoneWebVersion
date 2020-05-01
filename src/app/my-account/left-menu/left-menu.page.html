@@ -41,6 +41,13 @@
     Orders
   </a>
 
+  <a routerLink="/my-account/shipping-config"
+     *ngIf="tokenStorage.hasPMRole()"
+     [ngClass]="isShippingConfigPage()?'active': ''">
+    <i class="fa fa-truck"></i>
+    Shipping Config
+  </a>
+
   <a routerLink="/my-account/chat"
      *ngIf="tokenStorage.hasFarmerRole() || tokenStorage.hasBuyerRole()"
      [ngClass]="isChatPage()?'active': ''">

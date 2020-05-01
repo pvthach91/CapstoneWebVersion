@@ -106,6 +106,10 @@ const routes: Routes = [
         loadChildren: () => import('./my-account/deliver-address/deliver-address.module').then( m => m.DeliverAddressPageModule)
       },
       {
+        path: 'shipping-config',
+        loadChildren: () => import('./my-account/shipping/shipping.module').then( m => m.ShippingPageModule)
+      },
+      {
         path: '',
         redirectTo: '/my-account/profile',
         pathMatch: 'full'

@@ -48,6 +48,10 @@ export class LeftMenuPage implements OnInit {
     return 'user' == this.currentPage ? true : false;
   }
 
+  isShippingConfigPage(): boolean {
+    return 'shipping-config' == this.currentPage ? true : false;
+  }
+
   logout() {
     this.tokenStorage.signOut();
     this.route.navigate(['/home']);
