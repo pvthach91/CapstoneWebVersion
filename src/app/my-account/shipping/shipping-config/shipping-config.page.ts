@@ -88,6 +88,7 @@ export class ShippingConfigPage implements OnInit {
         this.form.weightCarryFrom);
     this.shippingConfigService.addShippingConfig(sc).subscribe(
         data => {
+          this.configurationStorage.shippingConfigLatest = false;
           this.router.navigateByUrl('my-account/shipping-config');
         },
         error => {

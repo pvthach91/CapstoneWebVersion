@@ -3,6 +3,7 @@ import {AlertController} from "@ionic/angular";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ShippingConfig} from "../../model/shipping-config.model";
 import {ShippingConfigService} from "../../services/shipping-config.service";
+import {ConfigurationStorage} from "../../services/configuration-storage.service";
 
 @Component({
   selector: 'app-shipping',
@@ -15,6 +16,7 @@ export class ShippingPage implements OnInit {
 
   constructor(private shippingService: ShippingConfigService,
               public alertController: AlertController,
+              public configurationStorage: ConfigurationStorage,
               public router: Router,
               private route: ActivatedRoute) { }
 
@@ -39,6 +41,9 @@ export class ShippingPage implements OnInit {
     this.shippingService.getShippingConfigs().subscribe(
         data => {
           this.shippings = data;
+          if (!this.configurationStorage.shippingConfigLatest) {
+            this.configurationStorage.saveShippingConfigs(this.shippings);
+          }
         },
         error => {
           console.log(error);

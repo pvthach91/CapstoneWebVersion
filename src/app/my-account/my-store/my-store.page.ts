@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AlertController} from "@ionic/angular";
 import {ProductService} from "../../services/product.service";
 import {Product} from "../../model/product.model";
-import {UserSearchCriteria} from "../../model/user-search-criteria.model";
 import {configuration} from "../../model/configuration.model";
 
 @Component({
@@ -77,17 +76,11 @@ export class MyStorePage implements OnInit {
       page = 1;
     }
     let start = configuration.pageSize * (this.currentPage - 1);
-    // let end = configuration.pageSize;
     if (page == this.pages.length) {
       this.subProducts = this.products.slice(start);
     } else {
       this.subProducts = this.products.slice(start, configuration.pageSize);
     }
-
-    console.log(this.subProducts);
-
-    // this.subProducts = this.products.slice(start, end);
-    // this.search(page);
   }
 
 }
