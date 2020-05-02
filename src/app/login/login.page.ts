@@ -75,6 +75,7 @@ export class LoginPage implements OnInit {
         data => {
           if (data != null) {
             this.configurationStorage.saveConfiguration(data);
+            console.log(JSON.stringify(data));
           } else {
             this.presentAlert('Failed', '', 'Failed to get configuration');
           }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {OrderItem} from "../model/order-item.model";
 import {Product} from "../model/product.model";
+import {ShippingMethod} from "../model/shipping-method.model";
+import {ConfigurationStorage} from "./configuration-storage.service";
 
 const SHOPPING_CART_KEY = 'FoodProducerShoppingCart';
 
@@ -9,7 +11,7 @@ const SHOPPING_CART_KEY = 'FoodProducerShoppingCart';
 })
 export class CartStorageService {
 
-  constructor() { }
+  constructor(private configurationStorage: ConfigurationStorage) { }
 
   public saveShoppingCart(cartItems: Array<OrderItem>) {
     window.localStorage.removeItem(SHOPPING_CART_KEY);
@@ -76,6 +78,22 @@ export class CartStorageService {
       shoppingCart.splice(index, 1);
       this.saveShoppingCart(shoppingCart);
     }
+  }
+
+  getAvailableShippingMethod(): Array<ShippingMethod> {
+    let methods:Array<ShippingMethod> = Array<ShippingMethod>();
+    let shipByBuyer = new ShippingMethod('I get product by myself', 0);
+    methods.push(shipByBuyer);
+
+
+    let sc: Array<OrderItem> = this.getShoppingCart();
+
+    console.log(JSON.stringify(sc));
+
+    console.log(JSON.stringify(this.configurationStorage.getShippingConfigs()));
+
+
+    return methods;
   }
 
 }

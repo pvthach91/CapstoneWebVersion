@@ -3,6 +3,7 @@ import {AddressService} from "../../services/address.service";
 import {ActivatedRoute} from "@angular/router";
 import {AlertController} from "@ionic/angular";
 import {Address} from "../../model/address.model";
+import {ConfigurationStorage} from "../../services/configuration-storage.service";
 
 @Component({
   selector: 'app-deliver-address',
@@ -15,6 +16,7 @@ export class DeliverAddressPage implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private addressService: AddressService,
+              private configurationStorage: ConfigurationStorage,
               public alertController: AlertController) { }
 
   ngOnInit() {
@@ -39,6 +41,9 @@ export class DeliverAddressPage implements OnInit {
         data => {
           if (data != null) {
             this.addresses = data;
+            if (!this.configurationStorage.deliveryAddressLatest) {
+              this.configurationStorage.saveDeliveryAddresses(this.addresses);
+            }
           } else {
             this.presentAlert('Error', '', 'Failed to get address');
           }

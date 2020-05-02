@@ -116,6 +116,7 @@ export class DeliverAddressNewPage implements OnInit {
         data => {
           if (data.success) {
             this.router.navigate(['/my-account/deliver-address']);
+            this.configurationStorage.deliveryAddressLatest = false;
           } else {
             this.presentAlert('Error', '', 'Failed to update address');
           }

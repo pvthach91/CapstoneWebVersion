@@ -1,4 +1,5 @@
 import {Role} from './role.model';
+import {Vehicle} from "./vehicle.model";
 
 export class User {
   id: number;
@@ -14,6 +15,7 @@ export class User {
   longitude: number;
   isActive: boolean;
   roles: Array<Role>;
+  vehicles: Array<Vehicle>;
 
 
   constructor() {

@@ -56,44 +56,25 @@
               <div class="col-lg-6 col-12">
                 <div class="calculate-shipping">
                   <h4>Calculate Shipping</h4>
-                  <form action="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#">
+                  <form role="form" name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
                     <div class="row">
                       <div class="col-md-6 col-12 mb-25">
-                        <select class="nice-select" style="display: none;">
-                          <option>Bangladesh</option>
-                          <option>China</option>
-                          <option>country</option>
-                          <option>India</option>
-                          <option>Japan</option>
-                        </select><div class="nice-select" tabindex="0"><span class="current">Bangladesh</span><ul class="list"><li data-value="Bangladesh" class="option selected">Bangladesh</li><li data-value="China" class="option">China</li><li data-value="country" class="option">country</li><li data-value="India" class="option">India</li><li data-value="Japan" class="option">Japan</li></ul></div>
+                        <select class="nice-select" id="deliverAddress" name="deliverAddress" [(ngModel)]="form.deliverAddress" #deliverAddress="ngModel" (change)="changeDeliverAddress($event.target.value)">
+                          <option *ngFor="let add of addresses" [ngValue]="add">{{add.name}}</option>
+                        </select>
                       </div>
                       <div class="col-md-6 col-12 mb-25">
-                        <select class="nice-select" style="display: none;">
-                          <option>Dhaka</option>
-                          <option>Barisal</option>
-                          <option>Khulna</option>
-                          <option>Comilla</option>
-                          <option>Chittagong</option>
-                        </select><div class="nice-select" tabindex="0"><span class="current">Dhaka</span><ul class="list"><li data-value="Dhaka" class="option selected">Dhaka</li><li data-value="Barisal" class="option">Barisal</li><li data-value="Khulna" class="option">Khulna</li><li data-value="Comilla" class="option">Comilla</li><li data-value="Chittagong" class="option">Chittagong</li></ul></div>
+                        <input type="text" id="state" name="state" [(ngModel)]="form.state" #state="ngModel" readonly>
                       </div>
-                      <div class="col-md-6 col-12 mb-25">
-                        <input type="text" placeholder="Postcode / Zip">
-                      </div>
-                      <div class="col-md-6 col-12 mb-25">
-                        <input type="submit" value="Estimate">
+                      <div class="col-md-12 col-12 mb-25">
+                        <input type="text" id="address" name="address" [(ngModel)]="form.address" #address="ngModel" readonly>
                       </div>
                     </div>
-                  </form>
-                </div>
-                <div class="discount-coupon">
-                  <h4>Discount Coupon Code</h4>
-                  <form action="https://demo.hasthemes.com/greenfarm-preview/greenfarm/cart.html#">
                     <div class="row">
-                      <div class="col-md-6 col-12 mb-25">
-                        <input type="text" placeholder="Coupon Code">
-                      </div>
-                      <div class="col-md-6 col-12 mb-25">
-                        <input type="submit" value="Apply Code">
+                      <div class="col-md-12 col-12 mb-25">
+                        <select class="nice-select" id="shippingMethod" name="shippingMethod" [(ngModel)]="form.shippingMethod" #shippingMethod="ngModel" (change)="changeShippingMethod($event.target.value)">
+                          <option *ngFor="let sm of shippingMethods" [ngValue]="sm">{{sm.method}}</option>
+                        </select>
                       </div>
                     </div>
                   </form>
@@ -103,12 +84,12 @@
                 <div class="cart-summary">
                   <div class="cart-summary-wrap">
                     <h4>Cart Summary</h4>
-                    <p>Sub Total <span>$1250.00</span></p>
-                    <p>Shipping Cost <span>$00.00</span></p>
-                    <h2>Grand Total <span>$1250.00</span></h2>
+                    <p>Sub Total <span>PHP {{totalPrice | number}}</span></p>
+                    <p>Shipping Cost <span>PHP {{shippingFee}}</span></p>
+                    <h2>Grand Total <span>PHP {{totalPrice + shippingFee}}</span></h2>
                   </div>
                   <div class="cart-summary-button">
-                    <button class="checkout-btn">Checkout</button>
+                    <button (click)="checkout()" class="checkout-btn">Checkout</button>
                     <button class="update-btn">Update Cart</button>
                   </div>
                 </div>
