@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {OrderItem} from "../model/order-item.model";
 import {Product} from "../model/product.model";
 import {ShippingMethod} from "../model/shipping-method.model";
@@ -7,12 +7,9 @@ import {ShippingConfig} from "../model/shipping-config.model";
 import {Vehicle} from "../model/vehicle.model";
 import {DistanceService} from "./distance.service";
 import {User} from "../model/user.model";
-import {State} from "../model/state.model";
+import {configuration} from "../model/configuration.model";
 
 const SHOPPING_CART_KEY = 'FoodProducerShoppingCart';
-
-const SHOPPING_CART_SHIPPING_METHOD_KEY = 'CapstoneShoppingCartShippingMethod';
-const SHOPPING_CART_SHIPPING_FEE_KEY = 'CapstoneShoppingCartShippingFee';
 
 @Injectable({
   providedIn: 'root'
@@ -89,11 +86,12 @@ export class CartStorageService {
     }
   }
 
-  getAvailableShippingMethod(): Array<ShippingMethod> {
+  getAvailableShippingMethod(state:string): Array<ShippingMethod> {
     let methods:Array<ShippingMethod> = Array<ShippingMethod>();
     let shipByBuyer = new ShippingMethod('Self Shipping', 0, 0, 0, 0);
     methods.push(shipByBuyer);
 
+    let weight = 0;
 
     let sc: Array<OrderItem> = this.getShoppingCart();
 
@@ -107,6 +105,7 @@ export class CartStorageService {
         list.push(item);
         shoppingCartMap.set(item.product.user.id, list);
       }
+      weight += item.quantity;
     });
 
     // Only 1 producer so we need to get available vehicles
@@ -137,9 +136,6 @@ export class CartStorageService {
       });
 
       if (availableVehicle != null) {
-        // let distance = this.distanceService.distance(lat, lng, user.latitude, user.longitude);
-        // let roundDistance = Math.ceil(distance/1000);
-        // console.log('distance: ' + distance, "rounded: " + roundDistance);
         let shipByFarmer = new ShippingMethod('Shipping by Farmer', availableVehicle.pricePerKm, 1, user.latitude, user.longitude);
         methods.push(shipByFarmer);
       }
@@ -149,37 +145,48 @@ export class CartStorageService {
 
     let shoppingConfigs: Array<ShippingConfig> =this.configurationStorage.getShippingConfigs();
 
+    let configMap: Map<string, Array<ShippingConfig>> = new Map<string, Array<ShippingConfig>>();
+    shoppingConfigs.forEach((item, index) => {
+      if (configMap.has(item.state)) {
+        configMap.get(item.state).push(item);
+      } else {
+        let list:Array<ShippingConfig> = new Array<ShippingConfig>();
+        list.push(item);
+        configMap.set(item.state, list);
+      }
+    });
+    let currentStateConfigs:Array<ShippingConfig> = configMap.get(state);
+    console.log('currentStateConfigs' + currentStateConfigs);
+    if (currentStateConfigs.length >= 1) {
+      console.log('config >=1');
+      let keepLoop = true;
+      let availableConfig:ShippingConfig = null;
+      currentStateConfigs.forEach((config, index) => {
+        console.log('from: ' + config.weightCarryFrom+ ', to: ' + config.weightCarryTo+ ', weight: ' + weight);
+        if (keepLoop) {
+          if (config.weightCarryFrom<= weight && config.weightCarryTo >= weight) {
+            availableConfig = config;
+            keepLoop = false;
+          }
+        }
+      });
+
+      if (availableConfig != null) {
+        let shipByCompany = new ShippingMethod('Shipping by ' + configuration.appName, availableConfig.price, 2, 0, 0);
+        methods.push(shipByCompany);
+      }
+    } else {
+      console.log('config >=1');
+      let other:Array<ShippingConfig> = configMap.get('Otherwise');
+      if (other.length==0) {
+        let shipByCompany = new ShippingMethod('Shipping by ' + configuration.appName, 50, 2, 0, 0);
+        methods.push(shipByCompany);
+      } else if (other.length==1) {
+        let shipByCompany = new ShippingMethod('Shipping by ' + configuration.appName, other[0].price, 2, 0, 0);
+        methods.push(shipByCompany);
+      }
+    }
 
     return methods;
   }
-
-
-  public saveShippingMethod(method: string) {
-    window.localStorage.removeItem(SHOPPING_CART_SHIPPING_METHOD_KEY);
-    window.localStorage.setItem(SHOPPING_CART_SHIPPING_METHOD_KEY, method);
-  }
-
-  public getShippingMethod(): string {
-    let result = localStorage.getItem(SHOPPING_CART_SHIPPING_METHOD_KEY);
-    return result;
-  }
-
-  public removeShippingMethod(){
-    window.localStorage.removeItem(SHOPPING_CART_SHIPPING_METHOD_KEY);
-  }
-
-  public saveShippingFee(method: number) {
-    window.localStorage.removeItem(SHOPPING_CART_SHIPPING_FEE_KEY);
-    window.localStorage.setItem(SHOPPING_CART_SHIPPING_FEE_KEY, method.toString());
-  }
-
-  public getShippingFee(): string {
-    let result = localStorage.getItem(SHOPPING_CART_SHIPPING_FEE_KEY);
-    return result;
-  }
-
-  public removeShippingFee(){
-    window.localStorage.removeItem(SHOPPING_CART_SHIPPING_FEE_KEY);
-  }
-
 }

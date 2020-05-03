@@ -1,0 +1,46 @@
+<ion-content [fullscreen]="true">
+
+  <div class="main-content">
+
+    <app-header #headerPage></app-header>
+
+    <div class="breadcrumb-area mb-50">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="breadcrumb-container">
+              <ul>
+                <li><a routerLink="/home"><i class="fa fa-home"></i> Home</a></li>
+                <li class="active">Shop</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="single-product-content ">
+      <div class="container">
+        <div class="single-product-content-container mb-35">
+          <div class="row justify-content-center">
+            <div class="col-lg-9 col-xl-8">
+              <div class="section-title mb-4">
+                <h2 class="text-center mb-0">Thank You For Your Order</h2>
+              </div>
+              <div class="text-center">
+                <p>Thanks for shopping! Your order hasn’t shipped yet but we will send you an email when it does.</p>
+                <p class="mb-5">Order ID: <span class="text-dark">{{id}}</span></p>
+
+                <a class="btn btn-outline-dark text-uppercase letter-spacing-5 py-3 mb-5 mb-md-0 mr-md-2" routerLink="/home">Back To Shop</a>
+                <a class="btn btn-outline-dark text-uppercase letter-spacing-5 py-3 ml-md-2" routerLink="/track">Track Order</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <app-footer></app-footer>
+  </div>
+</ion-content>

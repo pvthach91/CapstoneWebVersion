@@ -11,6 +11,7 @@ import {AlertController} from "@ionic/angular";
 import {User} from "../model/user.model";
 import {OrderRequest} from "../model/post/order-request.model";
 import {OrderItemRequest} from "../model/post/order-item-request.model";
+import {OrderService} from "../services/order.service";
 
 @Component({
   selector: 'app-checkout',
@@ -38,6 +39,7 @@ export class CheckoutPage implements OnInit {
               private configurationStorage: ConfigurationStorage,
               private route: ActivatedRoute,
               private distanceService: DistanceService,
+              private orderService: OrderService,
               public alertController: AlertController) { }
 
   ngOnInit() {
@@ -53,7 +55,7 @@ export class CheckoutPage implements OnInit {
             this.addresses = this.configurationStorage.getDeliveryAddresses();
             this.form.deliverAddress = new Address(null,'', '', '', 0, 0);
 
-            this.shippingMethods = this.cartStorage.getAvailableShippingMethod();
+            // this.shippingMethods = this.cartStorage.getAvailableShippingMethod();
             this.updateAddress();
           }
         });
@@ -89,6 +91,8 @@ export class CheckoutPage implements OnInit {
 
   changeDeliverAddress(address: any) {
     this.updateAddress();
+    this.shippingMethods = this.cartStorage.getAvailableShippingMethod(this.form.deliverAddress.state);
+    this.form.shippingMethod = null;
     if (this.form.shippingMethod != null && this.form.shippingMethod.latitude != null) {
       let d = this.distanceService.distance(this.form.deliverAddress.latitude, this.form.deliverAddress.longitude, this.form.shippingMethod.latitude, this.form.shippingMethod.longitude);
       this.currentDistance = Math.ceil(d/1000);
@@ -159,7 +163,19 @@ export class CheckoutPage implements OnInit {
         }, {
           text: 'Ok',
           handler: () => {
-            console.log('order');
+            this.orderService.create(this.getOrderRequest()).subscribe(
+                data => {
+                  if (data.success) {
+                    this.cartStorage.remove();
+                    this.goToConfirmationPage(data.data);
+                  } else {
+                    this.presentAlert("Error", '', data.message);
+                  }
+                },
+                error => {
+                  this.presentAlert("Error", '', error);
+                }
+            );
           }
         }
       ]
@@ -183,6 +199,10 @@ export class CheckoutPage implements OnInit {
     let orderRequest: OrderRequest = new OrderRequest(address, lat, lng, this.totalPrice, shippingMethod, this.shippingFee, items);
 
     return orderRequest;
+  }
+
+  goToConfirmationPage(id: number) {
+    this.router.navigateByUrl('/confirmation/' + id);
   }
 
 }
