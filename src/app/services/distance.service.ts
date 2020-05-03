@@ -9,7 +9,7 @@ export class  DistanceService {
   constructor() { }
 
 
-  public distance(lat1, lon1, lat2, lon2) {
+  public distance(lat1, lon1, lat2, lon2): number {
       var a = 6378137,
           b = 6356752.3142,
           f = 1 / 298.257223563, // WGS-84 ellipsoid params
@@ -53,6 +53,8 @@ export class  DistanceService {
           B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq))),
           deltaSigma = B * sinSigma * (cos2SigmaM + B / 4 * (cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM) - B / 6 * cos2SigmaM * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2SigmaM * cos2SigmaM))),
           s = b * A * (sigma - deltaSigma);
-      return s.toFixed(3); // round to 1mm precision
+      var resultStr:string = s.toFixed(3);
+      var result = parseFloat(resultStr);
+      return result; // round to 1mm precision
   }
 }

@@ -3,12 +3,15 @@ import {State} from "../model/state.model";
 import {ShippingConfig} from "../model/shipping-config.model";
 import {ConfigurationSingleton} from "../model/configuration-singleton.model";
 import {Address} from "../model/address.model";
+import {User} from "../model/user.model";
 
 const STATE_LIST_KEY = 'CapstoneStateList';
 
 const SHIPPING_CONFIG_LIST_KEY = 'CapstoneShippingConfigList';
 
 const DELIVERY_ADDRESS_LIST_KEY = 'CapstoneDeliveryAddressList';
+
+const CURRENT_USER_KEY = 'CapstoneCurrentUser';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +28,7 @@ export class ConfigurationStorage {
       this.saveStateList(config.states);
       this.saveShippingConfigs(config.shippingConfigs);
       this.saveDeliveryAddresses(config.deliveryAddresses);
+      this.saveCurrentUser(config.user);
     }
 
 
@@ -93,6 +97,27 @@ export class ConfigurationStorage {
 
     public removeDeliveryAddresses(){
         window.localStorage.removeItem(DELIVERY_ADDRESS_LIST_KEY);
+    }
+
+    //Current User
+    public saveCurrentUser(user: User) {
+        window.localStorage.removeItem(CURRENT_USER_KEY);
+        window.localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+        this.deliveryAddressLatest = true;
+    }
+
+    public getCurrentUser(): User {
+        let json = localStorage.getItem(CURRENT_USER_KEY);
+        if (json == undefined || json == null) {
+            return new User();
+        } else {
+            let result: User = JSON.parse(json);
+            return result;
+        }
+    }
+
+    public removeCurrentUser(){
+        window.localStorage.removeItem(CURRENT_USER_KEY);
     }
 
 }

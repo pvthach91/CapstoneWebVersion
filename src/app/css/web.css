@@ -4866,8 +4866,8 @@ p.result-show-message {
   opacity: 1; }
 
 /*-- Shipping Form --*/
-#shipping-form {
-  display: none; }
+/*#shipping-form {*/
+/*  display: none; }*/
 
 /*-- Checkout Cart Total --*/
 .checkout-cart-total {

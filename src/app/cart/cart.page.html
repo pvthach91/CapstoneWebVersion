@@ -54,39 +54,14 @@
               </div>
             <div class="row">
               <div class="col-lg-6 col-12">
-                <div class="calculate-shipping">
-                  <h4>Calculate Shipping</h4>
-                  <form role="form" name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
-                    <div class="row">
-                      <div class="col-md-6 col-12 mb-25">
-                        <select class="nice-select" id="deliverAddress" name="deliverAddress" [(ngModel)]="form.deliverAddress" #deliverAddress="ngModel" (change)="changeDeliverAddress($event.target.value)">
-                          <option *ngFor="let add of addresses" [ngValue]="add">{{add.name}}</option>
-                        </select>
-                      </div>
-                      <div class="col-md-6 col-12 mb-25">
-                        <input type="text" id="state" name="state" [(ngModel)]="form.state" #state="ngModel" readonly>
-                      </div>
-                      <div class="col-md-12 col-12 mb-25">
-                        <input type="text" id="address" name="address" [(ngModel)]="form.address" #address="ngModel" readonly>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12 col-12 mb-25">
-                        <select class="nice-select" id="shippingMethod" name="shippingMethod" [(ngModel)]="form.shippingMethod" #shippingMethod="ngModel" (change)="changeShippingMethod($event.target.value)">
-                          <option *ngFor="let sm of shippingMethods" [ngValue]="sm">{{sm.method}}</option>
-                        </select>
-                      </div>
-                    </div>
-                  </form>
-                </div>
               </div>
               <div class="col-lg-6 col-12 d-flex">
                 <div class="cart-summary">
                   <div class="cart-summary-wrap">
                     <h4>Cart Summary</h4>
                     <p>Sub Total <span>PHP {{totalPrice | number}}</span></p>
-                    <p>Shipping Cost <span>PHP {{shippingFee}}</span></p>
-                    <h2>Grand Total <span>PHP {{totalPrice + shippingFee}}</span></h2>
+                    <p>Shipping Cost <span>PHP 0</span></p>
+                    <h2>Grand Total <span>PHP {{totalPrice | number}}</span></h2>
                   </div>
                   <div class="cart-summary-button">
                     <button (click)="checkout()" class="checkout-btn">Checkout</button>
