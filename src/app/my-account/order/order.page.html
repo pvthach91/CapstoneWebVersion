@@ -29,6 +29,19 @@
                 <div class="tab-content" id="myaccountContent">
                   <div class="tab-pane fade active" id="orders" role="tabpanel">
                     <div class="myaccount-content">
+                      <span class="pull-right">
+                        <label class="mr-5">Order Status</label>
+                        <select class="mr-5" id="status" name="status" [(ngModel)]="form.status" #status="ngModel">
+                          <option value="all">All</option>
+                          <option value="PROCESSING">Processing</option>
+                          <option value="PROCESSED">Processed</option>
+                          <option value="DELIVERING">Delivering</option>
+                          <option value="FINISHED">Finished</option>
+                          <option value="CANCELLED">Cancelled</option>
+                        </select>
+                        <input type="search" placeholder="Search order ref" aria-label="Search" id="orderId" name="orderId" [(ngModel)]="form.orderId" #orderId="ngModel">
+                        <a (click)="search(1)" class="btn btn-info"><i class="fa fa-search"></i></a>
+                      </span>
                       <h3>Orders</h3>
 
                       <div class="myaccount-table table-responsive text-center">
