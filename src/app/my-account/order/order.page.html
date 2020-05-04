@@ -57,7 +57,7 @@
                               <span *ngIf="isCancelled(order)" class="badge badge-danger">{{order.status}}</span>
                             </td>
                             <td>
-                              <a routerLink="view/1" class="btn btn-primary btn-sm mr-1">
+                              <a routerLink="view/{{order.id}}" class="btn btn-primary btn-sm mr-1">
                                 <i class="fa fa-folder"></i>View
                               </a>
                               <a *ngIf="isProcessing(order)" (click)="processOrder(order.id, i)" class="btn btn-info btn-sm">

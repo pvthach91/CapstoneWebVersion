@@ -4,6 +4,7 @@ import {configuration} from "../../model/configuration.model";
 import {OrderService} from "../../services/order.service";
 import {OrderCriteriaSearch} from "../../model/order-criteria-search.model";
 import {AlertController} from "@ionic/angular";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-order',
@@ -22,11 +23,16 @@ export class OrderPage implements OnInit {
   private configuration = configuration;
 
   constructor(private orderService: OrderService,
+              private route: ActivatedRoute,
               public alertController: AlertController) { }
 
   ngOnInit() {
     this.form.status = 'all';
-    this.search(1);
+    this.route.params.subscribe(
+        params => {
+          this.search(1);
+        });
+
   }
 
   async presentAlert(header: string, subHeader: string, message: string) {

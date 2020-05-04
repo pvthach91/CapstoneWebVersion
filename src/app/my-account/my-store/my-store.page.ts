@@ -3,6 +3,7 @@ import {AlertController} from "@ionic/angular";
 import {ProductService} from "../../services/product.service";
 import {Product} from "../../model/product.model";
 import {configuration} from "../../model/configuration.model";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-my-store',
@@ -20,10 +21,14 @@ export class MyStorePage implements OnInit {
   private configuration = configuration;
 
   constructor(public alertController: AlertController,
+              private route: ActivatedRoute,
               private productService: ProductService) { }
 
   ngOnInit() {
-    this.search(1);
+    this.route.params.subscribe(
+        params => {
+          this.search(1);
+        });
   }
 
   async presentAlert(header: string, subHeader: string, message: string) {
