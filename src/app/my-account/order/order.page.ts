@@ -5,6 +5,7 @@ import {OrderService} from "../../services/order.service";
 import {OrderCriteriaSearch} from "../../model/order-criteria-search.model";
 import {AlertController} from "@ionic/angular";
 import {ActivatedRoute, Router} from "@angular/router";
+import {TokenStorageService} from "../../auth/token-storage.service";
 
 @Component({
   selector: 'app-order',
@@ -24,6 +25,7 @@ export class OrderPage implements OnInit {
 
   constructor(private orderService: OrderService,
               private route: ActivatedRoute,
+              private tokenStorage: TokenStorageService,
               public alertController: AlertController) { }
 
   ngOnInit() {

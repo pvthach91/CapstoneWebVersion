@@ -5,6 +5,7 @@ import {OrderService} from "../../../services/order.service";
 import {AlertController} from "@ionic/angular";
 import {configuration} from "../../../model/configuration.model";
 import {User} from "../../../model/user.model";
+import {TokenStorageService} from "../../../auth/token-storage.service";
 
 @Component({
   selector: 'app-order-view',
@@ -25,6 +26,7 @@ export class OrderViewPage implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private orderService: OrderService,
+              private tokenStorage: TokenStorageService,
               public alertController: AlertController) {
   }
 

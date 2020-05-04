@@ -42,7 +42,7 @@
 
                         <div class="myaccount-table table-responsive text-center">
                           <form>
-                            <div class="login-form">
+                            <div *ngIf="tokenStorage.hasPMRole() || tokenStorage.hasFarmerRole()" class="login-form">
                               <div class="row">
                                 <div class="col-md-6 col-12 mb-20">
                                   <label>Order Reference</label>
@@ -100,7 +100,7 @@
                                 </tbody>
                               </table>
                             </div>
-                            <div class="login-form">
+                            <div *ngIf="tokenStorage.hasPMRole()" class="login-form">
                               <div class="row">
                                 <div class="col-12">
                                   <button *ngIf="isProcessing" class="btn btn-primary" (click)="processOrder(order.id)" style="border-radius: 50px !important;">Set Processed</button>

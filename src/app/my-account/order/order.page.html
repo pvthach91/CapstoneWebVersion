@@ -60,16 +60,16 @@
                               <a routerLink="view/{{order.id}}" class="btn btn-primary btn-sm mr-1">
                                 <i class="fa fa-folder"></i>View
                               </a>
-                              <a *ngIf="isProcessing(order)" (click)="processOrder(order.id, i)" class="btn btn-info btn-sm">
+                              <a *ngIf="tokenStorage.hasPMRole() && isProcessing(order)" (click)="processOrder(order.id, i)" class="btn btn-info btn-sm">
                                 <i class="fa fa-spinner"></i>Set Processed
                               </a>
-                              <a *ngIf="isProcessed(order)" (click)="deliverOrder(order.id, i)" class="btn btn-info btn-sm">
+                              <a *ngIf="tokenStorage.hasPMRole() && isProcessed(order)" (click)="deliverOrder(order.id, i)" class="btn btn-info btn-sm">
                                 <i class="fa fa fa-truck"></i>Set Delivering
                               </a>
-                              <a *ngIf="isDelivering(order)" (click)="finishOrder(order.id, i)" class="btn btn-info btn-sm">
+                              <a *ngIf="tokenStorage.hasPMRole() && isDelivering(order)" (click)="finishOrder(order.id, i)" class="btn btn-info btn-sm">
                                 <i class="fa fa-check"></i>Set Finished
                               </a>
-                              <a *ngIf="isProcessing(order) || isProcessed(order)" (click)="cancelOrder(order.id, i)" class="btn btn-danger btn-sm ml-1">
+                              <a *ngIf="tokenStorage.hasPMRole() && isProcessing(order) || isProcessed(order)" (click)="cancelOrder(order.id, i)" class="btn btn-danger btn-sm ml-1">
                                 <i class="fa fa-trash"></i>Cancel
                               </a>
                             </td>
