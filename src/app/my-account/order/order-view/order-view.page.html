@@ -30,10 +30,49 @@
                   <div class="tab-pane fade active" id="orders" role="tabpanel">
                     <div class="myaccount-content">
                       <span class="pull-right"><a routerLink="/my-account/order" data-toggle="tooltip" title="Back to order" class="btn btn-info"><i class="fa fa-arrow-left"></i></a></span>
-                      <h3>Order Details</h3>
+                      <h3>Order Details
+                        <span>
+                          <span *ngIf="isProcessing || isProcessed" class="badge bg-primary">{{order.status}}</span>
+                          <span *ngIf="isDelivering" class="badge bg-success">{{order.status}}</span>
+                          <span *ngIf="isFinished" class="badge bg-dark">{{order.status}}</span>
+                          <span *ngIf="isCancelled" class="badge bg-danger">{{order.status}}</span>
+                        </span>
+                      </h3>
+
 
                         <div class="myaccount-table table-responsive text-center">
                           <form>
+                            <div class="login-form">
+                              <div class="row">
+                                <div class="col-md-6 col-12 mb-20">
+                                  <label>Order Reference</label>
+                                  <input class="mb-0" type="text" value="{{order.orderId}}" readonly>
+                                </div>
+                                <div class="col-md-6 col-12 mb-20">
+                                  <label>Date</label>
+                                  <input class="mb-0" type="text" value="{{order.date | date: 'yyyy/MM/dd HH:mm'}}" readonly>
+                                </div>
+
+                                <div class="col-md-6 col-12 mb-20">
+                                  <label>Order By</label>
+                                  <input class="mb-0" type="text" value="{{order.orderBy.name}}" readonly>
+                                </div>
+                                <div class="col-md-6 col-12 mb-20">
+                                  <label>Email</label>
+                                  <input class="mb-0" type="text" value="{{order.orderBy.email}}" readonly>
+                                </div>
+
+                                <div class="col-md-6 col-12 mb-20">
+                                  <label>Phone</label>
+                                  <input class="mb-0" type="text" value="{{order.orderBy.phone}}" readonly>
+                                </div>
+                                <div class="col-md-6 col-12 mb-20">
+                                  <label>Address</label>
+                                  <input class="mb-0" type="text" value="{{order.address}}" readonly>
+                                </div>
+                            </div>
+                            </div>
+
                             <div class="cart-table table-responsive mb-40">
                               <table class="table">
                                 <thead>
@@ -46,35 +85,32 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <tr *ngFor="let orderItem of order.items; let i = index">
+                                  <td class="pro-thumbnail"><a><img src="{{configuration.host}}/api/guest/file/{{orderItem.product.images[0]}}" class="img-fluid" alt="Product"></a></td>
+                                  <td class="pro-title"><a>{{orderItem.product.name}}</a></td>
+                                  <td class="pro-price"><span>PHP {{orderItem.product.price}}</span></td>
+                                  <td class="pro-quantity">{{orderItem.quantity}}</td>
+                                  <td class="pro-subtotal"><span>PHP {{orderItem.product.price * orderItem.quantity}}</span></td>
+                                </tr>
+
                                 <tr>
-                                  <td class="pro-thumbnail"><a><img src="assets/images/product01.jpg" class="img-fluid" alt="Product"></a></td>
-                                  <td class="pro-title"><a>Cillum dolore tortor nisl fermentum</a></td>
-                                  <td class="pro-price"><span>$29.00</span></td>
-                                  <td class="pro-quantity">1</td>
-                                  <td class="pro-subtotal"><span>$29.00</span></td>
+                                  <td colspan="4" class="pro-title"><a><strong>Total price</strong></a></td>
+                                  <td class="pro-subtotal"><span>PHP {{order.totalPrice}}</span></td>
                                 </tr>
                                 </tbody>
                               </table>
                             </div>
-                          </form>
-                          <div class="row">
-                            <div class="col-lg-6 col-12">
-                            </div>
-                            <div class="col-lg-6 col-12 d-flex">
-                              <div class="cart-summary">
-                                <div class="cart-summary-wrap">
-                                  <h4>Cart Summary</h4>
-                                  <p>Sub Total <span>$1250.00</span></p>
-                                  <p>Shipping Cost <span>$00.00</span></p>
-                                  <h2>Grand Total <span>$1250.00</span></h2>
-                                </div>
-                                <div class="cart-summary-button">
-                                  <button class="checkout-btn">Checkout</button>
-                                  <button class="update-btn">Update Cart</button>
+                            <div class="login-form">
+                              <div class="row">
+                                <div class="col-12">
+                                  <button *ngIf="isProcessing" class="btn btn-primary" (click)="processOrder(order.id)" style="border-radius: 50px !important;">Set Processed</button>
+                                  <button *ngIf="isProcessed" class="btn btn-primary" (click)="deliverOrder(order.id)" style="border-radius: 50px !important;">Set Delivering</button>
+                                  <button *ngIf="isDelivering" class="btn btn-primary" (click)="finishOrder(order.id)" style="border-radius: 50px !important;">Set Finished</button>
+                                  <button *ngIf="isProcessing || isProcessed" class="btn btn-danger ml-1" (click)="cancelOrder(order.id)" style="border-radius: 50px !important;">Cancel Order</button>
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </form>
                         </div>
                     </div>
                   </div>
