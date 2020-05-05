@@ -47,9 +47,9 @@
             </div>
 
             <div class="header-advance-search">
-              <form>
-                <input type="text" placeholder="Search products">
-                <button><span><i class="fa fa-search" aria-hidden="true"></i></span></button>
+              <form role="form" name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+                <input type="text" placeholder="Search products" id="productName" name="productName" [(ngModel)]="form.productName" #productName="ngModel">
+                <button (click)="search()"><span><i class="fa fa-search" aria-hidden="true"></i></span></button>
               </form>
             </div>
 

@@ -2,7 +2,7 @@
 
   <div class="main-content">
 
-    <app-header #headerPage></app-header>
+    <app-header #headerPage (searchEmit)="searchFromHeader($event)"></app-header>
 
     <div class="breadcrumb-area mb-50">
       <div class="container">
@@ -23,199 +23,51 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-3 order-2 order-lg-1">
-            <!--=======  sidebar area  =======-->
-
+            <form role="form" name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
             <div class="sidebar-area">
-              <!--=======  single sidebar  =======-->
-
               <div class="sidebar mb-35">
                 <h3 class="sidebar-title">PRODUCT CATEGORIES</h3>
                 <ul class="product-categories">
-                  <li><a class="active" href="">Beans</a></li>
-                  <li><a href="">Bread</a></li>
-                  <li><a href="">Eggs</a></li>
-                  <li><a href="">Fruits</a></li>
-                  <li><a href="">Salads</a></li>
-                  <li><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">Fast Foods</a></li>
-                  <li><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">Fish &amp; Meats</a></li>
-                  <li><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">Uncategorized</a></li>
+                  <li><input type="checkbox" [ngModelOptions]="{standalone: true}" [(ngModel)]="form.checkPoultry"/> Poultry</li>
+                  <li><input type="checkbox" [ngModelOptions]="{standalone: true}" [(ngModel)]="form.checkLivestock"/> Livestock</li>
+                  <li><input type="checkbox" [ngModelOptions]="{standalone: true}" [(ngModel)]="form.checkAquatic"/> Aquatic</li>
+                  <li><input type="checkbox" [ngModelOptions]="{standalone: true}" [(ngModel)]="form.checkVegetable"/> Vegetable</li>
+                  <li><input type="checkbox" [ngModelOptions]="{standalone: true}" [(ngModel)]="form.checkFruit"/> Fruit</li>
+                  <li><input type="checkbox" [ngModelOptions]="{standalone: true}" [(ngModel)]="form.checkOther"/> Other</li>
                 </ul>
               </div>
-
-              <!--=======  End of single sidebar  =======-->
-
-              <!--=======  single sidebar  =======-->
-
-              <div class="sidebar mb-35">
-                <h3 class="sidebar-title">Filter By</h3>
-                <ul class="product-categories">
-                  <li><a class="active" href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">Gold</a></li>
-                  <li><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">Green</a></li>
-                  <li><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">White</a></li>
-                </ul>
-              </div>
-
-              <!--=======  End of single sidebar  =======-->
-
-              <!--=======  single sidebar  =======-->
 
               <div class="sidebar mb-35">
                 <h3 class="sidebar-title">Filter By Price</h3>
                 <div class="sidebar-price">
-                  <div id="price-range" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 1.25%; width: 47.25%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 1.25%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 48.5%;"></span></div>
-                  <input type="text" id="price-amount" readonly="">
+                  <div>
+                    <select id="price" name="price" [(ngModel)]="form.price" #price="ngModel" style="width: 100%; border-radius: 5px; padding: 5px;">
+                      <option value="1;100">1 - 100</option>
+                      <option value="101;200">101 - 200</option>
+                      <option value="201;300">201 - 300</option>
+                    </select>
+                  </div>
+                  <div>
+                    <select id="onsale" name="onsale" [(ngModel)]="form.onsale" style="width: 100%; border-radius: 5px; padding: 5px;">
+                      <option value="">Both</option>
+                      <option value="true">On Sale</option>
+                      <option value="false">Not On sale</option>
+                    </select>
+                  </div>
                 </div>
               </div>
-
-              <!--=======  End of single sidebar  =======-->
-
-              <!--=======  single sidebar  =======-->
 
               <div class="sidebar mb-35">
-                <h3 class="sidebar-title">Compare</h3>
-
-                <!--=======  compare product container  =======-->
-
-                <ul class="product-list">
-                  <li>
-                    <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html" class="remove" title="Remove">x</a>
-                    <a class="title" href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html">Cillum dolore tortor nisl fermentum</a>
-                  </li>
-                  <li>
-                    <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html" class="remove" title="Remove">x</a>
-                    <a class="title" href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html">Condimentum posuere consectetur</a>
-                  </li>
+                <h3 class="sidebar-title">Search Nearby</h3>
+                <ul class="product-categories">
+                  <select id="nearBy" name="nearBy" [(ngModel)]="form.nearBy" #nearBy="ngModel" style="width: 100%; border-radius: 5px; padding: 5px;">
+                    <option *ngFor="let add of deliverAddress" [ngValue]="add">{{add.name}}</option>
+                  </select>
                 </ul>
-                <div class="compare-btns">
-                  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html#" class="clear-all">Clear all</a>
-                  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html#" class="compare">Compare</a>
-                </div>
-
-                <!--=======  End of compare product container  =======-->
-
               </div>
-
-              <!--=======  End of single sidebar  =======-->
-
-              <!--=======  single sidebar  =======-->
-
-              <div class="sidebar mb-35">
-                <h3 class="sidebar-title">Top rated products</h3>
-
-                <!--=======  top rated product container  =======-->
-
-                <div class="top-rated-product-container">
-                  <!--=======  single top rated product  =======-->
-
-                  <div class="single-top-rated-product d-flex align-content-center">
-                    <div class="image">
-                      <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html">
-                        <img src="assets/images/product01.jpg" class="img-fluid" alt="">
-                      </a>
-                    </div>
-                    <div class="content">
-                      <p><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html">Eodem modo vel mattis</a></p>
-                      <p class="product-rating">
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                      </p>
-
-                      <p class="product-price">
-                        <span class="discounted-price"> $10.00</span>
-                        <span class="main-price">$12.90</span>
-
-                      </p>
-                    </div>
-                  </div>
-
-                  <!--=======  End of single top rated product  =======-->
-                  <!--=======  single top rated product  =======-->
-
-                  <div class="single-top-rated-product d-flex align-content-center">
-                    <div class="image">
-                      <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html">
-                        <img src="assets/images/product02.jpg" class="img-fluid" alt="">
-                      </a>
-                    </div>
-                    <div class="content">
-                      <p><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html">Mirum est notare tellus</a></p>
-                      <p class="product-rating">
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                      </p>
-
-                      <p class="product-price">
-                        <span class="discounted-price"> $10.00</span>
-                        <span class="main-price">$12.90</span>
-
-                      </p>
-                    </div>
-                  </div>
-
-                  <!--=======  End of single top rated product  =======-->
-                  <!--=======  single top rated product  =======-->
-
-                  <div class="single-top-rated-product d-flex align-content-center">
-                    <div class="image">
-                      <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html">
-                        <img src="assets/images/product03.jpg" class="img-fluid" alt="">
-                      </a>
-                    </div>
-                    <div class="content">
-                      <p><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html">Aliquam lobortis est turpis</a></p>
-                      <p class="product-rating">
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                      </p>
-
-                      <p class="product-price">
-                        <span class="discounted-price"> $10.00</span>
-                        <span class="main-price">$12.90</span>
-
-                      </p>
-                    </div>
-                  </div>
-
-                  <!--=======  End of single top rated product  =======-->
-
-                </div>
-
-                <!--=======  End of top rated product container  =======-->
-              </div>
-
-              <!--=======  End of single sidebar  =======-->
-
-              <!--=======  single sidebar  =======-->
-
-              <div class="sidebar">
-                <h3 class="sidebar-title">Product Tags</h3>
-                <!--=======  tag container  =======-->
-
-                <ul class="tag-container">
-                  <li><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">new</a> </li>
-                  <li><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">bags</a> </li>
-                  <li><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">new</a> </li>
-                  <li><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">kids</a> </li>
-                  <li><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">fashion</a> </li>
-                  <li><a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html">Accessories</a> </li>
-                </ul>
-
-                <!--=======  End of tag container  =======-->
-              </div>
-
-              <!--=======  End of single sidebar  =======-->
             </div>
+            </form>
 
-            <!--=======  End of sidebar area  =======-->
           </div>
           <div class="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
 

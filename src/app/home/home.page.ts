@@ -7,6 +7,8 @@ import {ActivatedRoute} from "@angular/router";
 import {ProductCriteriaSearch} from "../model/product-criteria-search.model";
 import {CartStorageService} from "../services/cart-storage.service";
 import {HeaderPage} from "../header/header.page";
+import {ConfigurationStorage} from "../services/configuration-storage.service";
+import {Address} from "../model/address.model";
 
 @Component({
   selector: 'app-home',
@@ -16,6 +18,8 @@ import {HeaderPage} from "../header/header.page";
 export class HomePage implements OnInit {
   @ViewChild('headerPage',null) headerPage:HeaderPage;
 
+  form: any = {};
+
   products:Array<Product> = new Array<Product>();
   subProducts:Array<Product> = new Array<Product>();
   currentPage: number = 1;
@@ -24,16 +28,20 @@ export class HomePage implements OnInit {
 
   gridView = true;
 
+  deliverAddress:Array<Address> = new Array<Address>();
+
   private configuration = configuration;
 
   constructor(public alertController: AlertController,
               private route: ActivatedRoute,
               private cartStorage: CartStorageService,
+              private configurationStorage: ConfigurationStorage,
               private productService: ProductService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
         params => {
+            this.deliverAddress = this.configurationStorage.getDeliveryAddresses();
           this.search();
         });
 
@@ -51,13 +59,30 @@ export class HomePage implements OnInit {
   }
 
   search() {
+      let price:string = this.form.price;
+      let priceFrom = null;
+      let priceTo = null;
+      if (price != null || price != undefined) {
+          let split = price.split(';');
+          priceFrom = split[0];
+          priceTo = split[1];
+      }
+      let selectedOnsale = this.form.onsale;
+      let onsale = null;
+      if (selectedOnsale == null || selectedOnsale == undefined || selectedOnsale == '') {
+          onsale = null;
+      } else if (selectedOnsale == 'true') {
+          onsale = true;
+      } else {
+          onsale = false;
+      }
     let criteria = new ProductCriteriaSearch(
-        null,
-        null,
-        null,
-        1,
-        100000,
-        null,
+        this.form.productName,
+        this.generateCategories(),
+        this.form.nearBy == null ? '': this.form.nearBy.state,
+        priceFrom,
+        priceTo,
+        onsale,
         0);
     this.productService.getProducts(criteria).subscribe(
         data => {
@@ -71,6 +96,42 @@ export class HomePage implements OnInit {
           console.log(error);
         }
     );
+  }
+
+  generateCategories(): Array<string> {
+      let category:Array<string> = new Array<string>();
+
+      let checkPoultry = this.form.checkPoultry;
+      if (checkPoultry == true) {
+          category.push('Poultry');
+      }
+
+      let checkLivestock = this.form.checkLivestock;
+      if (checkLivestock == true) {
+          category.push('Livestock');
+      }
+
+      let checkAquatic = this.form.checkAquatic;
+      if (checkAquatic == true) {
+          category.push('Aquatic');
+      }
+
+      let checkVegetable = this.form.checkVegetable;
+      if (checkVegetable == true) {
+          category.push('Vegetable');
+      }
+
+      let checkFruit = this.form.checkFruit;
+      if (checkFruit == true) {
+          category.push('Fruit');
+      }
+
+      let checkOther = this.form.checkOther;
+      if (checkOther == true) {
+          category.push('Other');
+      }
+
+      return category;
   }
 
   makePages() {
@@ -125,5 +186,10 @@ export class HomePage implements OnInit {
 
   updateShoppingCartHeader() {
     this.headerPage.updateCart();
+  }
+
+  searchFromHeader(productName: string) {
+    this.form.productName = productName;
+    this.search();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {TokenStorageService} from "../auth/token-storage.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {OrderItem} from "../model/order-item.model";
@@ -11,9 +11,13 @@ import {CartStorageService} from "../services/cart-storage.service";
 })
 export class HeaderPage implements OnInit {
 
+  @Output() searchEmit = new EventEmitter();
+
   shoppingCart: Array<OrderItem>;
   totalPrice: number;
   totalItem: number;
+
+  form: any = {};
 
   constructor(private tokenStorage: TokenStorageService,
               private cartStorage: CartStorageService,
@@ -41,6 +45,10 @@ export class HeaderPage implements OnInit {
       this.totalPrice += rowPrice;
       this.totalItem ++;
     });
+  }
+
+  search() {
+    this.searchEmit.emit(this.form.productName);
   }
 
 }
