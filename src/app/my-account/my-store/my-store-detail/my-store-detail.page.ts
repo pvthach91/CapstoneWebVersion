@@ -55,7 +55,7 @@ export class MyStoreDetailPage implements OnInit {
 
   myComment: string = '';
 
-  isPMRole = true;
+  isPMRole = false;
 
   constructor(public alertController: AlertController,
               private route: ActivatedRoute,
@@ -67,9 +67,9 @@ export class MyStoreDetailPage implements OnInit {
               private productService: ProductService) { }
 
   ngOnInit() {
-    this.isPMRole = this.tokenStorage.hasPMRole();
     this.getFarmAddress();
     this.route.params.subscribe(params => {
+      this.isPMRole = this.tokenStorage.hasPMRole();
       this.id = params['id'];
       if (this.id == null || this.id == undefined) {
         // Load new page
