@@ -4,6 +4,9 @@ import {Observable} from "rxjs";
 import {configuration} from "../model/configuration.model";
 import {ApiResponse} from "../model/api-response.model";
 import {ShippingConfig} from "../model/shipping-config.model";
+import {OrderCriteriaSearch} from "../model/order-criteria-search.model";
+import {ShippingConfigCriteriaSearch} from "../model/shipping-config-criteria-search.model";
+import {Page} from "../model/page.model";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,9 +22,9 @@ export class ShippingConfigService {
   constructor(private http: HttpClient) { }
 
 
-  getShippingConfigs(): Observable<Array<ShippingConfig>> {
+  getShippingConfigs(search : ShippingConfigCriteriaSearch): Observable<Page> {
     const url = configuration.host + '/api/shippingConfigs/';
-    return this.http.get<Array<ShippingConfig>>(url, httpOptions);
+    return this.http.post<Page>(url, search, httpOptions);
   }
 
   getShippingConfig(id: number): Observable<ApiResponse> {

@@ -30,6 +30,13 @@
                   <div class="tab-pane fade active" id="address-edit" role="tabpanel">
                     <div class="myaccount-content">
                       <span class="pull-right"><a routerLink="new" data-toggle="tooltip" title="New Config" class="btn btn-info"><i class="fa fa-plus"></i></a></span>
+                      <span class="pull-right">
+                        <label class="mr-5">State</label>
+                        <select class="mr-5" id="state" name="state" [(ngModel)]="form.state" #state="ngModel">
+                          <option *ngFor="let state of states" [ngValue]="state.name">{{state.name}}</option>
+                        </select>
+                        <a (click)="search(1)" class="btn btn-info"><i class="fa fa-search"></i></a>
+                      </span>
                       <h3>Config Shipping</h3>
 
                       <div class="myaccount-table table-responsive text-center">
@@ -59,6 +66,19 @@
                           </tr>
                           </tbody>
                         </table>
+                        <div class="pagination-container">
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="pagination-content text-center" *ngIf="pages.length>0">
+                                  <ul>
+                                    <li *ngFor="let page of pages"><a (click)="gotoPage(page)" [ngClass]="page==currentPage?'active': ''">{{page}}</a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

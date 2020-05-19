@@ -4,6 +4,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ShippingConfig} from "../../model/shipping-config.model";
 import {ShippingConfigService} from "../../services/shipping-config.service";
 import {ConfigurationStorage} from "../../services/configuration-storage.service";
+import {configuration} from "../../model/configuration.model";
+import {ShippingConfigCriteriaSearch} from "../../model/shipping-config-criteria-search.model";
+import {State} from "../../model/state.model";
 
 @Component({
   selector: 'app-shipping',
@@ -13,6 +16,12 @@ import {ConfigurationStorage} from "../../services/configuration-storage.service
 export class ShippingPage implements OnInit {
 
   shippings: Array<ShippingConfig> = new Array<ShippingConfig>();
+  currentPage: number = 1;
+  totalPage: number;
+  pages: Array<number> = new Array<number>();
+
+  form: any = {};
+  states:Array<State> = new Array<State>();
 
   constructor(private shippingService: ShippingConfigService,
               public alertController: AlertController,
@@ -22,7 +31,10 @@ export class ShippingPage implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.getShippingConfigs();
+      this.states = this.configurationStorage.getStateList();
+      this.states.push(new State(0, 'Otherwise'));
+      this.form.state = this.states[0].name;
+      this.search(1);
     });
   }
 
@@ -37,10 +49,18 @@ export class ShippingPage implements OnInit {
     await alert.present();
   }
 
-  getShippingConfigs() {
-    this.shippingService.getShippingConfigs().subscribe(
+  onSubmit() {
+    this.search(1);
+  }
+
+  search(page: number) {
+    let sc: ShippingConfigCriteriaSearch = new ShippingConfigCriteriaSearch(this.form.state, page, configuration.pageSize);
+    this.shippingService.getShippingConfigs(sc).subscribe(
         data => {
-          this.shippings = data;
+          this.shippings = data.data;
+          this.currentPage = data.current;
+          this.totalPage = data.total;
+          this.makePages();
           if (!this.configurationStorage.shippingConfigLatest) {
             this.configurationStorage.saveShippingConfigs(this.shippings);
           }
@@ -49,6 +69,24 @@ export class ShippingPage implements OnInit {
           console.log(error);
         }
     );
+  }
+
+  makePages() {
+    this.pages = new Array<number>();
+    if (this.totalPage < 1) {
+      // do nothing
+    } else {
+      for (var i = 1; i <= this.totalPage; i++) {
+        this.pages.push(i);
+      }
+    }
+  }
+
+  gotoPage(page: number) {
+    if(page <1) {
+      page = 1;
+    }
+    this.search(page);
   }
 
   async deleteShippingConfig(id: number) {
