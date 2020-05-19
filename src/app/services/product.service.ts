@@ -25,9 +25,9 @@ export class ProductService {
     return this.http.post<Array<Product>>(url, criteria, httpOptions);
   }
 
-  getProductsForFarmer(): Observable<Array<Product>> {
+  getProductsForUser(criteria: ProductCriteriaSearch): Observable<Array<Product>> {
     const url = configuration.host + '/api/products/';
-    return this.http.get<Array<Product>>(url, httpOptions);
+    return this.http.post<Array<Product>>(url, criteria, httpOptions);
   }
 
   getProduct(id: number): Observable<ApiResponse> {
@@ -38,6 +38,11 @@ export class ProductService {
   addProduct(product: Product): Observable<ApiResponse> {
     const url = configuration.host + '/api/product/add';
     return this.http.post<ApiResponse>(url, product, httpOptions);
+  }
+
+  approve(productId: number): Observable<ApiResponse> {
+    const url = configuration.host + '/api/product/approve/' + productId;
+    return this.http.post<ApiResponse>(url, null, httpOptions);
   }
 
   deleteProduct(dishId: number): Observable<ApiResponse> {

@@ -11,6 +11,7 @@ import {ProductDetail} from "../../../model/productdetail.model";
 import {Comment} from "../../../model/comment.model";
 import {Rate} from "../../../model/rate.model";
 import {CommentService} from "../../../services/comment.service";
+import {TokenStorageService} from "../../../auth/token-storage.service";
 
 @Component({
   selector: 'app-my-store-detail',
@@ -54,15 +55,19 @@ export class MyStoreDetailPage implements OnInit {
 
   myComment: string = '';
 
+  isPMRole = true;
+
   constructor(public alertController: AlertController,
               private route: ActivatedRoute,
               private router: Router,
               private fileUploadService: FileUploadService,
               private farmService: FarmerService,
               public commentService: CommentService,
+              private tokenStorage: TokenStorageService,
               private productService: ProductService) { }
 
   ngOnInit() {
+    this.isPMRole = this.tokenStorage.hasPMRole();
     this.getFarmAddress();
     this.route.params.subscribe(params => {
       this.id = params['id'];
@@ -359,5 +364,21 @@ export class MyStoreDetailPage implements OnInit {
       });
       await alert.present();
     }
+  }
+
+  approveProduct(productId: number) {
+    this.productService.approve(productId).subscribe(
+        data => {
+          if (data.success) {
+            this.presentAlert("Success", '', 'Approved successfully');
+            this.productDetail.dto.status = data.data.status;;
+          } else {
+            this.presentAlert("Error", '', data.message);
+          }
+        },
+        error => {
+          this.presentAlert("Error", '', 'Failed to approve the product');
+        }
+    );
   }
 }

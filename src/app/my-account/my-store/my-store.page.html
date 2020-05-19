@@ -29,13 +29,22 @@
                 <div class="tab-content" id="myaccountContent">
                   <div class="tab-pane fade active" id="my-store" role="tabpanel">
                     <div class="myaccount-content">
-                      <span class="pull-right"><a routerLink="new" data-toggle="tooltip" title="View detail" class="btn btn-info"><i class="fa fa-plus"></i></a></span>
-                      <span class="pull-right"><a routerLink="config" data-toggle="tooltip" title="Config address" class="btn btn-info"><i class="fa fa-cog"></i></a></span>
+                      <span *ngIf="tokenStorage.hasFarmerRole()" class="pull-right"><a routerLink="new" data-toggle="tooltip" title="Add new product" class="btn btn-info"><i class="fa fa-plus"></i></a></span>
+                      <span *ngIf="tokenStorage.hasFarmerRole()" class="pull-right mr-20"><a routerLink="config" data-toggle="tooltip" title="Config address" class="btn btn-info"><i class="fa fa-cog"></i></a></span>
+                      <span class="pull-right mr-20">
+                        <label class="mr-5">Product Status</label>
+                        <select class="mr-5" id="status" name="status" [(ngModel)]="form.status" #status="ngModel">
+                          <option value="">All</option>
+                          <option value="PENDING">Pending</option>
+                          <option value="APPROVED">Approved</option>
+                        </select>
+                        <a (click)="search(1)" class="btn btn-info"><i class="fa fa-search"></i></a>
+                      </span>
                       <h3>My store</h3>
 
                       <div class="myaccount-table table-responsive text-center">
                         <div class="shop-product-wrap grid row no-gutters mb-35">
-                          <div *ngFor="let product of subProducts" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                          <div *ngFor="let product of subProducts; let i = index;" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="gf-product shop-grid-view-product">
                               <div class="image">
                                 <a routerLink="detail/{{product.id}}">
@@ -53,8 +62,11 @@
                                   <span class="main-price">PHP {{product.price | number}}</span>
                                   <span class="discounted-price">PHP {{product.promotionPrice | number}}</span>
                                 </div>
-                                <div *ngIf="!product.promotionActive"class="price-box">
+                                <div *ngIf="!product.promotionActive" class="price-box">
                                   <span class="discounted-price">PHP {{product.price | number}}</span>
+                                </div>
+                                <div *ngIf="tokenStorage.hasPMRole() && product.status=='PENDING'" class="product-categories">
+                                  <a (click)="approveProduct(product.id, i)">Approve</a>
                                 </div>
                               </div>
 

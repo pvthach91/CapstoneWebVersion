@@ -4,6 +4,8 @@ import {ProductService} from "../../services/product.service";
 import {Product} from "../../model/product.model";
 import {configuration} from "../../model/configuration.model";
 import {ActivatedRoute} from "@angular/router";
+import {ProductCriteriaSearch} from "../../model/product-criteria-search.model";
+import {TokenStorageService} from "../../auth/token-storage.service";
 
 @Component({
   selector: 'app-my-store',
@@ -11,6 +13,7 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./my-store.page.scss'],
 })
 export class MyStorePage implements OnInit {
+  form: any = {};
 
   products:Array<Product> = new Array<Product>();
   subProducts:Array<Product> = new Array<Product>();
@@ -22,11 +25,13 @@ export class MyStorePage implements OnInit {
 
   constructor(public alertController: AlertController,
               private route: ActivatedRoute,
+              private tokenStorage: TokenStorageService,
               private productService: ProductService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
         params => {
+          this.form.status = '';
           this.search(1);
         });
   }
@@ -43,7 +48,16 @@ export class MyStorePage implements OnInit {
   }
 
   search(page: number) {
-    this.productService.getProductsForFarmer().subscribe(
+    let criteria = new ProductCriteriaSearch(
+        '',
+        [],
+        '',
+        0,
+        0,
+        false,
+        0);
+    criteria.status = this.form.status;
+    this.productService.getProductsForUser(criteria).subscribe(
         data => {
           this.products = data;
           // this.currentPage = data.current;
@@ -86,6 +100,22 @@ export class MyStorePage implements OnInit {
     } else {
       this.subProducts = this.products.slice(start, configuration.pageSize);
     }
+  }
+
+  approveProduct(productId: number, index: number) {
+    this.productService.approve(productId).subscribe(
+        data => {
+          if (data.success) {
+            this.presentAlert("Success", '', 'Approved successfully');
+            this.subProducts[index] = data.data;
+          } else {
+            this.presentAlert("Error", '', data.message);
+          }
+        },
+        error => {
+          this.presentAlert("Error", '', 'Failed to approve the product');
+        }
+    );
   }
 
 }

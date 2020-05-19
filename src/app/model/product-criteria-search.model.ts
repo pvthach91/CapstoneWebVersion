@@ -5,6 +5,7 @@ export class ProductCriteriaSearch {
   priceFrom: number;
   priceTo: number;
   promotionActive: boolean;
+  status: string;
   sort: number;
 
   constructor(name: string, category: Array<string>, state: string, priceFrom: number, priceTo: number, promotionActive: boolean, sort: number) {

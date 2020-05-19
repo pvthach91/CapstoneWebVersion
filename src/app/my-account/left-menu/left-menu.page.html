@@ -7,10 +7,11 @@
   </a>
 
   <a routerLink="/my-account/my-store"
-     *ngIf="tokenStorage.hasFarmerRole()"
+     *ngIf="tokenStorage.hasFarmerRole() || tokenStorage.hasPMRole()"
      [ngClass]="isMyStorePage()?'active': ''">
     <i class="fa fa-home"></i>
-    My Store
+     <span *ngIf="tokenStorage.hasFarmerRole()">My Store</span>
+    <span *ngIf="tokenStorage.hasPMRole()">Store Management</span>
   </a>
 
   <a routerLink="/my-account/deliver-address"

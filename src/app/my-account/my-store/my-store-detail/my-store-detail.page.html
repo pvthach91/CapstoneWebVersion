@@ -30,7 +30,12 @@
                   <div class="tab-pane fade active" id="my-store" role="tabpanel">
                     <div class="myaccount-content">
                       <span class="pull-right"><a routerLink="/my-account/my-store" data-toggle="tooltip" title="Back to my store" class="btn btn-info"><i class="fa fa-arrow-left"></i></a></span>
-                      <h3>My store</h3>
+                      <h3>My store
+                        <span>
+                          <span *ngIf="productDetail.dto.status=='PENDING'" class="badge bg-primary">{{productDetail.dto.status}}</span>
+                          <span *ngIf="productDetail.dto.status=='APPROVED'" class="badge bg-success">{{productDetail.dto.status}}</span>
+                        </span>
+                      </h3>
 
                       <div class="myaccount-content">
                         <form  role="form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
@@ -65,10 +70,10 @@
                                 </div>
                               </div>
                               <div class="col-md-10 col-12 mb-20">
-                                <input type="file" class="form-control" id="exampleInputFile" multiple="multiple" (change)="onFileChanged($event)" accept=".png,.jpg">
+                                <input [disabled]="isPMRole" type="file" class="form-control" id="exampleInputFile" multiple="multiple" (change)="onFileChanged($event)" accept=".png,.jpg">
                               </div>
                               <div class="col-md-2 col-12">
-                                <button [disabled]="displayOldImages" (click)="cancelUpload()" class="btn btn-info">Cancel</button>
+                                <button [disabled]="displayOldImages || isPMRole" (click)="cancelUpload()" class="btn btn-info">Cancel</button>
                               </div>
 
 
@@ -79,7 +84,7 @@
                                       <span *ngIf="name.errors.minlength" class="text-danger"><small>Name must be at least 3 characters</small></span>
                                     </span>
                                 </label>
-                                <input class="mb-0" type="text" placeholder="product name" id="name" name="name" [(ngModel)]="form.name" #name="ngModel" required minlength="3">
+                                <input [readOnly]="isPMRole" class="mb-0" type="text" placeholder="product name" id="name" name="name" [(ngModel)]="form.name" #name="ngModel" required minlength="3">
                               </div>
                               <div class="col-md-6 col-12 mb-20">
                                 <label>Category*
@@ -87,7 +92,7 @@
                                     <span *ngIf="category.errors.required" class="text-danger"><small>Category is required</small></span>
                                   </span>
                                 </label>
-                                  <select class="mb-0" id="category" name="category" [(ngModel)]="form.category" #category="ngModel" required>
+                                  <select [disabled]="isPMRole" class="mb-0" id="category" name="category" [(ngModel)]="form.category" #category="ngModel" required>
                                       <option value="Poultry">Poultry</option>
                                       <option value="Livestock">Livestock</option>
                                       <option value="Aquatic">Aquatic</option>
@@ -102,7 +107,7 @@
                                       <span *ngIf="price.errors.required" class="text-danger"><small>price is required</small></span>
                                     </span>
                                     </label>
-                                    <input class="mb-0" type="text" placeholder="price" id="price" name="price" [(ngModel)]="form.price" #price="ngModel" required>
+                                    <input [readOnly]="isPMRole" class="mb-0" type="text" placeholder="price" id="price" name="price" [(ngModel)]="form.price" #price="ngModel" required>
                                </div>
                               <div class="col-md-6 mb-20">
                                 <label>In stock (kg)*
@@ -111,7 +116,7 @@
                                         </span>
                                 </label>
 
-                                <input class="mb-0" type="number" placeholder="quantity" id="quantity" name="quantity" [(ngModel)]="form.quantity" #quantity="ngModel" required>
+                                <input [readOnly]="isPMRole" class="mb-0" type="number" placeholder="quantity" id="quantity" name="quantity" [(ngModel)]="form.quantity" #quantity="ngModel" required>
                               </div>
                               <div class="col-md-12 mb-20">
                                 <label>Description*
@@ -120,7 +125,7 @@
                                   </span>
                                 </label>
 
-                                <textarea rows="4" class="mb-0" type="text" placeholder="description" id="description" name="description" [(ngModel)]="form.description" #description="ngModel" required></textarea>
+                                <textarea [readOnly]="isPMRole" rows="4" class="mb-0" type="text" placeholder="description" id="description" name="description" [(ngModel)]="form.description" #description="ngModel" required></textarea>
                               </div>
                               <div class="col-md-6 col-12 mb-20">
                                 <label>Promotion*
@@ -129,7 +134,7 @@
                                   </span>
                                 </label>
 
-                                  <select class="mb-0" id="promotionActive" name="promotionActive" [(ngModel)]="form.promotionActive" #promotionActive="ngModel" required (change)="changePromotion($event.target.value)">
+                                  <select [disabled]="isPMRole" class="mb-0" id="promotionActive" name="promotionActive" [(ngModel)]="form.promotionActive" #promotionActive="ngModel" required (change)="changePromotion($event.target.value)">
                                     <option value="true">Apply Promotion</option>
                                     <option value="false">Dont Apply Promotion</option>
                                   </select>
@@ -141,7 +146,7 @@
                                   </span>
                                 </label>
 
-                                <input [disabled]="!promotionSectionActive" class="mb-0" type="number" placeholder="promotion price" id="promotionPrice" name="promotionPrice" [(ngModel)]="form.promotionPrice" #promotionPrice="ngModel" required>
+                                <input [disabled]="!promotionSectionActive || isPMRole" class="mb-0" type="number" placeholder="promotion price" id="promotionPrice" name="promotionPrice" [(ngModel)]="form.promotionPrice" #promotionPrice="ngModel" required>
                               </div>
 
                               <div class="col-md-6 mb-20">
@@ -151,7 +156,7 @@
                                   </span>
                                 </label>
 
-                                <select class="mb-0" id="storeLocation" name="storeLocation" [(ngModel)]="form.storeLocation" #storeLocation="ngModel" required (change)="changePickUpLocation($event.target.value)">
+                                <select [disabled]="isPMRole" class="mb-0" id="storeLocation" name="storeLocation" [(ngModel)]="form.storeLocation" #storeLocation="ngModel" required (change)="changePickUpLocation($event.target.value)">
                                   <option value="true">Pick up at store</option>
                                   <option value="false">Pick up at farm</option>
                                 </select>
@@ -164,12 +169,13 @@
                                   </span>
                                 </label>
 
-                                  <select class="mb-0" id="location" name="location" [(ngModel)]="form.location" #location="ngModel" required>
+                                  <select [disabled]="isPMRole" class="mb-0" id="location" name="location" [(ngModel)]="form.location" #location="ngModel" required>
                                       <option [disabled]="storePickupActive" *ngFor="let farm of farms" [ngValue]="farm">{{farm.address}}</option>
                                   </select>
                               </div>
                               <div class="col-12">
-                                <button type="submit" class="register-button mt-0">Submit</button>
+                                <button *ngIf="!isPMRole" type="submit" class="register-button mt-0">Submit</button>
+                                <button *ngIf="isPMRole && productDetail.dto.status =='PENDING'" (click)="approveProduct(productDetail.dto.id)" type="button" class="register-button mt-0">Approve</button>
                               </div>
                             </div>
                           </div>
@@ -201,7 +207,7 @@
                                             <p>{{comment.content}}</p>
                                           </div>
                                         </div>
-                                        <div class="ratting-form-wrapper fix">
+                                        <div *ngIf="!isPMRole" class="ratting-form-wrapper fix">
                                           <h3>Add your Comments</h3>
                                           <form>
                                             <div class="ratting-form row">
