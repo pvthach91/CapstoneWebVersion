@@ -9,6 +9,8 @@ import {CartStorageService} from "../services/cart-storage.service";
 import {HeaderPage} from "../header/header.page";
 import {ConfigurationStorage} from "../services/configuration-storage.service";
 import {Address} from "../model/address.model";
+import {AddressService} from "../services/address.service";
+import {TokenStorageService} from "../auth/token-storage.service";
 
 @Component({
   selector: 'app-home',
@@ -35,17 +37,36 @@ export class HomePage implements OnInit {
   constructor(public alertController: AlertController,
               private route: ActivatedRoute,
               private cartStorage: CartStorageService,
+              private addressService: AddressService,
+              private tokenStorage: TokenStorageService,
               private configurationStorage: ConfigurationStorage,
               private productService: ProductService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
         params => {
-            this.deliverAddress = this.configurationStorage.getDeliveryAddresses();
+            if (this.tokenStorage.hasBuyerRole()) {
+                this.getAddresses();
+            }
           this.search();
         });
 
   }
+
+    getAddresses() {
+        this.addressService.getAddressesForCurrentUser().subscribe(
+            data => {
+                if (data != null) {
+                    this.deliverAddress = data;
+                } else {
+                    this.presentAlert('Error', '', 'Failed to get address');
+                }
+            },
+            error => {
+                this.presentAlert('Error', '', 'Failed to get address');
+            }
+        );
+    }
 
   async presentAlert(header: string, subHeader: string, message: string) {
     const alert = await this.alertController.create({

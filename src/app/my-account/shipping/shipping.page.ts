@@ -33,7 +33,7 @@ export class ShippingPage implements OnInit {
     this.route.params.subscribe(params => {
       this.states = this.configurationStorage.getStateList();
       this.states.push(new State(0, 'Otherwise'));
-      this.form.state = this.states[0].name;
+      this.form.state = "";
       this.search(1);
     });
   }

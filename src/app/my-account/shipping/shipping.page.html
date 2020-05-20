@@ -33,6 +33,7 @@
                       <span class="pull-right">
                         <label class="mr-5">State</label>
                         <select class="mr-5" id="state" name="state" [(ngModel)]="form.state" #state="ngModel">
+                          <option value="">All</option>
                           <option *ngFor="let state of states" [ngValue]="state.name">{{state.name}}</option>
                         </select>
                         <a (click)="search(1)" class="btn btn-info"><i class="fa fa-search"></i></a>
