@@ -139,8 +139,8 @@ export class FarmNewPage implements OnInit {
     postFarm() {
         let farm = new Farm(
             null,
-            '',
-            '',
+            this.form.state,
+            this.form.address,
             this.joinImagesText,
             0,
             0);

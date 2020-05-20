@@ -225,8 +225,8 @@ export class FarmViewPage implements OnInit {
   postFarm() {
     let requestFarm = this.currentFarm;
     requestFarm.images = this.joinImagesText;
-    // requestFarm.state = this.form.state;
-    // requestFarm.address = this.form.address;
+    requestFarm.state = this.form.state;
+    requestFarm.address = this.form.address;
     this.farmService.addFarm(requestFarm).subscribe(
         data => {
           if (data != null) {

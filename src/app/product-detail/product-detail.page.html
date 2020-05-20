@@ -397,7 +397,7 @@
                           <div class="myaccount-tab-menu nav" role="tablist">
                             <a [ngClass]="farm.key==aboutAuthorCurrentFarm.id?'active':''" *ngFor="let farm of farmMap | keyvalue;" (click)="changeAboutFarmerFarm(farm.key)">
                               <i class="fa fa-user"></i>
-                              {{farm.value.address}}
+                              {{farm.value.state}} * {{farm.value.address}} (m2)
                             </a>
                           </div>
                         </div>
