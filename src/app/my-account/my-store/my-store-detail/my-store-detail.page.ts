@@ -37,7 +37,7 @@ export class MyStoreDetailPage implements OnInit {
   productDetail: ProductDetail = new ProductDetail(this.dto,[], [], []);
 
   joinImagesText: Array<string>;
-  farms: Array<Farm> = new Array<Farm>();
+  // farms: Array<Farm> = new Array<Farm>();
 
   private configuration = configuration;
 
@@ -67,7 +67,7 @@ export class MyStoreDetailPage implements OnInit {
               private productService: ProductService) { }
 
   ngOnInit() {
-    this.getFarmAddress();
+    // this.getFarmAddress();
     this.route.params.subscribe(params => {
       this.isPMRole = this.tokenStorage.hasPMRole();
       this.id = params['id'];
@@ -91,21 +91,21 @@ export class MyStoreDetailPage implements OnInit {
     await alert.present();
   }
 
-  getFarmAddress() {
-    this.farmService.getFarmsForCurrentUser().subscribe(
-        data => {
-          if (data != null) {
-            this.farms = data;
-            // this.form.location = data;
-          } else {
-            this.presentAlert('Error', '', "Failed to get farm address");
-          }
-        },
-        error => {
-          console.log(error);
-        }
-    );
-  }
+  // getFarmAddress() {
+  //   this.farmService.getFarmsForCurrentUser().subscribe(
+  //       data => {
+  //         if (data != null) {
+  //           this.farms = data;
+  //           // this.form.location = data;
+  //         } else {
+  //           this.presentAlert('Error', '', "Failed to get farm address");
+  //         }
+  //       },
+  //       error => {
+  //         console.log(error);
+  //       }
+  //   );
+  // }
 
   getCurrentProduct() {
     this.productService.getProduct(this.id).subscribe(
@@ -147,15 +147,15 @@ export class MyStoreDetailPage implements OnInit {
     this.form.quantity = this.productDetail.dto.quantity;
     this.form.storeLocation = this.productDetail.dto.storeLocation;
 
-    if (this.productDetail.dto.storeLocation) {
-      this.form.location = this.farms[0];
-    } else {
-      this.farms.forEach((farm, index) => {
-        if (farm.id == this.productDetail.dto.locationRef) {
-          this.form.location = farm;
-        }
-      });
-    }
+    // if (this.productDetail.dto.storeLocation) {
+    //   this.form.location = this.farms[0];
+    // } else {
+    //   this.farms.forEach((farm, index) => {
+    //     if (farm.id == this.productDetail.dto.locationRef) {
+    //       this.form.location = farm;
+    //     }
+    //   });
+    // }
 
 
     this.promotionSectionActive = this.productDetail.dto.promotionActive;
@@ -232,11 +232,11 @@ export class MyStoreDetailPage implements OnInit {
   }
 
   postProduct() {
-    let location = this.form.location;
-    if (this.form.storeLocation == 'true') {
-      location.latitude = this.productDetail.dto.user.latitude;
-      location.longitude = this.productDetail.dto.user.longitude;
-    }
+    // let location = this.form.location;
+    // if (this.form.storeLocation == 'true') {
+    //   location.latitude = this.productDetail.dto.user.latitude;
+    //   location.longitude = this.productDetail.dto.user.longitude;
+    // }
     let product = new Product(
         this.form.id,
         this.form.name,
@@ -246,11 +246,11 @@ export class MyStoreDetailPage implements OnInit {
         this.form.promotionActive,
         this.form.description,
         this.displayOldImages ? this.getOldImageUrl() : this.joinImagesText,
-        location.latitude,
-        location.longitude,
+        0,
+        0,
         this.form.quantity,
         this.form.storeLocation,
-        location.id);
+        0);
     this.productService.addProduct(product).subscribe(
         data => {
           if (data.success) {

@@ -149,30 +149,30 @@
                                 <input [disabled]="!promotionSectionActive || isPMRole" class="mb-0" type="number" placeholder="promotion price" id="promotionPrice" name="promotionPrice" [(ngModel)]="form.promotionPrice" #promotionPrice="ngModel" required>
                               </div>
 
-                              <div class="col-md-6 mb-20">
-                                <label>Pick up at*
-                                  <span *ngIf="f.submitted && location.invalid">
-                                    <span *ngIf="location.errors.required" class="text-danger"><small>location is required</small></span>
-                                  </span>
-                                </label>
+<!--                              <div class="col-md-6 mb-20">-->
+<!--                                <label>Pick up at*-->
+<!--                                  <span *ngIf="f.submitted && location.invalid">-->
+<!--                                    <span *ngIf="location.errors.required" class="text-danger"><small>location is required</small></span>-->
+<!--                                  </span>-->
+<!--                                </label>-->
 
-                                <select [disabled]="isPMRole" class="mb-0" id="storeLocation" name="storeLocation" [(ngModel)]="form.storeLocation" #storeLocation="ngModel" required (change)="changePickUpLocation($event.target.value)">
-                                  <option value="true">Pick up at store</option>
-                                  <option value="false">Pick up at farm</option>
-                                </select>
-                              </div>
+<!--                                <select [disabled]="isPMRole" class="mb-0" id="storeLocation" name="storeLocation" [(ngModel)]="form.storeLocation" #storeLocation="ngModel" required (change)="changePickUpLocation($event.target.value)">-->
+<!--                                  <option value="true">Pick up at store</option>-->
+<!--                                  <option value="false">Pick up at farm</option>-->
+<!--                                </select>-->
+<!--                              </div>-->
 
-                              <div class="col-md-6 mb-20">
-                                <label>Select farm location to pickup*
-                                  <span *ngIf="f.submitted && location.invalid">
-                                    <span *ngIf="location.errors.required" class="text-danger"><small>location is required</small></span>
-                                  </span>
-                                </label>
+<!--                              <div class="col-md-6 mb-20">-->
+<!--                                <label>Select farm location to pickup*-->
+<!--                                  <span *ngIf="f.submitted && location.invalid">-->
+<!--                                    <span *ngIf="location.errors.required" class="text-danger"><small>location is required</small></span>-->
+<!--                                  </span>-->
+<!--                                </label>-->
 
-                                  <select [disabled]="isPMRole" class="mb-0" id="location" name="location" [(ngModel)]="form.location" #location="ngModel" required>
-                                      <option [disabled]="storePickupActive" *ngFor="let farm of farms" [ngValue]="farm">{{farm.address}}</option>
-                                  </select>
-                              </div>
+<!--                                  <select [disabled]="isPMRole" class="mb-0" id="location" name="location" [(ngModel)]="form.location" #location="ngModel" required>-->
+<!--                                      <option [disabled]="storePickupActive" *ngFor="let farm of farms" [ngValue]="farm">{{farm.address}}</option>-->
+<!--                                  </select>-->
+<!--                              </div>-->
                               <div class="col-12">
                                 <button *ngIf="!isPMRole" type="submit" class="register-button mt-0">Submit</button>
                                 <button *ngIf="isPMRole && productDetail.dto.status =='PENDING'" (click)="approveProduct(productDetail.dto.id)" type="button" class="register-button mt-0">Approve</button>

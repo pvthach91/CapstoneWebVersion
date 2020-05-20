@@ -60,31 +60,31 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="row">
-                                                                <div class="col-md-6 col-12 mb-20">
-                                                                    <label>Region*
-                                                                        <span *ngIf="f.submitted && state.invalid">
-                                                                        <span *ngIf="state.errors.required" class="text-danger"><small>region is required</small></span>
-                                                                        </span>
-                                                                    </label>
-                                                                    <select class="mb-0" id="state" name="state" [(ngModel)]="form.state" #state="ngModel" required>
-                                                                        <option *ngFor="let state of states" [ngValue]="state.name">{{state.name}}</option>
-                                                                    </select>
-                                                                </div>
+<!--                                                            <div class="row">-->
+<!--                                                                <div class="col-md-6 col-12 mb-20">-->
+<!--                                                                    <label>Region*-->
+<!--                                                                        <span *ngIf="f.submitted && state.invalid">-->
+<!--                                                                        <span *ngIf="state.errors.required" class="text-danger"><small>region is required</small></span>-->
+<!--                                                                        </span>-->
+<!--                                                                    </label>-->
+<!--                                                                    <select class="mb-0" id="state" name="state" [(ngModel)]="form.state" #state="ngModel" required>-->
+<!--                                                                        <option *ngFor="let state of states" [ngValue]="state.name">{{state.name}}</option>-->
+<!--                                                                    </select>-->
+<!--                                                                </div>-->
 
-                                                                <div class="col-md-6 col-12 mb-20">
-                                                                    <label>Address*
-                                                                        <span *ngIf="f.submitted && address.invalid">
-                                      <span *ngIf="address.errors.required" class="text-danger"><small>address is required</small></span>
-                                    </span>
-                                                                    </label>
-                                                                    <input class="mb-0" type="text" placeholder="address" id="address" name="address" [(ngModel)]="form.address" #address="ngModel" required>
-                                                                </div>
-                                                            </div>
+<!--                                                                <div class="col-md-6 col-12 mb-20">-->
+<!--                                                                    <label>Address*-->
+<!--                                                                        <span *ngIf="f.submitted && address.invalid">-->
+<!--                                      <span *ngIf="address.errors.required" class="text-danger"><small>address is required</small></span>-->
+<!--                                    </span>-->
+<!--                                                                    </label>-->
+<!--                                                                    <input class="mb-0" type="text" placeholder="address" id="address" name="address" [(ngModel)]="form.address" #address="ngModel" required>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
 
-                                                            <div>
-                                                                <div id = "farm-detail-location-map" style = "height:350px;"></div>
-                                                            </div>
+<!--                                                            <div>-->
+<!--                                                                <div id = "farm-detail-location-map" style = "height:350px;"></div>-->
+<!--                                                            </div>-->
 
                                                             <div class="row mt-10">
                                                                 <div class="col-md-12 col-12">

@@ -149,8 +149,8 @@ export class ProductDetailPage implements OnInit {
           if (data.success) {
             this.productDetail = data.data;
             this.dto = this.productDetail.dto;
-            this.lat = this.dto.latitude;
-            this.lng = this.dto.longitude;
+            this.lat = this.dto.user.latitude;
+            this.lng = this.dto.user.longitude;
             this.initMap();
             this.comments = this.productDetail.comments;
             this.myComment = '';

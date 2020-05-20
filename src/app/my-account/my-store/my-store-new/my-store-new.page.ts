@@ -32,7 +32,7 @@ export class MyStoreNewPage implements OnInit {
   currentProduct: Product = new Product(null, '', '', 0, 0, false, '', [], null, null, 0,true, 0);
 
   joinImagesText: Array<string>;
-  farms: Array<Farm> = new Array<Farm>();
+  // farms: Array<Farm> = new Array<Farm>();
 
   private configuration = configuration;
 
@@ -50,7 +50,7 @@ export class MyStoreNewPage implements OnInit {
               private productService: ProductService) { }
 
   ngOnInit() {
-    this.getFarmAddress();
+    // this.getFarmAddress();
     this.route.params.subscribe(params => {
       this.id = params['id'];
       if (this.id == null || this.id == undefined) {
@@ -90,22 +90,22 @@ export class MyStoreNewPage implements OnInit {
     );
   }
 
-  getFarmAddress() {
-    this.farmService.getFarmsForCurrentUser().subscribe(
-        data => {
-          if (data != null) {
-            this.farms = data;
-            // this.form.location = data;
-            this.form.location = this.farms[0];
-          } else {
-            this.presentAlert('Error', '', "Failed to get farm address");
-          }
-        },
-        error => {
-          console.log(error);
-        }
-    );
-  }
+  // getFarmAddress() {
+  //   this.farmService.getFarmsForCurrentUser().subscribe(
+  //       data => {
+  //         if (data != null) {
+  //           this.farms = data;
+  //           // this.form.location = data;
+  //           this.form.location = this.farms[0];
+  //         } else {
+  //           this.presentAlert('Error', '', "Failed to get farm address");
+  //         }
+  //       },
+  //       error => {
+  //         console.log(error);
+  //       }
+  //   );
+  // }
 
   getCurrentProduct() {
     this.productService.getProduct(this.id).subscribe(
@@ -215,16 +215,16 @@ export class MyStoreNewPage implements OnInit {
   }
 
   postProduct() {
-    let location = this.form.location;
-    if (this.form.storeLocation == 'true') {
-      location.latitude = this.user.latitude;
-      location.longitude = this.user.longitude;
-    } else {
-      if (this.form.location == null || this.form.location == undefined) {
-        this.presentAlert('Warning', '', 'Please select pickup location');
-        return;
-      }
-    }
+    // let location = this.form.location;
+    // if (this.form.storeLocation == 'true') {
+    //   location.latitude = this.user.latitude;
+    //   location.longitude = this.user.longitude;
+    // } else {
+    //   if (this.form.location == null || this.form.location == undefined) {
+    //     this.presentAlert('Warning', '', 'Please select pickup location');
+    //     return;
+    //   }
+    // }
     let product = new Product(
         this.form.id,
         this.form.name,
@@ -234,11 +234,11 @@ export class MyStoreNewPage implements OnInit {
         this.form.promotionActive,
         this.form.description,
         this.displayOldImages ? this.getOldImageUrl() : this.joinImagesText,
-        location.latitude,
-        location.longitude,
+        0,
+        0,
         this.form.quantity,
         this.form.storeLocation,
-        location.id);
+        0);
     this.productService.addProduct(product).subscribe(
         data => {
           if (data.success) {

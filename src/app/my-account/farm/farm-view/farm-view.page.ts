@@ -38,11 +38,11 @@ export class FarmViewPage implements OnInit {
 
   private configuration = configuration;
 
-  lat = 14.665393;
-  lng = 121.012528;
-
-
-  map;
+  // lat = 14.665393;
+  // lng = 121.012528;
+  //
+  //
+  // map;
 
   constructor(private tokenStorage: TokenStorageService,
               private router: Router,
@@ -89,7 +89,7 @@ export class FarmViewPage implements OnInit {
           if (data.success) {
             this.currentFarm = data.data;
             this.initData();
-            this.initMap();
+            // this.initMap();
           } else {
             this.presentAlert('Error', '', data.message);
           }
@@ -112,21 +112,21 @@ export class FarmViewPage implements OnInit {
   }
 
 //Creating farm
-  initMap() {
-    var mapOptions = {
-      center:new google.maps.LatLng(this.currentFarm.latitude, this.currentFarm.longitude),
-      zoom:15
-    };
-
-    console.log('init map: ' + this.currentFarm.latitude + ", " + this.currentFarm.longitude);
-
-    this.map = new google.maps.Map(document.getElementById("farm-detail-location-map"),mapOptions);
-    var marker = new google.maps.Marker({
-      position: new google.maps.LatLng(this.currentFarm.latitude, this.currentFarm.longitude),
-      // draggable:true,
-      map: this.map,
-    });
-  }
+//   initMap() {
+//     var mapOptions = {
+//       center:new google.maps.LatLng(this.currentFarm.latitude, this.currentFarm.longitude),
+//       zoom:15
+//     };
+//
+//     console.log('init map: ' + this.currentFarm.latitude + ", " + this.currentFarm.longitude);
+//
+//     this.map = new google.maps.Map(document.getElementById("farm-detail-location-map"),mapOptions);
+//     var marker = new google.maps.Marker({
+//       position: new google.maps.LatLng(this.currentFarm.latitude, this.currentFarm.longitude),
+//       // draggable:true,
+//       map: this.map,
+//     });
+//   }
 
   changePhotoView(src: string) {
     this.savedCurrentPhoto = configuration.host + '/api/guest/file/' + src;
@@ -225,8 +225,8 @@ export class FarmViewPage implements OnInit {
   postFarm() {
     let requestFarm = this.currentFarm;
     requestFarm.images = this.joinImagesText;
-    requestFarm.state = this.form.state;
-    requestFarm.address = this.form.address;
+    // requestFarm.state = this.form.state;
+    // requestFarm.address = this.form.address;
     this.farmService.addFarm(requestFarm).subscribe(
         data => {
           if (data != null) {

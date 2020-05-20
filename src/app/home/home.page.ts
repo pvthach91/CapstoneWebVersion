@@ -45,9 +45,13 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(
         params => {
-            if (this.tokenStorage.hasBuyerRole()) {
-                this.getAddresses();
+            if (this.tokenStorage.isLoggedIn()) {
+                if (this.tokenStorage.hasBuyerRole()) {
+                    this.getAddresses();
+                }
+            } else {
             }
+
           this.search();
         });
 

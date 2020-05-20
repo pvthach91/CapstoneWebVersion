@@ -29,10 +29,10 @@ export class FarmNewPage implements OnInit {
 
     joinImagesText: Array<string>;
 
-    lat = 14.665393;
-    lng = 121.012528;
-    marker;
-    map;
+    // lat = 14.665393;
+    // lng = 121.012528;
+    // marker;
+    // map;
 
     constructor(private tokenStorage: TokenStorageService,
                 private router: Router,
@@ -49,12 +49,12 @@ export class FarmNewPage implements OnInit {
         }
 
         this.route.params.subscribe(params => {
-            this.lat = 14.665393;
-            this.lng = 121.012528;
-            this.getCurrentLocation();
-            this.states = this.configurationStorage.getStateList();
-            this.form.state = this.states[0].name;
-            this.form.address = '';
+            // this.lat = 14.665393;
+            // this.lng = 121.012528;
+            // this.getCurrentLocation();
+            // this.states = this.configurationStorage.getStateList();
+            // this.form.state = this.states[0].name;
+            // this.form.address = '';
         });
     }
 
@@ -71,35 +71,35 @@ export class FarmNewPage implements OnInit {
 
 //Creating farm
 
-    getCurrentLocation() {
-        if (navigator.geolocation) {
-            let current = this;
-            navigator.geolocation.getCurrentPosition(function(position) {
-                console.log('show location: ' + position.coords.latitude);
-                current.lat =position.coords.latitude;
-                current.lng =position.coords.longitude;
-                current.initMap();
-            }, function() {
-            });
-        } else {
-            console.log('Browser doesnt support Geolocation');
-        }
-    }
+    // getCurrentLocation() {
+    //     if (navigator.geolocation) {
+    //         let current = this;
+    //         navigator.geolocation.getCurrentPosition(function(position) {
+    //             console.log('show location: ' + position.coords.latitude);
+    //             current.lat =position.coords.latitude;
+    //             current.lng =position.coords.longitude;
+    //             current.initMap();
+    //         }, function() {
+    //         });
+    //     } else {
+    //         console.log('Browser doesnt support Geolocation');
+    //     }
+    // }
 
 
-    initMap() {
-        var mapOptions = {
-            center:new google.maps.LatLng(this.lat, this.lng),
-            zoom:15
-        };
-
-        this.map = new google.maps.Map(document.getElementById("farm-detail-location-map"),mapOptions);
-        this.marker = new google.maps.Marker({
-            position: new google.maps.LatLng(this.lat, this.lng),
-            draggable:true,
-            map: this.map,
-        });
-    }
+    // initMap() {
+    //     var mapOptions = {
+    //         center:new google.maps.LatLng(this.lat, this.lng),
+    //         zoom:15
+    //     };
+    //
+    //     this.map = new google.maps.Map(document.getElementById("farm-detail-location-map"),mapOptions);
+    //     this.marker = new google.maps.Marker({
+    //         position: new google.maps.LatLng(this.lat, this.lng),
+    //         draggable:true,
+    //         map: this.map,
+    //     });
+    // }
 
     onFileChanged(event: any): void {
         let files = event.target.files;
@@ -139,11 +139,11 @@ export class FarmNewPage implements OnInit {
     postFarm() {
         let farm = new Farm(
             null,
-            this.form.state,
-            this.form.address,
+            '',
+            '',
             this.joinImagesText,
-            this.marker.position.lat(),
-            this.marker.position.lng());
+            0,
+            0);
         this.farmService.addFarm(farm).subscribe(
             data => {
                 if (data.success) {
@@ -161,7 +161,6 @@ export class FarmNewPage implements OnInit {
 
 
     onSubmit() {
-        console.log('current location: ' + this.marker.position.lat() + ' , ' + this.marker.position.lng())
         if (!this.displayOldImages) {
             this.getSelectedFiles();
             if (this.selectedFile.length > 0) {

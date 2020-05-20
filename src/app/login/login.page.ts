@@ -54,7 +54,10 @@ export class LoginPage implements OnInit {
             this.tokenStorage.saveUsername(data.data.username);
             this.tokenStorage.saveFullName(data.data.fullName);
             this.tokenStorage.saveAuthorities(data.data.authorities);
-            this.storeConfiguration();
+            if(!this.tokenStorage.hasAdminRole()) {
+              this.storeConfiguration();
+            }
+
             this.reloadPage();
           } else {
             this.presentAlert('Login failed', '', data.message);
