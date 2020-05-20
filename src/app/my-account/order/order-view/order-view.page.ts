@@ -6,6 +6,7 @@ import {AlertController} from "@ionic/angular";
 import {configuration} from "../../../model/configuration.model";
 import {User} from "../../../model/user.model";
 import {TokenStorageService} from "../../../auth/token-storage.service";
+import {OrderItem} from "../../../model/order-item.model";
 
 @Component({
   selector: 'app-order-view',
@@ -168,6 +169,16 @@ export class OrderViewPage implements OnInit {
           this.presentAlert("Error", '', 'Failed to cancel the order');
         }
     );
+  }
+
+  displayFull(item: OrderItem): boolean {
+    if (this.tokenStorage.hasPMRole()
+        || this.tokenStorage.hasBuyerRole()
+        || (this.tokenStorage.hasFarmerRole() && item.product.user.username == this.tokenStorage.getUsername())) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

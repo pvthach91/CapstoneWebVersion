@@ -105,7 +105,7 @@
                       <img src="{{configuration.host}}/api/guest/file/{{product.images[0]}}" class="img-fluid" alt="">
                     </a>
                     <div class="product-hover-icons">
-                      <a (click)="addItemToCart(product)" data-tooltip="Add to cart"> <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
+                      <a routerLink="/products/detail/{{product.id}}" data-tooltip="View details"> <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
                     </div>
                   </div>
                   <div class="product-content">
@@ -134,7 +134,7 @@
                       <img src="{{configuration.host}}/api/guest/file/{{product.images[0]}}" class="img-fluid" alt="">
                     </a>
                     <div class="product-hover-icons">
-                      <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/shop-left-sidebar.html#" data-tooltip="Quick view" data-toggle="modal" data-target="#quick-view-modal-container"> <span class="icon_search"></span> </a>
+                      <a routerLink="/products/detail/{{product.id}}" data-tooltip="Detail" data-toggle="modal" data-target="#quick-view-modal-container"> <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span> </a>
                     </div>
                   </div>
                   <div class="product-content">
@@ -152,7 +152,7 @@
                     </div>
                     <p class="product-description">{{product.description}}</p>
                     <div class="list-product-icons">
-                      <a (click)="addItemToCart(product)"data-tooltip="Add to cart"> <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
+                      <a routerLink="/products/detail/{{product.id}}" data-tooltip="View detail"> <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></a>
                     </div>
                   </div>
 
