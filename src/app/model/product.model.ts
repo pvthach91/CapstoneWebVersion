@@ -17,6 +17,7 @@ export class Product {
   locationRef: number;
   user: User;
   status: string;
+  totalOrder: number;
 
 
   constructor(id: number, name: string, category: string, price: number, promotionPrice: number, promotionActive: boolean, description: string, images: Array<string>, latitude: number, longitude: number, quantity: number, storeLocation: boolean, locationRef: number) {
@@ -33,5 +34,6 @@ export class Product {
     this.quantity = quantity;
     this.storeLocation = storeLocation;
     this.locationRef = locationRef;
+    this.totalOrder = 0;
   }
 }
