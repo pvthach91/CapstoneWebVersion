@@ -88,10 +88,10 @@
                                 <tr *ngFor="let orderItem of order.items; let i = index">
                                     <td *ngIf="displayFull(orderItem)" class="pro-thumbnail"><a><img src="{{configuration.host}}/api/guest/file/{{orderItem.product.images[0]}}" class="img-fluid" alt="Product"></a></td>
                                     <td *ngIf="displayFull(orderItem)" class="pro-title"><a>{{orderItem.product.name}}</a></td>
-                                    <td *ngIf="displayFull(orderItem)" class="pro-price"><span>PHP {{orderItem.product.price}}</span></td>
+                                    <td *ngIf="displayFull(orderItem)" class="pro-price"><span>PHP {{orderItem.price}}</span></td>
                                     <td *ngIf="displayFull(orderItem)" class="pro-quantity">{{orderItem.quantity}}</td>
                                   <td *ngIf="!displayFull(orderItem)" colspan="4" class="pro-title"><a><strong>Item from other farmer</strong></a></td>
-                                    <td class="pro-subtotal"><span>PHP {{orderItem.product.price * orderItem.quantity}}</span></td>
+                                    <td class="pro-subtotal"><span>PHP {{orderItem.price * orderItem.quantity}}</span></td>
                                 </tr>
 
                                 <tr>
