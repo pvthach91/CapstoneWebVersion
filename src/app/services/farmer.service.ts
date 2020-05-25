@@ -52,12 +52,12 @@ export class FarmerService {
   }
 
   deleteFarm(farmId: number): Observable<ApiResponse> {
-    const url = configuration.host + '/api/farmer/deleteFarm/{id}' + farmId;
+    const url = configuration.host + '/api/farmer/deleteFarm/' + farmId;
     return this.http.post<ApiResponse>(url, null, httpOptions);
   }
 
   deleteVehicle(vehicleId: number): Observable<ApiResponse> {
-    const url = configuration.host + '/api/farmer/deleteVehicle/{id}' + vehicleId;
+    const url = configuration.host + '/api/farmer/deleteVehicle/' + vehicleId;
     return this.http.post<ApiResponse>(url, null, httpOptions);
   }
 
