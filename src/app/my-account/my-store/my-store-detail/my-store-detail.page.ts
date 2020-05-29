@@ -312,7 +312,11 @@ export class MyStoreDetailPage implements OnInit {
       }
     });
 
-    this.averageRates = sumRate/this.rates.length;
+    if (this.rates.length ==0 ) {
+      this.averageRates = 0;
+    } else {
+      this.averageRates = sumRate/this.rates.length;
+    }
   }
 
   activeTabComment() {
