@@ -70,7 +70,7 @@
               </div>
               <div class="col-md-6 mb-20">
                 <label>Confirm Password*
-                  <span *ngIf="f.submitted && password.invalid">
+                  <span *ngIf="f.submitted && cpassword.invalid">
                                     <span *ngIf="cpassword.errors.required" class="text-danger"><small>Confirm password is required</small></span>
                                     <span *ngIf="cpassword.errors.minlength" class="text-danger"><small>Confirm password must be at least 3 characters</small></span>
                                   </span>

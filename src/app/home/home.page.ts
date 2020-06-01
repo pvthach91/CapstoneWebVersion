@@ -87,7 +87,7 @@ export class HomePage implements OnInit {
       let price:string = this.form.price;
       let priceFrom = null;
       let priceTo = null;
-      if (price != null || price != undefined) {
+      if ((price != null || price != undefined) && price.length  > 0) {
           let split = price.split(';');
           priceFrom = split[0];
           priceTo = split[1];
