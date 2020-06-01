@@ -6248,6 +6248,7 @@ footer {
 .chat-body{
   height: 300px;
   overflow: auto;
+  padding:0px;
 }
 
 .chat-footer-text{

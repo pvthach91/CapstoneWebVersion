@@ -32,37 +32,31 @@
 <!--                      <h3>Chats</h3>-->
 
                       <div class="row">
-                        <div class="col-lg-4 col-12">
+                        <div class="col-lg-5 col-12">
                           <div class="card bg-light">
                             <div class="card-header text-muted border-bottom-0">Contacts</div>
                             <div class="card-body pt-0 chat-body">
-                              <ul class="conversation-list">
-                                <li class="clearfix chat-contact">
-                                  <a>
-                                    <div class="chat-avatar">
-                                      <img src="assets/images/product01.jpg">
-                                    </div>
-                                    <div class="conversation-text">
-                                      <strong>Pham Van Thach</strong>
-                                    </div>
-                                  </a>
-                                </li>
-                                <li class="clearfix chat-contact">
-                                  <a>
-                                    <div class="chat-avatar">
-                                      <img src="assets/images/product02.jpg" alt="male">
-                                    </div>
-                                    <div class="conversation-text">
-                                      <strong>Fatima Apostolero</strong>
-                                    </div>
-                                  </a>
-                                </li>
-                              </ul>
+                              <ion-list class="ion-no-padding">
+                                <a *ngFor="let cc of contactChats">
+                                  <ion-item>
+                                    <ion-avatar>
+                                      <ion-img *ngIf="cc.user.photo!= null && cc.user.photo.length>0" src="{{configuration.host}}/api/guest/file/{{cc.user.photo}}"></ion-img>
+                                      <ion-img *ngIf="cc.user.photo== null || cc.user.photo.length==0" src="assets/images/no_image_available.png"></ion-img>
+                                    </ion-avatar>
+                                    <ion-label>{{cc.user.name}}</ion-label>
+<!--                                    <ion-buttons slot="end">-->
+<!--                                      <ion-label>-->
+<!--                                        <small>{{cc.lastUpdated | date: 'yyyy/MM/dd HH:mm'}}</small>-->
+<!--                                      </ion-label>-->
+<!--                                    </ion-buttons>-->
+                                  </ion-item>
+                                </a>
+                              </ion-list>
                             </div>
                           </div>
                         </div>
 
-                        <div class="col-lg-8 col-12">
+                        <div class="col-lg-7 col-12">
                           <div class="card bg-light">
                             <div class="card-header text-muted border-bottom-0">Chats</div>
                             <div class="card-body pt-0 chat-body">
