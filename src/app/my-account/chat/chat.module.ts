@@ -10,6 +10,7 @@ import { ChatPage } from './chat.page';
 import {FooterPageModule} from "../../footer/footer.module";
 import {LeftMenuPageModule} from "../left-menu/left-menu.module";
 import {HeaderPageModule} from "../../header/header.module";
+import {ChatBubbleComponent} from "./chat-bubble/chat-bubble.component";
 
 @NgModule({
     imports: [
@@ -21,6 +22,6 @@ import {HeaderPageModule} from "../../header/header.module";
         LeftMenuPageModule,
         HeaderPageModule
     ],
-  declarations: [ChatPage]
+  declarations: [ChatPage, ChatBubbleComponent]
 })
 export class ChatPageModule {}

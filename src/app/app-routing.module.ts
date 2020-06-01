@@ -102,6 +102,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'chat/detail/:id',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./my-account/chat/chat.module').then( m => m.ChatPageModule)
+          }
+        ]
+      },
+      {
         path: 'deliver-address',
         loadChildren: () => import('./my-account/deliver-address/deliver-address.module').then( m => m.DeliverAddressPageModule)
       },

@@ -36,14 +36,14 @@
                           <div class="card bg-light">
                             <div class="card-header text-muted border-bottom-0">Contacts</div>
                             <div class="card-body pt-0 chat-body">
-                              <ion-list class="ion-no-padding">
-                                <a *ngFor="let cc of contactChats">
+                              <ion-list class="ion-no-padding" no-lines>
+                                <a *ngFor="let cc of contactChats" (click)="goToChatDetail(cc.user.id)" class="w-100">
                                   <ion-item>
                                     <ion-avatar>
                                       <ion-img *ngIf="cc.user.photo!= null && cc.user.photo.length>0" src="{{configuration.host}}/api/guest/file/{{cc.user.photo}}"></ion-img>
                                       <ion-img *ngIf="cc.user.photo== null || cc.user.photo.length==0" src="assets/images/no_image_available.png"></ion-img>
                                     </ion-avatar>
-                                    <ion-label>{{cc.user.name}}</ion-label>
+                                    <ion-label [color]="cc.user.id == id ? 'primary': ''">{{cc.user.name}}</ion-label>
 <!--                                    <ion-buttons slot="end">-->
 <!--                                      <ion-label>-->
 <!--                                        <small>{{cc.lastUpdated | date: 'yyyy/MM/dd HH:mm'}}</small>-->
@@ -60,37 +60,42 @@
                           <div class="card bg-light">
                             <div class="card-header text-muted border-bottom-0">Chats</div>
                             <div class="card-body pt-0 chat-body">
-                              <ul class="conversation-list">
-                                <li class="clearfix chat-receive">
-                                  <div class="chat-avatar">
-                                    <img src="assets/images/product01.jpg" alt="male" class="mCS_img_loaded">
-                                    <p>10:00</p>
-                                  </div>
-                                  <div class="conversation-text">
-                                    <div class="text-content">
-                                      <i>John Deo</i>
-                                      <p>
-                                        Hello!
-                                      </p>
-                                    </div>
-                                  </div>
-                                </li>
+                                <ion-list no-lines>
+                                    <ion-item *ngFor="let msg of messages" >
+                                        <chat-bubble [msg]="msg" style="width: 100%"></chat-bubble>
+                                    </ion-item>
+                                </ion-list>
+<!--                              <ul class="conversation-list">-->
+<!--                                <li class="clearfix chat-receive">-->
+<!--                                  <div class="chat-avatar">-->
+<!--                                    <img src="assets/images/product01.jpg" alt="male" class="mCS_img_loaded">-->
+<!--                                    <p>10:00</p>-->
+<!--                                  </div>-->
+<!--                                  <div class="conversation-text">-->
+<!--                                    <div class="text-content">-->
+<!--                                      <i>John Deo</i>-->
+<!--                                      <p>-->
+<!--                                        Hello!-->
+<!--                                      </p>-->
+<!--                                    </div>-->
+<!--                                  </div>-->
+<!--                                </li>-->
 
-                                <li class="clearfix chat-send">
-                                  <div class="chat-avatar">
-                                    <img src="assets/images/product01.jpg" alt="male" class="mCS_img_loaded">
-                                    <p>10:00</p>
-                                  </div>
-                                  <div class="conversation-text">
-                                    <div class="text-content">
-                                      <i>John Deo</i>
-                                      <p>
-                                        Hello!
-                                      </p>
-                                    </div>
-                                  </div>
-                                </li>
-                              </ul>
+<!--                                <li class="clearfix chat-send">-->
+<!--                                  <div class="chat-avatar">-->
+<!--                                    <img src="assets/images/product01.jpg" alt="male" class="mCS_img_loaded">-->
+<!--                                    <p>10:00</p>-->
+<!--                                  </div>-->
+<!--                                  <div class="conversation-text">-->
+<!--                                    <div class="text-content">-->
+<!--                                      <i>John Deo</i>-->
+<!--                                      <p>-->
+<!--                                        Hello!-->
+<!--                                      </p>-->
+<!--                                    </div>-->
+<!--                                  </div>-->
+<!--                                </li>-->
+<!--                              </ul>-->
                             </div>
                             <div class="card-footer">
                               <div class="text-right">
