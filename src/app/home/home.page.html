@@ -117,6 +117,7 @@
                       <a>{{product.category}}</a>
                     </div>
                     <h3 class="product-title"><a routerLink="/products/detail/{{product.id}}">{{product.name}}</a></h3>
+                    <h4 class="product-title" *ngIf="product.distance != null">{{product.distance}} km(s)</h4>
                     <div *ngIf="product.promotionActive" class="price-box">
                       <span class="main-price">PHP {{product.price | number}}</span>
                       <span class="discounted-price">PHP {{product.promotionPrice}}</span>

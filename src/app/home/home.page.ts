@@ -11,6 +11,7 @@ import {ConfigurationStorage} from "../services/configuration-storage.service";
 import {Address} from "../model/address.model";
 import {AddressService} from "../services/address.service";
 import {TokenStorageService} from "../auth/token-storage.service";
+import {DistanceService} from "../services/distance.service";
 
 @Component({
   selector: 'app-home',
@@ -40,6 +41,7 @@ export class HomePage implements OnInit {
               private addressService: AddressService,
               private tokenStorage: TokenStorageService,
               private configurationStorage: ConfigurationStorage,
+              private distanceService: DistanceService,
               private productService: ProductService) { }
 
   ngOnInit() {
@@ -48,6 +50,7 @@ export class HomePage implements OnInit {
             if (this.tokenStorage.isLoggedIn()) {
                 if (this.tokenStorage.hasBuyerRole()) {
                     this.getAddresses();
+                    this.form.sort = 0;
                 }
             } else {
             }
@@ -118,8 +121,12 @@ export class HomePage implements OnInit {
           this.products = data;
           // this.currentPage = data.current;
           // this.totalPage = data.total;
-          this.makePages();
-          this.gotoPage(1);
+            if (this.form.sort == 3) {
+                this.sortProductNearest();
+            } else {
+                this.makePages();
+                this.gotoPage(1);
+            }
         },
         error => {
           console.log(error);
@@ -222,5 +229,28 @@ export class HomePage implements OnInit {
   searchFromHeader(productName: string) {
     this.form.productName = productName;
     this.search();
+  }
+
+  sortProductNearest() {
+      let nearBy = this.form.nearBy;
+      if (nearBy == null && nearBy == undefined && nearBy == '') {
+          this.makePages();
+          this.gotoPage(1);
+          return;
+      }
+      this.products.forEach((product, index) => {
+          let d = this.distanceService.distance(nearBy.latitude, nearBy.longitude, product.user.latitude, product.user.longitude);
+          let str = (d/1000).toFixed(2);
+          d = parseFloat(str);
+          product.distance = d;
+      });
+
+
+      this.products.sort((a, b) => {
+            return a.distance - b.distance;
+      })
+
+      this.makePages();
+      this.gotoPage(1);
   }
 }

@@ -5,7 +5,13 @@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center text-sm-left">
           <div class="lang-currency-dropdown">
             <ul>
-              <li> <a> Welcome {{tokenStorage.getFullName()}}</a>
+              <li *ngIf="tokenStorage.isLoggedIn()"> <a> Welcome {{tokenStorage.getFullName()}}</a>
+                <span *ngIf="tokenStorage.hasFarmerRole()">. You're FARMER</span>
+                <span *ngIf="tokenStorage.hasBuyerRole()">. You're BUYER</span>
+                <span *ngIf="tokenStorage.hasAdminRole()">. You're ADMIN</span>
+                <span *ngIf="tokenStorage.hasPMRole()">. You're OPERATION STAFF</span>
+              </li>
+              <li *ngIf="!tokenStorage.isLoggedIn()"> <a> You're surfing as guest</a>
               </li>
             </ul>
           </div>
@@ -14,9 +20,9 @@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  text-center text-sm-right">
           <div class="header-top-menu">
             <ul>
-              <li><a routerLink="/my-account">My account</a></li>
-              <li><a routerLink="/wish-list">Wishlist</a></li>
+              <li *ngIf="tokenStorage.isLoggedIn()"><a routerLink="/my-account">My account</a></li>
               <li *ngIf="!tokenStorage.isLoggedIn()"><a routerLink="/login">Login</a></li>
+              <li *ngIf="!tokenStorage.isLoggedIn()"><a routerLink="/register">Register an account</a></li>
               <li *ngIf="tokenStorage.isLoggedIn()"><a (click)="logout()">Logout</a></li>
             </ul>
           </div>
