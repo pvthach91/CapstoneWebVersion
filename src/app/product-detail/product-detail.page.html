@@ -24,30 +24,23 @@
         <div class="single-product-content-container mb-35">
           <div class="row">
             <div class="col-lg-6 col-md-12 col-xs-12">
-              <div class="product-image-slider d-flex flex-custom-xs-wrap flex-sm-nowrap align-items-center mb-sm-35">
-                <div class="product-small-image-list">
-                  <div class="nav small-image-slider-single-product slick-initialized slick-slider slick-vertical" role="tablist">
-                    <div class="slick-list draggable" style="height: 306px;">
-                      <div class="slick-track" style="opacity: 1; height: 1122px;">
-                        <div *ngFor="let i of dto.images" (click)="changePhotoView(i)" class="single-small-image img-full slick-slide slick-cloned" data-slick-index="-3" aria-hidden="true" tabindex="-1" style="width: 122px;">
-                          <a><img src="{{configuration.host}}/api/guest/file/{{i}}" class="img-fluid"></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
                 <div class="tab-content product-large-image-list">
                   <div class="tab-pane fade active show" id="single-slide4" role="tabpanel"
                        aria-labelledby="single-slide-tab-4">
                     <div class="single-product-img easyzoom img-full is-ready">
                       <img src="{{savedCurrentPhoto}}" class="img-fluid" alt="">
-                      <a href="{{savedCurrentPhoto}}" class="big-image-popup"><i class="fa fa-search-plus"></i></a>
                     </div>
                   </div>
                 </div>
-
-              </div>
+                <div>
+                  <ul class="row nav nav-pills" role="tablist">
+                    <li *ngFor="let i of dto.images" class="nav-item col-4 pr-1">
+                      <a (click)="changePhotoView(i)" class="nav-link img p-0 active show" id="pills-home-tab" data-toggle="pill" role="tab" aria-controls="pills-home" aria-selected="true">
+                        <img class="w-100" src="{{configuration.host}}/api/guest/file/{{i}}" alt="card-img">
+                      </a>
+                    </li>
+                  </ul>
+                </div>
             </div>
             <div class="col-lg-6 col-md-12 col-xs-12">
               <div class="product-feature-details">
@@ -85,36 +78,28 @@
                   </div>
                 </div>
 
-                <div class="single-product-action-btn mb-20">
-                  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#"
-                     data-tooltip="Add to wishlist"> <span class="icon_heart_alt"></span> Add to wishlist</a>
-                  <a href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#"
-                     data-tooltip="Add to compare"> <span class="arrow_left-right_alt"></span> Add to compare</a>
-                </div>
-
-
                 <div class="single-product-category mb-20">
                   <h3>Available: <span><a> {{dto.quantity - dto.totalOrder}} kg(s)</a>, category:
                       <a>{{dto.category}}</a></span>
                   </h3>
                 </div>
 
+                <div class="cart-buttons mb-20" *ngIf="tokenStorage.hasBuyerRole()">
+                  <div class="add-to-cart-btn">
+                    <a (click)="navigateToChat()">
+                      <ion-icon name="chatbubbles"></ion-icon>
+                      Chat to farmer
+                    </a>
+                  </div>
+                </div>
 
                 <div class="social-share-buttons">
                   <h3>share this product</h3>
                   <ul>
-                    <li><a class="twitter"
-                           href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#"><i
-                            class="fa fa-twitter"></i></a></li>
-                    <li><a class="facebook"
-                           href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#"><i
-                            class="fa fa-facebook"></i></a></li>
-                    <li><a class="google-plus"
-                           href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#"><i
-                            class="fa fa-google-plus"></i></a></li>
-                    <li><a class="pinterest"
-                           href="https://demo.hasthemes.com/greenfarm-preview/greenfarm/single-product.html#"><i
-                            class="fa fa-pinterest"></i></a></li>
+                    <li><a class="twitter" href=""><i class="fa fa-twitter"></i></a></li>
+                    <li><a class="facebook" href=""><i class="fa fa-facebook"></i></a></li>
+                    <li><a class="google-plus" href=""><i class="fa fa-google-plus"></i></a></li>
+                    <li><a class="pinterest" href=""><i class="fa fa-pinterest"></i></a></li>
                   </ul>
                 </div>
               </div>

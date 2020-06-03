@@ -2743,6 +2743,7 @@ a.single-sale-add-to-cart-btn:hover {
   padding: 30px 5px;
   text-align: center;
   position: relative;
+  height: 400px;
   background-color: #ffffff; }
 .shop-grid-view-product .image {
   margin-bottom: 20px; }

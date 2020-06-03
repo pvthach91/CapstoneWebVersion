@@ -101,14 +101,18 @@ export class HomePage implements OnInit {
       } else {
           onsale = false;
       }
+      let nearBy = null;
+      if (this.form.nearBy != null && this.form.nearBy != undefined && this.form.nearBy != '') {
+          nearBy = this.form.nearBy.state;
+      }
     let criteria = new ProductCriteriaSearch(
         this.form.productName,
         this.generateCategories(),
-        this.form.nearBy == null ? '': this.form.nearBy.state,
+        nearBy,
         priceFrom,
         priceTo,
         onsale,
-        0);
+        this.form.sort);
     this.productService.getProducts(criteria).subscribe(
         data => {
           this.products = data;

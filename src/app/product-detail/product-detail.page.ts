@@ -3,7 +3,7 @@ import {RateService} from "../services/rate.service";
 declare const google: any;
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ProductService} from "../services/product.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {configuration} from "../model/configuration.model";
 import {AlertController} from "@ionic/angular";
 import {Product} from "../model/product.model";
@@ -65,6 +65,7 @@ export class ProductDetailPage implements OnInit {
               private farmService: FarmerService,
               public commentService: CommentService,
               private cartStorage: CartStorageService,
+              private router: Router,
               private route: ActivatedRoute,) { }
 
   ngOnInit() {
@@ -105,6 +106,10 @@ export class ProductDetailPage implements OnInit {
     }
 
     addItemToCart(product: Product) {
+      if(!this.tokenStorage.hasBuyerRole()) {
+          this.presentAlert('Warning', '', 'Please login to buy product');
+          return;
+      }
         let added = this.cartStorage.addItem(product, this.quantity);
         if (added) {
             this.presentAlert('Success', '', 'Added to cart successfully');
@@ -319,6 +324,10 @@ export class ProductDetailPage implements OnInit {
     changeAboutFarmerFarm(farmId: number) {
         this.aboutAuthorCurrentFarm = this.farmMap.get(farmId);
         this.aboutAuthorCurrentFarmPhoto = configuration.host + '/api/guest/file/' + this.aboutAuthorCurrentFarm.images[0];
+    }
+
+    navigateToChat() {
+      this.router.navigateByUrl('/my-account/chat/detail/' + this.id);
     }
 
 }

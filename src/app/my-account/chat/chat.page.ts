@@ -157,6 +157,7 @@ export class ChatPage implements OnInit, OnDestroy {
           if (data != null) {
             this.myMessage = '';
             this.getChats();
+            this.getContacts();
           } else {
             this.presentAlert('Error', '', 'Failed to gt message');
           }

@@ -99,8 +99,8 @@
                             </div>
                             <div class="card-footer">
                               <div class="text-right">
-                                <input class="mr-5 chat-footer-text" type="text" placeholder="Enter text"/>
-                                <button type="submit" class="btn btn-md btn-primary">Send</button>
+                                <input class="mr-5 chat-footer-text" type="text" placeholder="Enter text"  [(ngModel)]="myMessage"/>
+                                <button (click)="addNewMessage()" type="button" class="btn btn-md btn-primary" [disabled]="myMessage.length==0">Send</button>
                               </div>
                             </div>
                           </div>
