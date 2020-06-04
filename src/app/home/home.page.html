@@ -62,7 +62,7 @@
               <div class="sidebar mb-35">
                 <h3 class="sidebar-title">Search Nearby</h3>
                 <ul class="product-categories">
-                  <select id="nearBy" name="nearBy" [(ngModel)]="form.nearBy" #nearBy="ngModel" style="width: 100%; border-radius: 5px; padding: 5px;">
+                  <select id="nearBy" name="nearBy" [(ngModel)]="form.nearBy" #nearBy="ngModel" style="width: 100%; border-radius: 5px; padding: 5px;" (change)="searchNearbySelect()">
                     <option [ngValue]="">All</option>
                     <option *ngFor="let add of deliverAddress" [ngValue]="add">{{add.name}}</option>
                   </select>

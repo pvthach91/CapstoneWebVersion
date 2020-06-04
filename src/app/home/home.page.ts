@@ -45,12 +45,13 @@ export class HomePage implements OnInit {
               private productService: ProductService) { }
 
   ngOnInit() {
+      this.form.sort = 0;
     this.route.params.subscribe(
         params => {
             if (this.tokenStorage.isLoggedIn()) {
                 if (this.tokenStorage.hasBuyerRole()) {
                     this.getAddresses();
-                    this.form.sort = 0;
+
                 }
             } else {
             }
@@ -105,9 +106,15 @@ export class HomePage implements OnInit {
           onsale = false;
       }
       let nearBy = null;
-      if (this.form.nearBy != null && this.form.nearBy != undefined && this.form.nearBy != '') {
-          nearBy = this.form.nearBy.state;
+      if (this.form.sort == 3) {
+          if (this.form.nearBy != null && this.form.nearBy != undefined && this.form.nearBy != '') {
+              nearBy = this.form.nearBy.state;
+          } else {
+              this.presentAlert('Warning', '', 'Please select your address for searching nearby');
+              return;
+          }
       }
+
     let criteria = new ProductCriteriaSearch(
         this.form.productName,
         this.generateCategories(),
@@ -252,5 +259,14 @@ export class HomePage implements OnInit {
 
       this.makePages();
       this.gotoPage(1);
+  }
+
+  searchNearbySelect() {
+      let nearBy = this.form.nearBy;
+      if (nearBy == null && nearBy == undefined && nearBy == '') {
+          this.form.sort = 0;
+      } else {
+          this.form.sort = 3;
+      }
   }
 }
