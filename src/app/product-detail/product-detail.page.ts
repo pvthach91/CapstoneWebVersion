@@ -149,7 +149,7 @@ export class ProductDetailPage implements OnInit {
   }
 
   getCurrentProduct() {
-    this.productService.getProduct(this.id).subscribe(
+    this.productService.getProductForGuest(this.id).subscribe(
         data => {
           if (data.success) {
             this.productDetail = data.data;

@@ -30,8 +30,13 @@ export class ProductService {
     return this.http.post<Array<Product>>(url, criteria, httpOptions);
   }
 
-  getProduct(id: number): Observable<ApiResponse> {
+  getProductForGuest(id: number): Observable<ApiResponse> {
     const url = configuration.host + '/api/guest/product/' + id;
+    return this.http.get<ApiResponse>(url);
+  }
+
+  getProduct(id: number): Observable<ApiResponse> {
+    const url = configuration.host + '/api/product/' + id;
     return this.http.get<ApiResponse>(url);
   }
 
