@@ -94,7 +94,7 @@
                     </select>
                   </div>
 
-                  <p class="result-show-message">Showing 1–12 of 41 results</p>
+                  <p class="result-show-message">Total results: {{totalPage}}</p>
                 </div>
               </div>
             </div>
@@ -103,12 +103,12 @@
               <div *ngFor="let product of subProducts" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                 <div *ngIf="gridView" class="gf-product shop-grid-view-product">
                   <div class="image">
-                    <a routerLink="/products/detail/{{product.id}}">
+                    <a href="products/detail/{{product.id}}">
                       <span *ngIf="product.promotionActive" class="onsale">Sale!</span>
                       <img src="{{configuration.host}}/api/guest/file/{{product.images[0]}}" class="img-fluid" alt="">
                     </a>
                     <div class="product-hover-icons">
-                      <a routerLink="/products/detail/{{product.id}}" data-tooltip="View details"> <span><i class="fa fa-info" aria-hidden="true"></i></span></a>
+                      <a href="products/detail/{{product.id}}" data-tooltip="View details"> <span><i class="fa fa-info" aria-hidden="true"></i></span></a>
                     </div>
                   </div>
                   <div class="product-content">
@@ -116,7 +116,7 @@
                       <a>Available {{product.quantity - product.totalOrder}} kg(s)</a>,
                       <a>{{product.category}}</a>
                     </div>
-                    <h3 class="product-title"><a routerLink="/products/detail/{{product.id}}">{{product.name}}</a></h3>
+                    <h3 class="product-title"><a href="products/detail/{{product.id}}">{{product.name}}</a></h3>
                     <h4 class="product-title" *ngIf="product.distance != null">{{product.distance}} km(s)</h4>
                     <div *ngIf="product.promotionActive" class="price-box">
                       <span class="main-price">PHP {{product.price | number}}</span>
