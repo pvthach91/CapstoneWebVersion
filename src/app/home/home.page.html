@@ -63,7 +63,7 @@
                 <h3 class="sidebar-title">Search Nearby</h3>
                 <ul class="product-categories">
                   <select id="nearBy" name="nearBy" [(ngModel)]="form.nearBy" #nearBy="ngModel" style="width: 100%; border-radius: 5px; padding: 5px;" (change)="searchNearbySelect()">
-                    <option [ngValue]="">All</option>
+                    <option value="">None</option>
                     <option *ngFor="let add of deliverAddress" [ngValue]="add">{{add.name}}</option>
                   </select>
                 </ul>
@@ -90,7 +90,7 @@
                       <option [value]="0">Sort By Newness</option>
                       <option [value]="1">Sort By Price: Low to High</option>
                       <option [value]="2">Sort By Price: High to Low</option>
-                      <option [value]="3">Sort By Nearest</option>
+                      <option *ngIf="tokenStorage.hasBuyerRole()" [value]="3">Sort By Nearest</option>
                     </select>
                   </div>
 

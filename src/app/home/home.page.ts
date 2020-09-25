@@ -109,7 +109,7 @@ export class HomePage implements OnInit {
       if (this.form.sort == 3) {
           if (this.form.nearBy != null && this.form.nearBy != undefined && this.form.nearBy != '') {
               nearBy = this.form.nearBy.state;
-          } else {
+          } else if (this.tokenStorage.hasBuyerRole()){
               this.presentAlert('Warning', '', 'Please select your address for searching nearby');
               return;
           }
@@ -265,7 +265,7 @@ export class HomePage implements OnInit {
       let nearBy = this.form.nearBy;
       if (nearBy == null && nearBy == undefined && nearBy == '') {
           this.form.sort = 0;
-      } else {
+      } else if (this.tokenStorage.hasBuyerRole()){
           this.form.sort = 3;
       }
   }
