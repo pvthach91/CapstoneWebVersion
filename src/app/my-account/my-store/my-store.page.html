@@ -29,8 +29,8 @@
                 <div class="tab-content" id="myaccountContent">
                   <div class="tab-pane fade active" id="my-store" role="tabpanel">
                     <div class="myaccount-content">
-                      <span *ngIf="tokenStorage.hasFarmerRole()" class="pull-right"><a routerLink="new" data-toggle="tooltip" title="Add new product" class="btn btn-info"><i class="fa fa-plus"></i></a></span>
-                      <span *ngIf="tokenStorage.hasFarmerRole()" class="pull-right mr-20"><a routerLink="config" data-toggle="tooltip" title="Config address" class="btn btn-info"><i class="fa fa-cog"></i></a></span>
+                      <span *ngIf="tokenStorage.hasFarmerRole()" class="pull-right"><button routerLink="new" data-toggle="tooltip" title="Add new product" class="my-account-search-button"><i class="fa fa-plus"></i></button></span>
+                      <span *ngIf="tokenStorage.hasFarmerRole()" class="pull-right ml-25 mr-10"><button routerLink="config" data-toggle="tooltip" title="Config address" class="my-account-search-button"><i class="fa fa-cog"></i></button></span>
                       <span class="pull-right">
                         <label class="mr-5">Product Status</label>
                         <select class="mr-5" id="status" name="status" [(ngModel)]="form.status" #status="ngModel">
@@ -38,7 +38,6 @@
                           <option value="PENDING">Pending</option>
                           <option value="APPROVED">Approved</option>
                         </select>
-<!--                        <a (click)="search(1)" class="my-account-search-button"><i class="fa fa-search"></i></a>-->
                         <button (click)="search(1)" class="my-account-search-button">SEARCH</button>
                       </span>
                       <h3>My store</h3>
