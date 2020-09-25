@@ -115,7 +115,7 @@ export class ChatPage implements OnInit, OnDestroy {
         },
         error => {
           console.log(error);
-          this.presentAlert('Error', '', error.toString());
+          // this.presentAlert('Error', '', error.toString());
         }
     );
   }
