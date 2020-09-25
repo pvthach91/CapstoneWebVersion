@@ -31,14 +31,15 @@
                     <div class="myaccount-content">
                       <span *ngIf="tokenStorage.hasFarmerRole()" class="pull-right"><a routerLink="new" data-toggle="tooltip" title="Add new product" class="btn btn-info"><i class="fa fa-plus"></i></a></span>
                       <span *ngIf="tokenStorage.hasFarmerRole()" class="pull-right mr-20"><a routerLink="config" data-toggle="tooltip" title="Config address" class="btn btn-info"><i class="fa fa-cog"></i></a></span>
-                      <span class="pull-right mr-20">
+                      <span class="pull-right">
                         <label class="mr-5">Product Status</label>
                         <select class="mr-5" id="status" name="status" [(ngModel)]="form.status" #status="ngModel">
                           <option value="">All</option>
                           <option value="PENDING">Pending</option>
                           <option value="APPROVED">Approved</option>
                         </select>
-                        <a (click)="search(1)" class="btn btn-info"><i class="fa fa-search"></i></a>
+<!--                        <a (click)="search(1)" class="my-account-search-button"><i class="fa fa-search"></i></a>-->
+                        <button (click)="search(1)" class="my-account-search-button">SEARCH</button>
                       </span>
                       <h3>My store</h3>
 

@@ -40,7 +40,8 @@
                           <option value="CANCELLED">Cancelled</option>
                         </select>
                         <input type="search" placeholder="Search order ref" aria-label="Search" id="orderId" name="orderId" [(ngModel)]="form.orderId" #orderId="ngModel">
-                        <a (click)="search(1)" class="btn btn-info"><i class="fa fa-search"></i></a>
+<!--                        <a (click)="search(1)" class="btn btn-info"><i class="fa fa-search"></i></a>-->
+                        <button (click)="search(1)" class="ml-5 my-account-search-button">SEARCH</button>
                       </span>
                       <h3>Orders</h3>
 

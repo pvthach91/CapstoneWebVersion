@@ -6319,4 +6319,10 @@ footer {
   border-radius: 100%
 }
 
+.my-account-search-button {
+  border: none;
+  background-color: #80bb01;
+  color: #ffffff;
+  font-weight: bold ;
+}
 
