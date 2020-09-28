@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TokenStorageService} from "../auth/token-storage.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {OrderItem} from "../model/order-item.model";
@@ -10,6 +10,7 @@ import {CartStorageService} from "../services/cart-storage.service";
   styleUrls: ['./header.page.scss'],
 })
 export class HeaderPage implements OnInit {
+  @Input() currentPage: string;
 
   @Output() searchEmit = new EventEmitter();
 
@@ -49,6 +50,63 @@ export class HeaderPage implements OnInit {
 
   search() {
     this.searchEmit.emit(this.form.productName);
+  }
+
+  isBuyerHomePage(): boolean {
+    return 'buyer-home' == this.currentPage ? true : false;
+  }
+
+  isBuyerOrderPage(): boolean {
+    return ('order' == this.currentPage && this.tokenStorage.hasBuyerRole()) ? true : false;
+  }
+
+  isBuyerAddressPage(): boolean {
+    console.log('address');
+    return 'buyer-address' == this.currentPage ? true : false;
+  }
+
+  isBuyerCheckoutPage(): boolean {
+    return 'buyer-checkout' == this.currentPage ? true : false;
+  }
+
+  isFarmerHomePage(): boolean {
+    return ('store' == this.currentPage && this.tokenStorage.hasFarmerRole()) ? true : false;
+  }
+
+  isFarmerFarmPage(): boolean {
+    return 'farmer-farm' == this.currentPage ? true : false;
+  }
+
+  isFarmerVehiclePage(): boolean {
+    return 'farmer-vehicle' == this.currentPage ? true : false;
+  }
+
+  isFarmerOrderPage(): boolean {
+    return ('order' == this.currentPage && this.tokenStorage.hasFarmerRole()) ? true : false;
+  }
+
+  isAdminHomePage(): boolean {
+    return 'user' == this.currentPage ? true : false;
+  }
+
+  isAdminProfilePage(): boolean {
+    return ('profile' == this.currentPage && this.tokenStorage.hasAdminRole()) ? true : false;
+  }
+
+  isPMHomePage(): boolean {
+    return ('order' == this.currentPage && this.tokenStorage.hasPMRole()) ? true : false;
+  }
+
+  isPMStorePage(): boolean {
+    return ('store' == this.currentPage && this.tokenStorage.hasPMRole()) ? true : false;
+  }
+
+  isPMShippingPage(): boolean {
+    return 'pm-shipping' == this.currentPage ? true : false;
+  }
+
+  isContactUsPage(): boolean {
+    return 'contact-us' == this.currentPage ? true : false;
   }
 
 }

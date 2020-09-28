@@ -78,29 +78,26 @@
           <div class="main-menu">
             <nav style="display: block;">
               <ul>
-                <li *ngIf="tokenStorage.hasBuyerRole() || !tokenStorage.isLoggedIn()" class="active"><a routerLink="/home">HOME</a></li>
-                <li *ngIf="tokenStorage.hasBuyerRole()"><a routerLink="/my-account/order">TRACK ORDER</a></li>
-                <li *ngIf="tokenStorage.hasBuyerRole()"><a routerLink="/my-account/deliver-address">MY ADDRESS</a></li>
-                <li *ngIf="tokenStorage.hasBuyerRole()"><a routerLink="/checkout">CHECK OUT</a></li>
+                <li *ngIf="tokenStorage.hasBuyerRole() || !tokenStorage.isLoggedIn()" [ngClass]="isBuyerHomePage()?'active': ''"><a routerLink="/home">HOME</a></li>
+                <li *ngIf="tokenStorage.hasBuyerRole()"><a routerLink="/my-account/order" [ngClass]="isBuyerOrderPage()?'active': ''">MY ORDER</a></li>
+                <li *ngIf="tokenStorage.hasBuyerRole()"><a routerLink="/my-account/deliver-address" [ngClass]="isBuyerAddressPage()?'active': ''">DELIVER ADDRESS</a></li>
+                <li *ngIf="tokenStorage.hasBuyerRole()"><a routerLink="/checkout" [ngClass]="isBuyerCheckoutPage()?'active': ''">CHECK OUT</a></li>
 
+                <li *ngIf="tokenStorage.hasFarmerRole()" [ngClass]="isFarmerHomePage()?'active': ''"><a routerLink="/my-account/my-store">HOME</a></li>
+                <li *ngIf="tokenStorage.hasFarmerRole()" [ngClass]="isFarmerFarmPage()?'active': ''"><a routerLink="/my-account/farm">FARM</a></li>
+                <li *ngIf="tokenStorage.hasFarmerRole()" [ngClass]="isFarmerVehiclePage()?'active': ''"><a routerLink="/my-account/vehicle">VEHICLE</a></li>
+                <li *ngIf="tokenStorage.hasFarmerRole()" [ngClass]="isFarmerOrderPage()?'active': ''"><a routerLink="/my-account/order">ORDER</a></li>
 
-                <li *ngIf="tokenStorage.hasFarmerRole()" class="active"><a routerLink="/my-account/my-store">HOME</a></li>
-                <li *ngIf="tokenStorage.hasFarmerRole()" class="active"><a routerLink="/my-account/farm">FARM</a></li>
-                <li *ngIf="tokenStorage.hasFarmerRole()" class="active"><a routerLink="/my-account/vehicle">VEHICLE</a></li>
-                <li *ngIf="tokenStorage.hasFarmerRole()" class="active"><a routerLink="/my-account/order">ORDER</a></li>
+                <li *ngIf="tokenStorage.hasAdminRole()" [ngClass]="isAdminHomePage()?'active': ''"><a routerLink="/my-account/user">HOME</a></li>
+                <li *ngIf="tokenStorage.hasAdminRole()" [ngClass]="isAdminProfilePage()?'active': ''"><a routerLink="/my-account">PROFILE</a></li>
 
-
-                <li *ngIf="tokenStorage.hasAdminRole()" class="active"><a routerLink="/my-account/user">HOME</a></li>
-                <li *ngIf="tokenStorage.hasAdminRole()" class="active"><a routerLink="/my-account">PROFILE</a></li>
-
-                <li *ngIf="tokenStorage.hasPMRole()" class="active"><a routerLink="/my-account/order">HOME</a></li>
-                <li *ngIf="tokenStorage.hasPMRole()" class="active"><a routerLink="/my-account/my-store">STORE MANAGEMENT</a></li>
-                <li *ngIf="tokenStorage.hasPMRole()" class="active"><a routerLink="/my-account/shipping-config">SHIPPING CONFIG</a></li>
-
+                <li *ngIf="tokenStorage.hasPMRole()" [ngClass]="isPMHomePage()?'active': ''"><a routerLink="/my-account/order">HOME</a></li>
+                <li *ngIf="tokenStorage.hasPMRole()" [ngClass]="isPMStorePage()?'active': ''"><a routerLink="/my-account/my-store">STORE MANAGEMENT</a></li>
+                <li *ngIf="tokenStorage.hasPMRole()" [ngClass]="isPMShippingPage()?'active': ''"><a routerLink="/my-account/shipping-config">SHIPPING CONFIG</a></li>
 
                 <li *ngIf="!tokenStorage.isLoggedIn()"><a routerLink="/checkout">PRIVACY POLICY</a></li>
                 <li *ngIf="!tokenStorage.isLoggedIn()"><a routerLink="/checkout">TERMS & CONDITION</a></li>
-                <li><a routerLink="/about-us">CONTACT US</a></li>
+                <li [ngClass]="isContactUsPage()?'active': ''"><a routerLink="/about-us">CONTACT US</a></li>
               </ul>
             </nav>
           </div>

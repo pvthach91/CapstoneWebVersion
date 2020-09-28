@@ -197,7 +197,7 @@
                             <textarea name="review" id="your-review" placeholder="Write a comment" [(ngModel)]="myComment"></textarea>
                           </div>
                           <div class="col-12">
-                            <input (click)="commentProduct()" value="add comment" type="submit">
+                            <input [disabled]="!tokenStorage.hasBuyerRole()" (click)="commentProduct()" value="add comment" type="submit">
                           </div>
                         </div>
                       </form>

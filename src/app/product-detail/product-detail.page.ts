@@ -222,6 +222,10 @@ export class ProductDetailPage implements OnInit {
     }
 
     async rateProduct(star: number) {
+      if (!this.tokenStorage.hasBuyerRole()) {
+          this.presentAlert('Warning', 'Please login to rate', '');
+          return;
+      }
         const alert = await this.alertController.create({
             header: 'Confirm!',
             message: 'Are you sure to rate this product as ' + star + ' star?',
