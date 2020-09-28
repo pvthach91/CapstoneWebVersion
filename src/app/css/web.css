@@ -390,6 +390,7 @@ select {
 .pagination-content ul li a {
   background-color: #666666;
   border-radius: 3px;
+  margin-left: 5px;
   color: #ffffff;
   display: block; }
 .pagination-content ul li a:hover {
@@ -2743,7 +2744,7 @@ a.single-sale-add-to-cart-btn:hover {
   padding: 30px 5px;
   text-align: center;
   position: relative;
-  height: 400px;
+  height: 355px;
   background-color: #ffffff; }
 .shop-grid-view-product .image {
   margin-bottom: 20px; }

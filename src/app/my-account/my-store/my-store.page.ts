@@ -94,11 +94,13 @@ export class MyStorePage implements OnInit {
     if(page <1) {
       page = 1;
     }
+    this.subProducts = new Array<Product>();
+    this.currentPage = page;
     let start = configuration.pageSize * (this.currentPage - 1);
     if (page == this.pages.length) {
       this.subProducts = this.products.slice(start);
     } else {
-      this.subProducts = this.products.slice(start, configuration.pageSize);
+      this.subProducts = this.products.slice(start, start + configuration.pageSize);
     }
   }
 

@@ -210,7 +210,6 @@ export class HomePage implements OnInit {
       this.subProducts = this.products.slice(start, start + configuration.pageSize);
     }
 
-    console.log(this.subProducts);
   }
 
   changeToListView() {

@@ -254,6 +254,7 @@ export class MyStoreDetailPage implements OnInit {
     this.productService.addProduct(product).subscribe(
         data => {
           if (data.success) {
+            this.productDetail.dto.status = data.data.status;
             this.presentAlert('Success', '', 'Saved successfuly');
           } else {
             this.presentAlert('Failed', '', data.message);
