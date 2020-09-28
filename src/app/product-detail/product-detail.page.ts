@@ -145,7 +145,7 @@ export class ProductDetailPage implements OnInit {
           }
       });
 
-      this.averageRates = sumRate/this.rates.length;
+      this.averageRates = this.rates.length == 0 ? 0 : sumRate/this.rates.length;
   }
 
   getCurrentProduct() {
