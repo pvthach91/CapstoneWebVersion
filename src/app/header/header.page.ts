@@ -109,4 +109,8 @@ export class HeaderPage implements OnInit {
     return 'contact-us' == this.currentPage ? true : false;
   }
 
+  isBODPage(): boolean {
+    return 'bod' == this.currentPage ? true : false;
+  }
+
 }

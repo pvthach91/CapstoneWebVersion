@@ -98,6 +98,7 @@
                 <li *ngIf="!tokenStorage.isLoggedIn()"><a routerLink="/checkout">PRIVACY POLICY</a></li>
                 <li *ngIf="!tokenStorage.isLoggedIn()"><a routerLink="/checkout">TERMS & CONDITION</a></li>
                 <li [ngClass]="isContactUsPage()?'active': ''"><a routerLink="/about-us">CONTACT US</a></li>
+                <li [ngClass]="isBODPage()?'active': ''"><a routerLink="/bod">ABOUT US</a></li>
               </ul>
             </nav>
           </div>
