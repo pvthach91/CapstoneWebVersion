@@ -86,7 +86,7 @@
                 <li *ngIf="tokenStorage.hasFarmerRole()" [ngClass]="isFarmerHomePage()?'active': ''"><a routerLink="/my-account/my-store">HOME</a></li>
                 <li *ngIf="tokenStorage.hasFarmerRole()" [ngClass]="isFarmerFarmPage()?'active': ''"><a routerLink="/my-account/farm">FARM</a></li>
                 <li *ngIf="tokenStorage.hasFarmerRole()" [ngClass]="isFarmerVehiclePage()?'active': ''"><a routerLink="/my-account/vehicle">VEHICLE</a></li>
-                <li *ngIf="tokenStorage.hasFarmerRole()" [ngClass]="isFarmerOrderPage()?'active': ''"><a routerLink="/my-account/order">ORDER</a></li>
+                <li *ngIf="tokenStorage.hasFarmerRole()" [ngClass]="isFarmerOrderPage()?'active': ''"><a routerLink="/my-account/order">TRANSACTION</a></li>
 
                 <li *ngIf="tokenStorage.hasAdminRole()" [ngClass]="isAdminHomePage()?'active': ''"><a routerLink="/my-account/user">HOME</a></li>
                 <li *ngIf="tokenStorage.hasAdminRole()" [ngClass]="isAdminProfilePage()?'active': ''"><a routerLink="/my-account">PROFILE</a></li>

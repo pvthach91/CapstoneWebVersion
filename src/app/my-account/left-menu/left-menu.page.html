@@ -36,7 +36,14 @@
   </a>
 
   <a routerLink="/my-account/order"
-     *ngIf="tokenStorage.hasFarmerRole() || tokenStorage.hasBuyerRole() || tokenStorage.hasPMRole()"
+     *ngIf="tokenStorage.hasFarmerRole()"
+     [ngClass]="isOrderPage()?'active': ''">
+    <i class="fa fa-shopping-cart"></i>
+    Transaction
+  </a>
+
+  <a routerLink="/my-account/order"
+     *ngIf="tokenStorage.hasBuyerRole() || tokenStorage.hasPMRole()"
      [ngClass]="isOrderPage()?'active': ''">
     <i class="fa fa-shopping-cart"></i>
     Orders
