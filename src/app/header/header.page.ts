@@ -113,4 +113,8 @@ export class HeaderPage implements OnInit {
     return 'bod' == this.currentPage ? true : false;
   }
 
+  isPrivacyPage(): boolean {
+    return 'privacy' == this.currentPage ? true : false;
+  }
+
 }

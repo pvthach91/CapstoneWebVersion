@@ -95,8 +95,8 @@
                 <li *ngIf="tokenStorage.hasPMRole()" [ngClass]="isPMStorePage()?'active': ''"><a routerLink="/my-account/my-store">STORE MANAGEMENT</a></li>
                 <li *ngIf="tokenStorage.hasPMRole()" [ngClass]="isPMShippingPage()?'active': ''"><a routerLink="/my-account/shipping-config">SHIPPING CONFIG</a></li>
 
-                <li *ngIf="!tokenStorage.isLoggedIn()"><a routerLink="/checkout">PRIVACY POLICY</a></li>
-                <li *ngIf="!tokenStorage.isLoggedIn()"><a routerLink="/checkout">TERMS & CONDITION</a></li>
+                <li *ngIf="!tokenStorage.isLoggedIn()" [ngClass]="isPrivacyPage()?'active': ''"><a routerLink="/privacy">PRIVACY POLICY</a></li>
+<!--                <li *ngIf="!tokenStorage.isLoggedIn()"><a routerLink="/checkout">TERMS & CONDITION</a></li>-->
                 <li [ngClass]="isContactUsPage()?'active': ''"><a routerLink="/about-us">CONTACT US</a></li>
                 <li [ngClass]="isBODPage()?'active': ''"><a routerLink="/bod">ABOUT US</a></li>
               </ul>

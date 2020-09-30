@@ -1,0 +1,39 @@
+@import "../css/web.css";
+
+.privacy.main-grid-border {
+  padding-bottom: 50px;
+}
+.privacy h4 {
+  font-size: 25px;
+  color: #01a185;
+  margin-top: 25px;
+}
+.privacy p{
+  font-size: 14px;
+  color: #a3a3a3;
+  line-height: 2em;
+  padding: 0 0 16px 0;
+}
+ol.privacy-start li a,ul.privacy-start li a{
+  display:block;
+  text-decoration: none;
+  color:#a3a3a3;
+  margin: 8px 0;
+  font-size:13px;
+  line-height: 30px;
+}
+ol.privacy-start li a:hover,ul.privacy-start li a:hover {
+  color: #01a185;
+}
+.use-privay{
+  padding: 4px 0;
+}
+p.privacy-para {
+  padding: 15px 0 7px;
+}
+.privacy.main-grid-border {
+  padding-bottom: 50px;
+}
+ul.privacy-start {
+  padding-left: 45px;
+}
