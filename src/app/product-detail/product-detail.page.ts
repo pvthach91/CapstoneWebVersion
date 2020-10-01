@@ -16,6 +16,7 @@ import {FarmerService} from "../services/farmer.service";
 import {Farm} from "../model/farm.model";
 import {HeaderPage} from "../header/header.page";
 import {CartStorageService} from "../services/cart-storage.service";
+import {User} from "../model/user.model";
 
 @Component({
   selector: 'app-product-detail',

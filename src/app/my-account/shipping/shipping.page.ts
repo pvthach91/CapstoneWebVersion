@@ -107,13 +107,14 @@ export class ShippingPage implements OnInit {
             this.shippingService.deleteShippingConfig(id).subscribe(
                 data => {
                   if (data.success) {
-                    this.router.navigateByUrl('/my-account/shipping-config');
+                    this.search(1);
+                    // this.router.navigateByUrl('/my-account/shipping-config');
                   } else {
                     this.presentAlert('Failed', '', data.message);
                   }
                 },
                 error => {
-                  this.presentAlert('Failed', '', 'Failed to deactivate the user');
+                  this.presentAlert('Failed', '', 'Failed to delete config');
                 }
             );
           }

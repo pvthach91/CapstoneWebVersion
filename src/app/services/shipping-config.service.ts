@@ -33,7 +33,7 @@ export class ShippingConfigService {
   }
 
   deleteShippingConfig(id: number): Observable<ApiResponse> {
-    const url = configuration.host + '/api/deleteShippingConfig/{id}' + id;
+    const url = configuration.host + '/api/deleteShippingConfig/' + id;
     return this.http.post<ApiResponse>(url, null, httpOptions);
   }
 

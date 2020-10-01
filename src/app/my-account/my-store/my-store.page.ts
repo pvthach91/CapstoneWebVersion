@@ -31,7 +31,11 @@ export class MyStorePage implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(
         params => {
-          this.form.status = '';
+          if (this.tokenStorage.hasFarmerRole()) {
+            this.form.status = '';
+          } else if (this.tokenStorage.hasPMRole()) {
+            this.form.status = 'PENDING';
+          }
           this.search(1);
         });
   }

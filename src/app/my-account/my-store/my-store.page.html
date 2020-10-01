@@ -65,8 +65,11 @@
                                 <div *ngIf="!product.promotionActive" class="price-box">
                                   <span class="discounted-price">PHP {{product.price | number}}</span>
                                 </div>
-                                <div *ngIf="tokenStorage.hasPMRole() && product.status=='PENDING'" class="product-categories">
-                                  <a (click)="approveProduct(product.id, i)">Approve</a>
+<!--                                <div *ngIf="tokenStorage.hasPMRole() && product.status=='PENDING'" class="product-categories">-->
+<!--                                  <a (click)="approveProduct(product.id, i)">Approve</a>-->
+<!--                                </div>-->
+                                <div class="product-categories">
+                                  <a>{{product.status}}</a>
                                 </div>
                               </div>
 

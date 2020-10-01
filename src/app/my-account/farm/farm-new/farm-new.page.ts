@@ -9,6 +9,7 @@ import {FarmerService} from "../../../services/farmer.service";
 import {FileUploadService} from "../../../services/file-upload.service";
 import {AlertController} from "@ionic/angular";
 import {ConfigurationStorage} from "../../../services/configuration-storage.service";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-farm-new',
@@ -136,7 +137,7 @@ export class FarmNewPage implements OnInit {
     }
 
 
-    postFarm() {
+    postFarm(form: NgForm) {
         let farm = new Farm(
             null,
             this.form.state,
@@ -147,6 +148,8 @@ export class FarmNewPage implements OnInit {
         this.farmService.addFarm(farm).subscribe(
             data => {
                 if (data.success) {
+                    form.resetForm();
+                    this.displayImagesMap = new Map<number, string>();
                     // window.location.href = 'my-account/farm/view/' + data;
                     this.router.navigate(['/my-account/farm/view/' + data.data.id]);
                 } else {
@@ -160,14 +163,14 @@ export class FarmNewPage implements OnInit {
     }
 
 
-    onSubmit() {
+    onSubmit(form: NgForm) {
         if (!this.displayOldImages) {
             this.getSelectedFiles();
             if (this.selectedFile.length > 0) {
                 this.fileUploadService.uploadFarmPhoto(this.selectedFile).subscribe(
                     data => {
                         this.joinImagesText = data;
-                        this.postFarm();
+                        this.postFarm(form);
                     },
                     error => {
                         this.presentAlert('Error', '', 'Failed to upload files');

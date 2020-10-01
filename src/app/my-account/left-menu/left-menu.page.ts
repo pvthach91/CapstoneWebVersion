@@ -54,7 +54,7 @@ export class LeftMenuPage implements OnInit {
 
   logout() {
     this.tokenStorage.signOut();
-    this.route.navigate(['/home']);
+    this.route.navigate(['/login']);
   }
 
 }

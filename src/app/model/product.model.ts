@@ -37,5 +37,7 @@ export class Product {
     this.locationRef = locationRef;
     this.totalOrder = 0;
     this.distance = null;
+
+    this.user = new User();
   }
 }

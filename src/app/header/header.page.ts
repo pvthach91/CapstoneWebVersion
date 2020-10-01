@@ -34,7 +34,7 @@ export class HeaderPage implements OnInit {
 
   logout() {
     this.tokenStorage.signOut();
-    this.router.navigate(['/home']);
+    this.router.navigate(['/login']);
   }
 
   updateCart() {
@@ -61,7 +61,6 @@ export class HeaderPage implements OnInit {
   }
 
   isBuyerAddressPage(): boolean {
-    console.log('address');
     return 'buyer-address' == this.currentPage ? true : false;
   }
 

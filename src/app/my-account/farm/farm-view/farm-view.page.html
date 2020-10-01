@@ -91,10 +91,10 @@
                                 <div class="col-md-6 col-12 mb-20">
                                   <label>Width of farm()*
                                     <span *ngIf="f.submitted && address.invalid">
-                                      <span *ngIf="address.errors.required" class="text-danger"><small>address is required</small></span>
+                                      <span *ngIf="address.errors.required" class="text-danger"><small>width is required</small></span>
                                     </span>
                                   </label>
-                                  <input class="mb-0" type="text" placeholder="address" id="address" name="address" [(ngModel)]="form.address" #address="ngModel" required>
+                                  <input class="mb-0" type="text" placeholder="width" id="address" name="address" [(ngModel)]="form.address" #address="ngModel" required>
                                 </div>
                               </div>
 

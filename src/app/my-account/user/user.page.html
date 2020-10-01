@@ -109,15 +109,6 @@
 
                                   <input class="mb-0" type="text" placeholder="Full Name" id="name" name="name" [(ngModel)]="form.name" #name="ngModel" required minlength="3">
                                 </div>
-                                <div class="col-md-12 mb-20">
-                                  <label>Full Name*
-                                    <span *ngIf="f.submitted && name.invalid">
-                                    <span *ngIf="name.errors.required" class="text-danger"><small>Name is required</small></span>
-                                    <span *ngIf="name.errors.minlength" class="text-danger"><small>Name must be at least 3 characters</small></span>
-                                  </span>
-                                  </label>
-                                  <input class="mb-0" type="text" placeholder="Full Name" id="name" name="name" [(ngModel)]="form.name" #name="ngModel" required minlength="3">
-                                </div>
                                 <div class="col-md-6 col-12 mb-20">
                                   <label>Email*
                                     <span *ngIf="f.submitted && email.invalid">

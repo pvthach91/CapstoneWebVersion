@@ -3,6 +3,7 @@ import {AlertController} from "@ionic/angular";
 import {SignUpInfo} from "../auth/signup-info";
 import {AuthService} from "../auth/auth.service";
 import {Router} from "@angular/router";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-register',
@@ -47,7 +48,7 @@ export class RegisterPage implements OnInit {
     await alert.present();
   }
 
-  onSubmit() {
+  onSubmit(form: NgForm) {
     let pass = this.form.password;
     let cpass = this.form.cpassword;
     if (pass != null && pass.length >= 3 && cpass != null && cpass.length >= 3 && pass == cpass) {
@@ -67,6 +68,7 @@ export class RegisterPage implements OnInit {
         data => {
           if (data.success) {
             this.presentAlert('Success', '', "Registered successfully, please login");
+            form.resetForm();
             this.route.navigate(['/login']);
           } else {
             this.presentAlert('Failed', '', data.message);
