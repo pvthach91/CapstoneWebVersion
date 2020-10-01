@@ -28,6 +28,7 @@ export class ProductDetailPage implements OnInit {
     quantity: number = 1;
 
   id;
+  linkId = 0;
   private configuration = configuration;
 
   dto: Product = new Product(null, '', '', 0, 0, false, '', [], null, null, 0, false, 0);
@@ -155,6 +156,7 @@ export class ProductDetailPage implements OnInit {
           if (data.success) {
             this.productDetail = data.data;
             this.dto = this.productDetail.dto;
+            this.linkId = this.dto.user.id;
             this.lat = this.dto.user.latitude;
             this.lng = this.dto.user.longitude;
             this.initMap();
@@ -332,7 +334,7 @@ export class ProductDetailPage implements OnInit {
     }
 
     navigateToChat() {
-      this.router.navigateByUrl('/my-account/chat/detail/' + this.id);
+      this.router.navigateByUrl('/my-account/chat/detail/' + this.linkId);
     }
 
 }
